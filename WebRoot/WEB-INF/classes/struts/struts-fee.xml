@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="fee" extends="struts-default" namespace="/fee">
+		<action name="feeList" class="com.tarena.netctoss.action.FeeAction">
+			<param name="pageSize">3</param>   <!-- 每页显示的记录数，用于初始化pageSize -->
+			<result name="success">/WEB-INF/fee/fee_list.jsp</result>
+		</action>
+
+		<action name="feeDelete" class="com.tarena.netctoss.action.FeeAction"
+			method="deleteFee">
+			<result name="success" type="redirectAction">
+				<param name="actionName">feeList</param>
+				<param name="namespace">../fee</param>
+				<param name="msg">${msg}</param>
+			</result>
+		</action>
+
+		<action name="feeAdd" class="com.tarena.netctoss.action.FeeAction"
+			method="addFee">
+			<result name="success" type="redirectAction">feeList</result>
+			<result name="false">/WEB-INF/fee/fee_add.jsp</result>
+		</action>
+
+		<action name="feeUModi" class="com.tarena.netctoss.action.FeeAction"
+			method="modiUFee">
+			<result name="success">/WEB-INF/fee/fee_modi.jsp</result>
+		</action>
+
+		<action name="feeModi" class="com.tarena.netctoss.action.FeeAction"
+			method="modiFee">
+			<result name="success" type="redirectAction">feeList</result>
+		</action>
+
+		<action name="feeStart" class="com.tarena.netctoss.action.FeeAction"
+			method="startFee">
+			<result name="success" type="redirectAction">
+				<param name="actionName">feeList</param>
+				<param name="namespace">../fee</param>
+				<param name="msg">${msg}</param>
+			</result>
+		</action>
+
+		<action name="feeDetail" class="com.tarena.netctoss.action.FeeAction"
+			method="detailFee">
+			<result name="success">/WEB-INF/fee/fee_detail.jsp</result>
+		</action>
+
+		<action name="feeSortList" class="com.tarena.netctoss.action.FeeAction"
+			method="listAllCostOrderByCol">
+			<param name="pageSize">3</param>
+			<result name="success">/WEB-INF/fee/fee_list.jsp</result>
+		</action>
+
+	</package>
+</struts>        

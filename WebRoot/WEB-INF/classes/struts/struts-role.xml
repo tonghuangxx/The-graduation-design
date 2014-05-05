@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="role" extends="struts-default" namespace="/role">
+		<action name="roleList" class="com.tarena.netctoss.action.RoleAction">
+			<param name="pageSize">2</param>
+			<result name="success">/WEB-INF/role/role_list.jsp</result>
+			<result name="false">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="roleAdd" class="com.tarena.netctoss.action.RoleAction"
+			method="roleAdd">
+			<result name="success">/WEB-INF/role/role_add.jsp</result>
+			<result name="false">/WEB-INF/role/role_add.jsp</result>
+		</action>
+
+		<action name="uroleUpdate" class="com.tarena.netctoss.action.RoleAction"
+			method="uroleUpdate">
+			<result name="success">/WEB-INF/role/role_modi.jsp</result>
+			<result name="false">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="roleUpdate" class="com.tarena.netctoss.action.RoleAction"
+			method="roleUpdate">
+			<result name="success">/WEB-INF/role/role_modi.jsp</result>
+			<result name="false">/WEB-INF/role/role_modi.jsp</result>
+		</action>
+
+		<action name="roleDel" class="com.tarena.netctoss.action.RoleAction"
+			method="roleDel">
+			<result name="success" type="redirectAction">../role/roleList</result>
+			<result name="false" type="redirectAction">../role/roleList</result>
+		</action>
+
+		<action name="AdminInfoList" class="com.tarena.netctoss.action.RoleAction">
+			<param name="pageSize">2</param>
+			<result name="success">/WEB-INF/admin/admin_list.jsp</result>
+			<result name="false">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="radminUpdate" class="com.tarena.netctoss.action.RoleAction"
+			method="rupdateAdmin">
+			<result name="success">/WEB-INF/admin/admin_modi.jsp</result>
+			<result name="false">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="adminUpdate" class="com.tarena.netctoss.action.RoleAction"
+			method="upadteAdmin">
+			<result name="success">/WEB-INF/admin/admin_modi.jsp</result>
+			<result name="false">/WEB-INF/admin/admin_modi.jsp</result>
+		</action>
+
+		<action name="adminAdd" class="com.tarena.netctoss.action.RoleAction"
+			method="addAdmin">
+			<result name="success">/WEB-INF/admin/admin_add.jsp</result>
+			<result name="false">/WEB-INF/admin/admin_add.jsp</result>
+		</action>
+
+		<action name="adminDel" class="com.tarena.netctoss.action.RoleAction"
+			method="delAdmin">
+			<result name="success" type="redirectAction">
+				<param name="actionName">AdminInfoList</param>
+				<param name="namespace">../role</param>
+				<param name="addMsg">${addMsg}</param>
+			</result>
+			<result name="false" type="redirectAction">
+				<param name="actionName">AdminInfoList</param>
+				<param name="namespace">../role</param>
+				<param name="addMsg">${addMsg}</param>
+			</result>
+		</action>
+
+		<action name="serachAdminRole" class="com.tarena.netctoss.action.RoleAction"
+			method="serachAdminRole">
+			<result name="success">/WEB-INF/admin/admin_list.jsp</result>
+			<result name="false" type="redirectAction">
+				<param name="actionName">AdminInfoList</param>
+				<param name="namespace">../role</param>
+				<param name="addMsg">${addMsg}</param>
+			</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="validName" extends="struts-default" namespace="/validName">
+		<action name="feeNameValidName" class="com.tarena.netctoss.action.ValidNameAction">
+			<result name="success"></result>
+		</action>
+		
+		<action name="adminCodeValidName" class="com.tarena.netctoss.action.ValidNameAction" method="judgeAdminCode">
+			<result name="success"></result>
+		</action>
+		
+	</package>
+</struts>

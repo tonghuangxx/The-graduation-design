@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="account" extends="struts-default" namespace="/account">
+		<action name="AccountList" class="com.tarena.netctoss.action.AccountAction">
+			<param name="pageSize">3</param>
+			<result name="success">/WEB-INF/account/account_list.jsp</result>
+		</action>
+	</package>
+</struts>        

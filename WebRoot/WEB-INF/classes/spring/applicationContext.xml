@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/context 
+				http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				http://www.springframework.org/schema/aop 
+				http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+<!--	使用properties文件中的值-->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:db.properties</value>
+		</property>
+	</bean>
+<!--	设置数据库连接池-->
+	<bean id="dataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass"><value>${db.driverClass}</value></property>
+		<property name="jdbcUrl"><value>${db.jdbcUrl}</value></property>
+		<property name="user"><value>${db.user}</value></property>
+		<property name="password"><value>${db.password}</value></property>
+		<property name="initialPoolSize"><value>${db.initialPoolSize}</value></property>
+		<property name="minPoolSize"><value>${db.minPoolSize}</value></property>
+		<property name="maxPoolSize"><value>${db.maxPoolSize}</value></property>
+		<property name="acquireIncrement"><value>${db.acquireIncrement}</value></property>
+		<property name="maxIdleTime"><value>${db.maxIdleTime}</value></property>
+	</bean>
+<!--	sessionFactory工厂配置,hibernate采用注解-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.formate_sql">true</prop>
+			</props>
+		</property>
+		<property name="packagesToScan" value="com.dlts.*.domain"></property>
+	</bean>				
+				
+	<bean id="dao" class="com.dlts.base.dao.IDaoManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>			
+				
+	<bean id="baseService" abstract="true" class="com.dlts.base.service.BaseService">
+		<property name="dao" ref="dao"></property>
+	</bean>			
+				
+				
+			
+</beans>		
+				

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+	<!--登录时的struts2  -->
+<struts>
+	<package name="login" extends='struts-default' namespace='/login'>
+		<action name='toLogin'>
+			<result name='success'>/login/login.jsp</result>
+		</action>
+		<!-- 判断验证码 -->
+		<action name="code" class="com.dlts.login.action.LoginAction"
+			method="testYZM">
+			<result></result>
+		</action>
+		<action name='login' class='com.dlts.login.action.LoginAction'>
+			<result name='success'>/main.jsp</result>  <!-- 登录成功 -->
+			<result name='login'>/login/login.jsp</result> <!-- 登录失败 -->
+		</action>
+		<action name="loginOut" class='com.dlts.login.action.LoginAction' method="loginOut">
+		<result name="success">/login/login.jsp</result>
+		</action>
+	</package>
+</struts>        

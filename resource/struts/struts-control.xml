@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+	<!--    用于控制有否权限去操作-->
+<struts>
+	<package name="control" extends="struts-default" namespace="/control">
+		<action name="main">
+			<result name="success">/WEB-INF/main.jsp</result>
+		</action>
+
+		<!--		用户显示角色信息，正确跳到显示页面  无全限跳到无全限界面   错误跳到错误页面   -->
+		<action name="roleListControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">../role/roleList</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="roleAddControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success">/WEB-INF/role/role_add.jsp</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<!--		actionName为要跳转的action名字-->
+		<!--		namespace为要跳转的action命名空间-->
+		<!--adminId为你要传递的参数名-->
+		<action name="roleUpdateControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">
+				<param name="actionName">../role/uroleUpdate</param>
+				<param name="namespace">../role</param>
+				<param name="adminId">${adminId}</param>
+			</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="roleDelControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">
+				<param name="actionName">../role/roleDel</param>
+				<param name="namespace">../role</param>
+				<param name="adminId">${adminId}</param>
+			</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="AdminInfoListControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">../role/AdminInfoList</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="adminUpdateControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">
+				<param name="actionName">../role/radminUpdate</param>
+				<param name="namespace">../role</param>
+				<param name="adminId">${adminId}</param>
+			</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="adminAddControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success">/WEB-INF/admin/admin_add.jsp</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="AdminDelControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">
+				<param name="actionName">../role/adminDel</param>
+				<param name="namespace">../role</param>
+				<param name="adminId">${adminId}</param>
+			</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="feeListControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">../fee/feeList</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="feeAddControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success">/WEB-INF/fee/fee_add.jsp</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="feeStartControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">
+				<param name="actionName">../fee/feeStart</param>
+				<param name="namespace">../fee</param>
+				<param name="feeId">${feeId}</param>
+			</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="feeModiControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">
+				<param name="actionName">../fee/feeUModi</param>
+				<param name="namespace">../fee</param>
+				<param name="feeId">${feeId}</param>
+			</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="feeDelControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">
+				<param name="actionName">../fee/feeDelete</param>
+				<param name="namespace">../fee</param>
+				<param name="feeId">${feeId}</param>
+			</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+		<action name="AccountListControl" class="com.tarena.netctoss.action.ControlAction"
+			method="control">
+			<result name="success" type="redirectAction">../account/AccountList</result>
+			<result name="false">/WEB-INF/nopower.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+
+	</package>
+</struts>
