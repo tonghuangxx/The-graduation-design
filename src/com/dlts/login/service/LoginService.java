@@ -34,7 +34,6 @@ public class LoginService extends BaseService{
 	 * @return
 	 */
 	public AdminInfo findByCodeAndPwd(AdminInfo adminInfo){
-		adminInfo.setPassword(MD5Util.MD5(adminInfo.getPassword()));
 		AdminInfo result = null;
 		String hql = "from AdminInfo where admin_code = ? and password = ?";
 		if(adminInfo!=null){

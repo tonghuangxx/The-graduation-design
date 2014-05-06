@@ -1,6 +1,4 @@
-package com.dlts.module.domain;
-
-import java.io.Serializable;
+package com.dlts.rolefunction.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,22 +7,27 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
+/**
+ * 角色功能实体类
+ * @author CWB
+ *
+ */
 @Entity
-@Table(name="dlts_module")
-public class Module implements Serializable{
-	private static final long serialVersionUID = 1L;
+@Table(name="dlts_role_function")
+public class RoleFunction {
 	/**
-	 * 主键id
+	 * 主键
 	 */
 	private String id;
 	/**
-	 * 模块名字
+	 * 角色id
 	 */
-	private String module_name;
+	private String roleId;
 	/**
-	 * 父模块id
+	 * 功能id
 	 */
-	private String moduleId;
+	private String functionId;
 	@Id
 	@GeneratedValue(generator = "uuidGenerator")
 	@GenericGenerator(name = "uuidGenerator", strategy = "uuid")
@@ -35,17 +38,17 @@ public class Module implements Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getModule_name() {
-		return module_name;
+	public String getRoleId() {
+		return roleId;
 	}
-	public void setModule_name(String moduleName) {
-		module_name = moduleName;
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
-	public String getModuleId() {
-		return moduleId;
+	public String getFunctionId() {
+		return functionId;
 	}
-	public void setModuleId(String moduleId) {
-		this.moduleId = moduleId;
+	public void setFunctionId(String functionId) {
+		this.functionId = functionId;
 	}
 	
 }

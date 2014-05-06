@@ -21,7 +21,6 @@ public class ServletInterceptor extends AbstractInterceptor {
 
 	@Override
 	public String intercept(ActionInvocation ai) throws Exception {
-		System.out.println(12312312);
 		Object o = ai.getAction();
 		if (o instanceof ServletHandler) {
 			HttpServletRequest request = ServletActionContext.getRequest();
@@ -39,7 +38,8 @@ public class ServletInterceptor extends AbstractInterceptor {
 				if (namespace != null && namespace.trim().length() > 0 && !"/".equals(namespace)) {
 					actionString.append("/");
 				}
-				actionString.append(proxy.getActionName()).append(".").append(new DefaultSettings().get("struts.action.extension"));
+//				actionString.append(proxy.getActionName()).append(".").append(new DefaultSettings().get("struts.action.extension"));
+				actionString.append(proxy.getActionName());
 				System.out.println("\n");
 				System.out.println("action:    " + actionString.toString());
 				System.out.println("class :    " + proxy.getConfig().getClassName());

@@ -8,10 +8,12 @@
 		<title>电信计费系统</title>
 		<link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global.css" />
 		<link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global_color.css" />
-		<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.4.3.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.validate.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath() %>/js/tool.js"></script>
 	</head>
 	<body class="index">
-		<form action="login" method="post" id="mainform">
+		<form action="login" method="post" id="mainform" onsubmit="return AT.postFrm(this,login_crdCallback)">
 			<div class="login_box">
 				<table>
 					<tr>
@@ -57,7 +59,7 @@
 <!--							 <input type="image" src="images/login_btn.png"/>-->
 						</td>
 						<td>
-							<span class="required">${message}</span>
+							<span class="required" id="login_message">${message}</span>
 						</td>
 					</tr>
 				</table>
@@ -86,6 +88,15 @@
 			}
 		});
 	});
+	
+	function login_crdCallback(json){
+		var data = eval('(' + json + ')'); 
+		if(data.statusCode==200){
+			window.location.href="<%=request.getContextPath()%>/admin/main";
+		}else{
+			$("#login_message").html(data.message);
+		}	
+	}
 	</script>	
 	</body>
 </html>

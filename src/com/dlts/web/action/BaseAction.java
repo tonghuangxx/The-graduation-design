@@ -10,7 +10,7 @@ import com.dlts.admininfo.domain.AdminInfo;
  * 
  * @author CWB
  */
-public class BaseAction implements ServletHandler {
+public class BaseAction implements ServletHandler{
 	/**
 	 * http request对象
 	 */

@@ -16,8 +16,7 @@ CREATE TABLE DLTS_ADMIN_INFO(
 )engine=innodb;
 
 
-
-insert into dlts_admin_info values(1,'dlts','dlts','cwb','13688997766',
+insert into dlts_admin_info values(1,'dlts','F60598D5B3B5012DA811610A7D8CC0C1','cwb','13688997766',
 		'shiyl@sin.com','2013-05-22');
 insert into dlts_admin_info values(2,'admin','111111','lily','13688997766','shiyl@sin.com'
    ,'2013-05-22 12:12:12');

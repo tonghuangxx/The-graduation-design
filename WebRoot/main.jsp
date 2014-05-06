@@ -3,15 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>达内－NetCTOSS</title>
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css" /> 
+        <title>电信计费系统</title>
+        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global_color.css" /> 
     </head>
     <body class="index">
         <!--导航区域开始-->
         <div id="index_navi">
             <ul id="menu">
-                <li><a href="../control/main" class="index_on"></a></li>
+                <li><a href="<%=request.getContextPath() %>/admin/main" class="index_on"></a></li>
                 <li><a href="../control/roleListControl?m.id=1&operation=r" class="role_off"></a></li>
                 <li><a href="../control/AdminInfoListControl?m.id=7&operation=r" class="admin_off"></a></li>
                 <li><a href="../control/feeListControl?m.id=2&operation=r" class="fee_off"></a></li>

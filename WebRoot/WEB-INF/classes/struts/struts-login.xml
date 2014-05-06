@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.1.dtd">
 	<!--登录时的struts2  -->
 <struts>
-	<package name="login" extends='struts-default' namespace='/login'>
+	<package name="login" extends='default' namespace='/login'>
 		<action name='toLogin'>
 			<result name='success'>/login/login.jsp</result>
 		</action>
@@ -13,7 +13,7 @@
 			method="testYZM">
 			<result></result>
 		</action>
-		<action name='login' class='com.dlts.login.action.LoginAction'>
+		<action name='login' class='com.dlts.login.action.LoginAction' method="login">
 			<result name='success'>/main.jsp</result>  <!-- 登录成功 -->
 			<result name='login'>/login/login.jsp</result> <!-- 登录失败 -->
 		</action>

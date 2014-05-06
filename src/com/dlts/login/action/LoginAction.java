@@ -5,8 +5,10 @@ import java.io.PrintWriter;
 
 import com.dlts.admininfo.domain.AdminInfo;
 import com.dlts.login.service.LoginService;
+import com.dlts.util.ContextUtil;
 import com.dlts.util.SpringUtil;
 import com.dlts.util.string.ConstantString;
+import com.dlts.web.action.ActionResult;
 import com.dlts.web.action.BaseAction;
 /**
  * 用户登录action
@@ -55,22 +57,26 @@ public class LoginAction extends BaseAction{
 	 * 用户登录
 	 * @return
 	 */
-	public String login(){
-		adminInfo = loginService.findByCode(adminInfo);
-		String result = null;
-		if(adminInfo == null){
-			this.setMessage("用户名不存在");
-			result = ConstantString.FALSE;
-		}else{
-			adminInfo = loginService.findByCodeAndPwd(adminInfo);
-			if(adminInfo == null){
-				this.setMessage("密码错误");
-				result = ConstantString.FALSE;
+	public void login(){
+		response.setContentType("text/html;charset=utf-8");
+		AdminInfo loginAdmin = null;
+		try {
+			loginAdmin = loginService.findByCode(adminInfo);
+			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "登陆成功");
+			if(loginAdmin == null){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "用户名不存在");
 			}else{
-				result = ConstantString.SUCCESS;
+				loginAdmin = loginService.findByCodeAndPwd(adminInfo);
+				if(loginAdmin == null){
+					actionResult = new ActionResult(ConstantString.FAILURECODE, "密码错误");
+				}
 			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return result;
 	}
 	
 	/**
