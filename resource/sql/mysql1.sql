@@ -88,45 +88,28 @@ insert into dlts_module values(5,'账单');
 insert into dlts_module values(6,'报表');
 insert into dlts_module values(7,'管理');
 
---访问控制表
-create table dlts_acl(
-   id varchar(32),
-   rid varchar(32),
-   mid varchar(32),
-   c  int(2) not null,
-   r int(2) not null,
-   u int(2) not null,
-   d int(2) not null,
-   constraint dlts_acl_id_pk primary key(id),
-   CONSTRAINT dlts_acl_rid_fk FOREIGN KEY(rid) REFERENCES dlts_role(id),
-   CONSTRAINT dlts_acl_mid_fk FOREIGN KEY(mid) REFERENCES dlts_module(id)
+##功能表
+create table dlts_function(
+	id varchar(32),
+	code varchar(255),
+	name varchar(255),
+	action varchar(1000),
+	parentId varchar(32),
+	constraint dlts_function_id_pk primary key(id)
 )engine=innodb;
 
---角色管理对模块的权限
-----------------------------------c-r-u-d
-insert into dlts_acl values(1,2,1,1,1,1,1);
-insert into dlts_acl values(2,2,2,0,1,0,0);
-insert into dlts_acl values(3,2,3,0,1,0,0);
-insert into dlts_acl values(4,2,4,0,1,0,0);
-insert into dlts_acl values(5,2,5,0,1,0,0);
-insert into dlts_acl values(6,2,6,0,1,0,0);
-insert into dlts_acl values(7,2,7,0,1,0,0);
---超级管理员对模块的权限
-insert into dlts_acl values(8,1,1,1,1,1,1);
-insert into dlts_acl values(9,1,2,1,1,1,1);
-insert into dlts_acl values(10,1,3,1,1,1,1);
-insert into dlts_acl values(11,1,4,1,1,1,1);
-insert into dlts_acl values(12,1,5,1,1,1,1);
-insert into dlts_acl values(13,1,6,1,1,1,1);
-insert into dlts_acl values(14,1,7,1,1,1,1);
---管理员管理对模块的权限
-insert into dlts_acl values(15,8,1,0,1,0,0);
-insert into dlts_acl values(16,8,2,0,1,0,0);
-insert into dlts_acl values(17,8,3,0,1,0,0);
-insert into dlts_acl values(18,8,4,0,1,0,0);
-insert into dlts_acl values(19,8,5,0,1,0,0);
-insert into dlts_acl values(20,8,6,0,1,0,0);
-insert into dlts_acl values(21,8,7,0,1,0,0);
+##角色功能表
+create table dlts_role_function(
+	id varchar(32),
+	roleId varchar(32),
+	functionId varchar(32),
+	constraint dlts_role_function_id_pk primary key(id),
+	constraint dlts_role_function_roleId_fk foreign key(roleId) references dlts_role(id),
+	constraint dlts_role_function_functionId_fk foreign key(functionId) references dlts_function(id)
+)engine=innodb;
+
+select count(*) from DLTS_ADMIN_INFO ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id;
+
 
 select * from dlts_acl;
 select * from dlts_admin_info; 

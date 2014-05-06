@@ -37,7 +37,7 @@ public class UserService extends BaseService{
 	public DCriteriaPageSupport<AdminInfo> list(int pageNo, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(AdminInfo.class);
 		String hql = "select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name," +
-				"ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from AdminInfo  ai left outer join AdminRole ar on ar.usid=ai.id left outer join Role r on ar.rid=r.id;";
+				"ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from AdminInfo as ai,AdminRole as ar,Role as r where ar.rid=r.id and ar.usid=ai.id";
 		DCriteriaPageSupport list = this.dao.findPageByHql(hql, pageSize, pageNo);
 		List<AdminInfo> aroleList = new ArrayList<AdminInfo>();
 		Map<String,AdminInfo> aMap = new HashMap<String, AdminInfo>();  //key为用户id，value为该用户
@@ -61,9 +61,8 @@ public class UserService extends BaseService{
 					ai.setPassword((String) object[5]);
 					ai.setName((String) object[6]);
 					ai.setTelephone((String) object[7]);
-					ai.setTelephone((String) object[8]);
-					ai.setEmail((String) object[9]);
-					ai.setEnrolldate((Date) object[10]);
+					ai.setEmail((String) object[8]);
+					ai.setEnrolldate((Date) object[9]);
 				}
 				ai.setRoleList(rlist);
 				aMap.put(key, ai);

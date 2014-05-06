@@ -10,9 +10,9 @@
 	<include file="struts/struts-interceptors.xml"></include>
 	<include file="struts/struts-login.xml"></include>
 	<include file="struts/struts-admin.xml"></include>
+	<include file="struts/struts-user.xml"></include>
 <!--	<include file="struts-fee.xml" />-->
 <!--	<include file="struts-role.xml"></include>-->
 <!--	<include file="struts-validName.xml"></include>-->
-<!--	<include file="struts-user.xml"></include>-->
 <!--	<include file="struts-account.xml"></include>-->
 </struts>
