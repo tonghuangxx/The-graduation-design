@@ -37,7 +37,7 @@ public class UserService extends BaseService{
 	public DCriteriaPageSupport<AdminInfo> list(int pageNo, int pageSize) {
 		DetachedCriteria dc = DetachedCriteria.forClass(AdminInfo.class);
 		String hql = "select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name," +
-				"ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from AdminInfo as ai,AdminRole as ar,Role as r where ar.rid=r.id and ar.usid=ai.id";
+				"ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from AdminInfo as ai,AdminRole as ar,Role as r where ar.rid=r.id and ar.usid=ai.id order by ai.enrolldate desc";
 		DCriteriaPageSupport list = this.dao.findPageByHql(hql, pageSize, pageNo);
 		List<AdminInfo> aroleList = new ArrayList<AdminInfo>();
 		Map<String,AdminInfo> aMap = new HashMap<String, AdminInfo>();  //key为用户id，value为该用户
@@ -75,4 +75,20 @@ public class UserService extends BaseService{
 		return result;
 	}
 	
+	/**
+	 * 根据id获得AdminInfo
+	 * @param id
+	 * @return
+	 */
+	public AdminInfo getAdminInfoById(String id){
+		return (AdminInfo) this.dao.getIObjectByPK(AdminInfo.class, id);
+	}
+	/**
+	 * 更新数据
+	 * @param adminInfo
+	 */
+	public void updateAdminInfo(AdminInfo adminInfo){
+		adminInfo.setAdmin_code("222");
+		this.dao.updateIObject(adminInfo);
+	}
 }

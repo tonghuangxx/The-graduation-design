@@ -5,36 +5,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>电信计费系统</title>
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css" /> 
-        	<script type="text/javascript" src="../js/jquery-1.4.3.js">
-</script>
-        <script language="javascript" type="text/javascript" src="../js/adminlist.js">
+       <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global_color.css" /> 
+        <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.4.4.min.js"></script>
+        <script language="javascript" type="text/javascript" src="<%=request.getContextPath() %>/js/adminlist.js">
         </script>       
     </head>
     <body onload="message();">
         <!--Logo区域开始-->
         <div id="header">
-            <img src="../images/logo.png" alt="logo" class="left"/>
+            <img src="<%=request.getContextPath() %>/images/logo.png" alt="logo" class="left"/>
             <span>当前账号：<b><s:property value="#session.userinfo.admin_code"/></b></span>
             <a href="../login/loginOut">[退出]</a>
         </div>
         <!--Logo区域结束-->
         <!--导航区域开始-->
-        <div id="navi">                        
-            <ul id="menu">
-                <li><a href="../control/main" class="index_on"></a></li>
-                <li><a href="../control/roleListControl?m.id=1&operation=r" class="role_off"></a></li>
-                <li><a href="../control/AdminInfoListControl?m.id=7&operation=r" class="admin_off"></a></li>
-                <li><a href="../control/feeListControl?m.id=2&operation=r" class="fee_off"></a></li>
-                <li><a href="../control/AccountListControl?m.id=4&operation=r" class="account_off"></a></li>
-                <li><a href="service/service_list.html" class="service_off"></a></li>
-                <li><a href="bill/bill_list.html" class="bill_off"></a></li>
-                <li><a href="report/report_list.html" class="report_off"></a></li>
-                <li><a href="../user/rupdateAdminInfo" class="information_off"></a></li>
-                <li><a href="../user/toResetPwd" class="password_off"></a></li>
-            </ul>            
-        </div>
+        <jsp:include page="/navigation.jsp"></jsp:include>
         <!--导航区域结束-->
         <!--主要区域开始-->
         <div id="main">
@@ -101,8 +87,8 @@
                                 </div>
                             </td>
                             <td class="td_modi">
-                                <input type="button" value="修改" class="btn_modify" onclick="location.href='../control/adminUpdateControl?m.id=7&operation=u&adminId=';" />
-                                <input type="button" value="删除" class="btn_delete" onclick="deleteAdmin();" />
+                                <input type="button" value="修改" class="btn_modify" onclick="location.href='<%=request.getContextPath() %>/user/edit?adminInfo.id=${l.id}';" />
+                                <input type="button" value="删除" class="btn_delete" onclick="deleteAdmin('${l.id}');" />
                             </td>
                         </tr>
                           </s:iterator>
@@ -132,7 +118,5 @@
             <p>[源自北美的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</p>
             <p>版权所有(C)加拿大达内IT培训集团公司 </p>
         </div>
-               	<script type="text/javascript" src="../js/jquery-1.4.3.js">
-</script>
     </body>
 </html>

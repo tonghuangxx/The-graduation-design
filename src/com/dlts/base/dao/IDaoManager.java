@@ -1,4 +1,3 @@
-
 package com.dlts.base.dao;
 
 import java.io.Serializable;
@@ -32,11 +31,12 @@ import com.dlts.util.log.LogUtil;
 
 /**
  * <p>
- * Description: 数据访问类, 通过 Spring 管理， 增强的
- * HibernateDaoSupport ， * 封装Hibernate ， 统一的数据访问接口 , 含分页
+ * Description: 数据访问类, 通过 Spring 管理， 增强的 HibernateDaoSupport ， * 封装Hibernate ，
+ * 统一的数据访问接口 , 含分页
  * </p>
  */
-public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupport implements GeneraDAO<T, P, PK> {
+public class IDaoManager<T, P, PK extends Serializable> extends
+		HibernateDaoSupport implements GeneraDAO<T, P, PK> {
 
 	/**
 	 * <p>
@@ -84,9 +84,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 */
 	public T getIObjectByPK(final Class iClass, final PK iPK) {
 		try {
-			return (T) getHibernateTemplate().load(iClass, iPK);
+			return (T) getHibernateTemplate().get(iClass, iPK);
 		} catch (Throwable e) {
-			LogUtil.error(e);
 		}
 		return null;
 	}
@@ -109,13 +108,15 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 */
 	@SuppressWarnings("unchecked")
 	public int execByHQL(final String hSQL, final String paramNames, final T[] t) {
-		return (Integer) this.getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws SQLException {
-				Query query = session.createQuery(hSQL);
-				query.setParameterList(paramNames, t);
-				return query.executeUpdate();
-			}
-		});
+		return (Integer) this.getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session)
+							throws SQLException {
+						Query query = session.createQuery(hSQL);
+						query.setParameterList(paramNames, t);
+						return query.executeUpdate();
+					}
+				});
 	}
 
 	/**
@@ -129,32 +130,37 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	public List<T> findAllByIObjectCType(final Class iClass) {
 		return getHibernateTemplate().find("from " + iClass.getName());
 	}
-	
+
 	/**
 	 * 根据实体对象查询
+	 * 
 	 * @param entity
 	 * @return
 	 */
 	public List<T> findByExample(Object entity) {
 		return getHibernateTemplate().findByExample(entity);
 	}
-	
+
 	/**
 	 * 根据实体对象查询
+	 * 
 	 * @param entity
 	 * @return
 	 */
-	public List<T> findPageByExample(Object entity,int page,int pageSize) {
+	public List<T> findPageByExample(Object entity, int page, int pageSize) {
 		int firstResult = (page - 1) * pageSize;
-		return getHibernateTemplate().findByExample(entity, firstResult, pageSize);
+		return getHibernateTemplate().findByExample(entity, firstResult,
+				pageSize);
 	}
-	
+
 	/**
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findByIObjectCType(final Class iClass, final int page, final int pageSize) {
-		return findPageByCriteria(DetachedCriteria.forClass(iClass), pageSize, page);
+	public List<T> findByIObjectCType(final Class iClass, final int page,
+			final int pageSize) {
+		return findPageByCriteria(DetachedCriteria.forClass(iClass), pageSize,
+				page);
 	}
 
 	/**
@@ -180,9 +186,9 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 		return getHibernateTemplate().bulkUpdate(hSQL);
 	}
 
-    /**
-     * 执行hql
-     */
+	/**
+	 * 执行hql
+	 */
 	public int execByHQL(final String hSQL, T[] t) {
 		return getHibernateTemplate().bulkUpdate(hSQL, t);
 	}
@@ -254,15 +260,19 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 *            DetachedCriteria
 	 * @return DCriteriaPageSupport
 	 */
-	public DCriteriaPageSupport<T> findPageByCriteria(final DetachedCriteria detachedCriteria) {
-		return findPageByCriteria(detachedCriteria, DCriteriaPageSupport.IPAGESIZE, 0);
+	public DCriteriaPageSupport<T> findPageByCriteria(
+			final DetachedCriteria detachedCriteria) {
+		return findPageByCriteria(detachedCriteria,
+				DCriteriaPageSupport.IPAGESIZE, 0);
 	}
 
 	/**
 	 * 
 	 */
-	public DCriteriaPageSupport<T> findPageByCriteria(final DetachedCriteria detachedCriteria, final int page) {
-		return findPageByCriteria(detachedCriteria, DCriteriaPageSupport.IPAGESIZE, page);
+	public DCriteriaPageSupport<T> findPageByCriteria(
+			final DetachedCriteria detachedCriteria, final int page) {
+		return findPageByCriteria(detachedCriteria,
+				DCriteriaPageSupport.IPAGESIZE, page);
 	}
 
 	/**
@@ -276,8 +286,11 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 *            int
 	 * @return DCriteriaPageSupport
 	 */
-	public DCriteriaPageSupport<T> findPageByCriteria(final DetachedCriteria detachedCriteria, final int pageSize, final int page) {
-		return findPageByCriteria(detachedCriteria, pageSize, (page > 0) ? (page - 1) * pageSize : page * pageSize, true);
+	public DCriteriaPageSupport<T> findPageByCriteria(
+			final DetachedCriteria detachedCriteria, final int pageSize,
+			final int page) {
+		return findPageByCriteria(detachedCriteria, pageSize,
+				(page > 0) ? (page - 1) * pageSize : page * pageSize, true);
 	}
 
 	/**
@@ -292,17 +305,26 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @return DCriteriaPageSupport
 	 */
 	@SuppressWarnings("unchecked")
-	private DCriteriaPageSupport<T> findPageByCriteria(final DetachedCriteria detachedCriteria, final int pageSize, final int startIndex, boolean isPage) {
+	private DCriteriaPageSupport<T> findPageByCriteria(
+			final DetachedCriteria detachedCriteria, final int pageSize,
+			final int startIndex, boolean isPage) {
 
-		return (DCriteriaPageSupport) this.getHibernateTemplate().executeFind(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws SQLException {
-				Criteria criteria = detachedCriteria.getExecutableCriteria(session);
-				long totalCount = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
-				criteria.setProjection(null);
-				DCriteriaPageSupport ps = new DCriteriaPageSupport(criteria.setFirstResult(startIndex).setMaxResults(pageSize).list(), totalCount, pageSize, startIndex);
-				return ps;
-			}
-		});
+		return (DCriteriaPageSupport) this.getHibernateTemplate().executeFind(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session)
+							throws SQLException {
+						Criteria criteria = detachedCriteria
+								.getExecutableCriteria(session);
+						long totalCount = (Long) criteria.setProjection(
+								Projections.rowCount()).uniqueResult();
+						criteria.setProjection(null);
+						DCriteriaPageSupport ps = new DCriteriaPageSupport(
+								criteria.setFirstResult(startIndex)
+										.setMaxResults(pageSize).list(),
+								totalCount, pageSize, startIndex);
+						return ps;
+					}
+				});
 	}
 
 	/**
@@ -317,20 +339,25 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @return DCriteriaPageSupport
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findPageByCriteriaNoTotal(final DetachedCriteria detachedCriteria, final int pageSize, final int startIndex, final boolean isPage) {
-		return (DCriteriaPageSupport) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) {
-				Criteria criteria = detachedCriteria.getExecutableCriteria(session);
-				if (isPage) {
-					criteria.setFirstResult(startIndex);
-					criteria.setMaxResults(pageSize);
-				}
-				List list = criteria.list();
-				Set set = new HashSet(list);
-				List list2 = new ArrayList(set);
-				return new DCriteriaPageSupport(list2, -1, pageSize, startIndex);
-			}
-		});
+	public List<T> findPageByCriteriaNoTotal(
+			final DetachedCriteria detachedCriteria, final int pageSize,
+			final int startIndex, final boolean isPage) {
+		return (DCriteriaPageSupport) getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session) {
+						Criteria criteria = detachedCriteria
+								.getExecutableCriteria(session);
+						if (isPage) {
+							criteria.setFirstResult(startIndex);
+							criteria.setMaxResults(pageSize);
+						}
+						List list = criteria.list();
+						Set set = new HashSet(list);
+						List list2 = new ArrayList(set);
+						return new DCriteriaPageSupport(list2, -1, pageSize,
+								startIndex);
+					}
+				});
 	}
 
 	/**
@@ -344,7 +371,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	public List<T> findAllByCriteria(final DetachedCriteria detachedCriteria) {
 		return (List) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session) {
-				Criteria criteria = detachedCriteria.getExecutableCriteria(session);
+				Criteria criteria = detachedCriteria
+						.getExecutableCriteria(session);
 				return criteria.list();
 			}
 		});
@@ -359,12 +387,15 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 */
 	@SuppressWarnings("unchecked")
 	public int getCountByCriteria(final DetachedCriteria detachedCriteria) {
-		Integer count = (Integer) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) {
-				Criteria criteria = detachedCriteria.getExecutableCriteria(session);
-				return criteria.setProjection(Projections.rowCount()).uniqueResult();
-			}
-		});
+		Integer count = (Integer) getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session) {
+						Criteria criteria = detachedCriteria
+								.getExecutableCriteria(session);
+						return criteria.setProjection(Projections.rowCount())
+								.uniqueResult();
+					}
+				});
 		return count;
 	}
 
@@ -372,7 +403,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * 带分页信息的执行hql的查询
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> hqlList(final String sql, final int startIndex, final int pageSize) {
+	public List<T> hqlList(final String sql, final int startIndex,
+			final int pageSize) {
 		return (List) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session) {
 				Query query = session.createQuery(sql);
@@ -399,7 +431,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> hqlListWithParam(final String sql, final Object[] params, final Type[] types, final int startIndex, final int pageSize) {
+	public List<T> hqlListWithParam(final String sql, final Object[] params,
+			final Type[] types, final int startIndex, final int pageSize) {
 		return (List) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session) {
 				Query query = session.createQuery(sql);
@@ -426,7 +459,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> hqlListWithParam(final String sql, final Object[] params, final Type[] types) {
+	public List<T> hqlListWithParam(final String sql, final Object[] params,
+			final Type[] types) {
 		return (List) getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(Session session) {
@@ -479,12 +513,14 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 
 	/**
 	 * 批量执行sql
+	 * 
 	 * @param sql
 	 * @param dataList
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public void doBySQLBatch(final String sql, final List<List> dataList) throws Exception {
+	public void doBySQLBatch(final String sql, final List<List> dataList)
+			throws Exception {
 		getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session) {
 				java.sql.PreparedStatement ps = null;
@@ -581,8 +617,10 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @param page
 	 * @return
 	 */
-	public DCriteriaPageSupport<T> findPageByHql(final String hql, final int pageSize, final int page) {
-		return findPageByHql(hql, null, pageSize, (page > 0) ? (page - 1) * pageSize : page * pageSize, true);
+	public DCriteriaPageSupport<T> findPageByHql(final String hql,
+			final int pageSize, final int page) {
+		return findPageByHql(hql, null, pageSize, (page > 0) ? (page - 1)
+				* pageSize : page * pageSize, true);
 	}
 
 	/**
@@ -592,8 +630,10 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @param page
 	 * @return
 	 */
-	public DCriteriaPageSupport<T> findPageByHql(final String hql, final Object[] params, final int pageSize, final int page) {
-		return findPageByHql(hql, params, pageSize, (page > 0) ? (page - 1) * pageSize : page * pageSize, true);
+	public DCriteriaPageSupport<T> findPageByHql(final String hql,
+			final Object[] params, final int pageSize, final int page) {
+		return findPageByHql(hql, params, pageSize, (page > 0) ? (page - 1)
+				* pageSize : page * pageSize, true);
 	}
 
 	/**
@@ -605,67 +645,77 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public DCriteriaPageSupport<T> findPageByHql(final String hql, final Object[] params, final int pageSize, final int startIndex, boolean isPage) {
-		return (DCriteriaPageSupport) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) {
-				//String countHql = "select count(*) " + removeSelect(removeOrders(hql));
-				//String countHql ="select count(distinct c )  "+removeSelect(removeOrders(hql));
-				String countHql = processHqlAndGetCountHql(hql);
-				Query query = session.createQuery(countHql);
-				if (params != null && params.length > 0) {
-					if (params != null) {
-						for (int i = 0; i < params.length; i++) {
-							query.setParameter(i, params[i]);
+	public DCriteriaPageSupport<T> findPageByHql(final String hql,
+			final Object[] params, final int pageSize, final int startIndex,
+			boolean isPage) {
+		return (DCriteriaPageSupport) getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session) {
+						// String countHql = "select count(*) " +
+						// removeSelect(removeOrders(hql));
+						// String countHql
+						// ="select count(distinct c )  "+removeSelect(removeOrders(hql));
+						String countHql = processHqlAndGetCountHql(hql);
+						Query query = session.createQuery(countHql);
+						if (params != null && params.length > 0) {
+							if (params != null) {
+								for (int i = 0; i < params.length; i++) {
+									query.setParameter(i, params[i]);
+								}
+							}
 						}
-					}
-				}
-				List titalQueryList = query.list();
-				long totalCount2 = 0;
-				if(titalQueryList.size()>0){
-					totalCount2 = ((Long) titalQueryList.get(0));
-				}
-				int totalCount = (int) totalCount2;
-				query = session.createQuery(hql);
-				if (params != null && params.length > 0) {
-					if (params != null) {
-						for (int i = 0; i < params.length; i++) {
-							query.setParameter(i, params[i]);
+						List titalQueryList = query.list();
+						long totalCount2 = 0;
+						if (titalQueryList.size() > 0) {
+							totalCount2 = ((Long) titalQueryList.get(0));
 						}
+						int totalCount = (int) totalCount2;
+						query = session.createQuery(hql);
+						if (params != null && params.length > 0) {
+							if (params != null) {
+								for (int i = 0; i < params.length; i++) {
+									query.setParameter(i, params[i]);
+								}
+							}
+						}
+						if (startIndex > 0) {
+							query.setFirstResult(startIndex);
+						}
+						query.setMaxResults(pageSize);
+						Iterator iterator = query.list().iterator();
+						List clazzList = new ArrayList();
+						while (iterator.hasNext()) {
+							clazzList.add(iterator.next());
+						}
+						DCriteriaPageSupport ps = new DCriteriaPageSupport(
+								clazzList, totalCount, pageSize, startIndex);
+						return ps;
 					}
-				}
-				if (startIndex > 0) {
-					query.setFirstResult(startIndex);
-				}
-				query.setMaxResults(pageSize);
-				Iterator iterator = query.list().iterator();
-				List clazzList = new ArrayList();
-				while (iterator.hasNext()) {
-					clazzList.add(iterator.next());
-				}
-				DCriteriaPageSupport ps = new DCriteriaPageSupport(clazzList, totalCount, pageSize, startIndex);
-				return ps;
-			}
 
-		});
+				});
 	}
 
 	/**
 	 * 输入hql,得到查找总数的hql
+	 * 
 	 * @param hql
 	 * @return
 	 */
-	private String processHqlAndGetCountHql(final String hql){
+	private String processHqlAndGetCountHql(final String hql) {
 		String countHql = "";
-		if(hql.toLowerCase().indexOf("distinct")!=-1){
+		if (hql.toLowerCase().indexOf("distinct") != -1) {
 			int index = hql.toLowerCase().indexOf("distinct");
 			int toIndex = hql.toLowerCase().indexOf("from");
-			String newHql = hql.substring(index,toIndex);
-			countHql = "select count("+newHql+")"+removeSelect(removeOrders(hql));
-		}else{
-			countHql = "select count(*) "+removeSelect(removeOrders(hql));;
+			String newHql = hql.substring(index, toIndex);
+			countHql = "select count(" + newHql + ")"
+					+ removeSelect(removeOrders(hql));
+		} else {
+			countHql = "select count(*) " + removeSelect(removeOrders(hql));
+			;
 		}
 		return countHql;
 	}
+
 	/**
 	 * 执行hql 带参数的查询
 	 * 
@@ -676,8 +726,10 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @param page
 	 * @return
 	 */
-	public List<T> findPageByHql(final String hql, final Object[] params, final String[] paramNames, final int pageSize, final int page) {
-		return findPageByHql(hql, params, paramNames, pageSize, (page > 0) ? (page - 1) * pageSize : page * pageSize, true);
+	public List<T> findPageByHql(final String hql, final Object[] params,
+			final String[] paramNames, final int pageSize, final int page) {
+		return findPageByHql(hql, params, paramNames, pageSize,
+				(page > 0) ? (page - 1) * pageSize : page * pageSize, true);
 	}
 
 	/**
@@ -690,56 +742,66 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findPageByHql(final String hql, final Object[] params, final String[] paramNames, final int pageSize, final int startIndex, boolean isPage) {
-		return (DCriteriaPageSupport) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) {
-				String countHql = "select count(*) " + removeSelect(removeOrders(hql));
-				Query query = session.createQuery(countHql);
-				if (params != null && params.length > 0) {
-					if (params != null) {
-						for (int i = 0; i < params.length; i++) {
-							if (params[i] instanceof Collection) {
-								query.setParameterList(paramNames[i], (Collection) params[i]);
-							} else {
-								query.setParameter(paramNames[i], params[i]);
-							}
+	public List<T> findPageByHql(final String hql, final Object[] params,
+			final String[] paramNames, final int pageSize,
+			final int startIndex, boolean isPage) {
+		return (DCriteriaPageSupport) getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session) {
+						String countHql = "select count(*) "
+								+ removeSelect(removeOrders(hql));
+						Query query = session.createQuery(countHql);
+						if (params != null && params.length > 0) {
+							if (params != null) {
+								for (int i = 0; i < params.length; i++) {
+									if (params[i] instanceof Collection) {
+										query.setParameterList(paramNames[i],
+												(Collection) params[i]);
+									} else {
+										query.setParameter(paramNames[i],
+												params[i]);
+									}
 
-						}
-
-					}
-				}
-				long totalCount2 = ((Long) query.list().get(0));
-				int totalCount = (int) totalCount2;
-				query = session.createQuery(hql);
-				if (params != null && params.length > 0) {
-					if (params != null) {
-						if (params != null) {
-							for (int i = 0; i < params.length; i++) {
-								if (params[i] instanceof Collection) {
-									query.setParameterList(paramNames[i], (Collection) params[i]);
-								} else {
-									query.setParameter(paramNames[i], params[i]);
 								}
 
 							}
-
 						}
-					}
-				}
-				if (startIndex > 0) {
-					query.setFirstResult(startIndex);
-				}
-				query.setMaxResults(pageSize);
-				Iterator iterator = query.list().iterator();
-				List clazzList = new ArrayList();
-				while (iterator.hasNext()) {
-					clazzList.add(iterator.next());
-				}
-				DCriteriaPageSupport ps = new DCriteriaPageSupport(clazzList, totalCount, pageSize, startIndex);
-				return ps;
-			}
+						long totalCount2 = ((Long) query.list().get(0));
+						int totalCount = (int) totalCount2;
+						query = session.createQuery(hql);
+						if (params != null && params.length > 0) {
+							if (params != null) {
+								if (params != null) {
+									for (int i = 0; i < params.length; i++) {
+										if (params[i] instanceof Collection) {
+											query.setParameterList(
+													paramNames[i],
+													(Collection) params[i]);
+										} else {
+											query.setParameter(paramNames[i],
+													params[i]);
+										}
 
-		});
+									}
+
+								}
+							}
+						}
+						if (startIndex > 0) {
+							query.setFirstResult(startIndex);
+						}
+						query.setMaxResults(pageSize);
+						Iterator iterator = query.list().iterator();
+						List clazzList = new ArrayList();
+						while (iterator.hasNext()) {
+							clazzList.add(iterator.next());
+						}
+						DCriteriaPageSupport ps = new DCriteriaPageSupport(
+								clazzList, totalCount, pageSize, startIndex);
+						return ps;
+					}
+
+				});
 	}
 
 	/**
@@ -749,17 +811,19 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findAllyHqlWithList(final String hql, final String name, final T[] params) {
-		return (List<T>) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) {
-				Query query = session.createQuery(hql);
-				if (params != null && params.length > 0) {
-					query.setParameterList(name, params);
-				}
-				return query.list();
-			}
+	public List<T> findAllyHqlWithList(final String hql, final String name,
+			final T[] params) {
+		return (List<T>) getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session) {
+						Query query = session.createQuery(hql);
+						if (params != null && params.length > 0) {
+							query.setParameterList(name, params);
+						}
+						return query.list();
+					}
 
-		});
+				});
 	}
 
 	/**
@@ -769,18 +833,19 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findAllyHql(final String hql, final Object[] params) {
-		return (List<T>) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) {
-				Query query = session.createQuery(hql);
-				if (params != null && params.length > 0) {
-					for (int i = 0; i < params.length; i++) {
-						query.setParameter(i, params[i]);
+		return (List<T>) getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session) {
+						Query query = session.createQuery(hql);
+						if (params != null && params.length > 0) {
+							for (int i = 0; i < params.length; i++) {
+								query.setParameter(i, params[i]);
+							}
+						}
+						return query.list();
 					}
-				}
-				return query.list();
-			}
 
-		});
+				});
 	}
 
 	/**
@@ -795,7 +860,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	 * 去除hql的orderby 子句
 	 */
 	private static String removeOrders(String hql) {
-		Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*", Pattern.CASE_INSENSITIVE);
+		Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*",
+				Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(hql);
 		StringBuffer sb = new StringBuffer();
 		while (m.find()) {
@@ -826,7 +892,9 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 						form = new HashMap();
 
 						for (int i = 0; i < fields.length; i++) {
-							form.put(fields[i], rs.getObject(fields[i]) == null ? "" : rs.getObject(fields[i]));
+							form.put(fields[i],
+									rs.getObject(fields[i]) == null ? "" : rs
+											.getObject(fields[i]));
 						}
 						list.add(form);
 					}
@@ -851,14 +919,15 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 			}
 		});
 	}
-	
+
 	/**
 	 * @param sql
 	 * @param fields
 	 * @return class对象集合
 	 */
 	@SuppressWarnings("unchecked")
-	public List getAllBySQL(final String sql, final String[] fields, final Class clazz) {
+	public List getAllBySQL(final String sql, final String[] fields,
+			final Class clazz) {
 		return (List) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session) {
 				List list = new ArrayList();
@@ -872,7 +941,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 					while (rs.next()) {
 						obj = clazz.newInstance();
 						for (int i = 0; i < fields.length; i++) {
-							ReflectionUtils.setFieldValue(obj, fields[i], rs.getObject(fields[i]));
+							ReflectionUtils.setFieldValue(obj, fields[i], rs
+									.getObject(fields[i]));
 						}
 						list.add(obj);
 					}
@@ -901,7 +971,7 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 			}
 		});
 	}
-	
+
 	/**
 	 * @param sql
 	 * @param values
@@ -928,7 +998,9 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 					while (rs.next()) {
 						form = new HashMap();
 						for (int i = 1; i <= colNum; i++) {
-							form.put(ms.getColumnName(i).toUpperCase(), rs.getObject(i) == null ? "" : rs.getObject(i));
+							form.put(ms.getColumnName(i).toUpperCase(), rs
+									.getObject(i) == null ? "" : rs
+									.getObject(i));
 						}
 						list.add(form);
 					}
@@ -976,7 +1048,9 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 						form = new HashMap();
 
 						for (int i = 1; i <= colNum; i++) {
-							form.put(ms.getColumnName(i).toUpperCase(), rs.getObject(i) == null ? "" : rs.getObject(i));
+							form.put(ms.getColumnName(i).toUpperCase(), rs
+									.getObject(i) == null ? "" : rs
+									.getObject(i));
 						}
 						list.add(form);
 					}
@@ -1002,10 +1076,9 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 		});
 	}
 
-	public void flushSession(){
+	public void flushSession() {
 		super.getSession().clear();
 	}
-	
 
 	/**
 	 * 数据批量入库处理
@@ -1014,7 +1087,8 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 	public void batchSaveIObject(final List<T> l) {
 		// final long start = System.currentTimeMillis();
 		getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+			public Object doInHibernate(Session session)
+					throws HibernateException, SQLException {
 				int count = 0;
 				while (l.size() > count) {
 					Object o = l.get(count);
@@ -1031,14 +1105,15 @@ public class IDaoManager<T, P, PK extends Serializable> extends HibernateDaoSupp
 		});
 
 	}
-	
+
 	/**
 	 * 数据批量入库处理
 	 */
 	@SuppressWarnings("unchecked")
 	public void batchUpdateIObject(final List l) {
 		getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+			public Object doInHibernate(Session session)
+					throws HibernateException, SQLException {
 				int count = 0;
 				while (l.size() > count) {
 					Object o = l.get(count);
