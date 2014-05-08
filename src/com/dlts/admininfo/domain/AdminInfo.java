@@ -50,7 +50,9 @@ public class AdminInfo {
 	 * 创建日期
 	 */
 	private Date enrolldate;
-	
+	/**
+	 * 用户的角色
+	 */
 	private List<Role> roleList;
 	
 	public AdminInfo() {

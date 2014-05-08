@@ -12,5 +12,7 @@
 	<bean id="userService" parent="baseService" class="com.dlts.admininfo.servcie.UserService"></bean>
 	<!--用户角色service-->
 	<bean id="adminRoleService" parent="baseService" class="com.dlts.adminrole.service.AdminRoleService"></bean>
+	<!--角色service-->
+	<bean id="roleService" parent="baseService" class="com.dlts.role.service.RoleService"></bean>
 
 </beans>

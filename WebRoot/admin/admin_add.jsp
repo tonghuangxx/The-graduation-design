@@ -4,9 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>达内－NetCTOSS</title>
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css" />
+        <title>电信计费系统</title>
+        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global_color.css" /> 
+        <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.4.4.min.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath() %>/js/adminadd.js"></script>
         <style type="text/css">
         .displayOK{
         color:green;
@@ -22,25 +24,12 @@
         </div>
         <!--Logo区域结束-->
         <!--导航区域开始-->
-        <div id="navi">
-            <ul id="menu">
-                <li><a href="../control/main" class="index_on"></a></li>
-                <li><a href="../control/roleListControl?m.id=1&operation=r" class="role_off"></a></li>
-                <li><a href="../control/AdminInfoListControl?m.id=7&operation=r" class="admin_off"></a></li>
-                <li><a href="../control/feeListControl?m.id=2&operation=r" class="fee_off"></a></li>
-                <li><a href="../control/AccountListControl?m.id=4&operation=r" class="account_off"></a></li>
-                <li><a href="service/service_list.html" class="service_off"></a></li>
-                <li><a href="bill/bill_list.html" class="bill_off"></a></li>
-                <li><a href="report/report_list.html" class="report_off"></a></li>
-                <li><a href="../user/rupdateAdminInfo" class="information_off"></a></li>
-                <li><a href="../user/toResetPwd" class="password_off"></a></li>
-            </ul>
-        </div>
+        <jsp:include page="/navigation.jsp"></jsp:include>
         <!--导航区域结束-->
         <!--主要区域开始-->
         <div id="main">            
             <div id="save_result_info" class="save_success"><s:property value="addMsg"/></div>
-            <form action="../role/adminAdd" method="post" class="main_form" id="mainform">
+            <form action="<%=request.getContextPath() %>/user/addDo" method="post" class="main_form" id="mainform">
                     <div class="text_info clearfix"><span>姓名：</span></div>
                     <div class="input_info">
                         <input type="text" name="adminInfo.name" value="" id="name"/>
@@ -67,7 +56,7 @@
                     </div>      
                     <div class="text_info clearfix"><span>电话：</span></div>
                     <div class="input_info">
-                        <input type="text" class="width200" id="telphone" name="adminInfo.telphone" value=""/>
+                        <input type="text" class="width200" id="telphone" name="adminInfo.telephone" value=""/>
                         <span class="required">*</span>
                         <div class="validate_msg_medium" id="telphoneLabel">正确的电话号码格式：手机或固话</div>
                     </div>
@@ -81,14 +70,9 @@
                     <div class="input_info_high">
                         <div class="input_info_scroll">
                             <ul>
-                            <li><input type="checkbox" name="rid" value="1"/>超级管理员</li>
-                            <li><input type="checkbox" name="rid" value="8"/>管理员管理</li>
-                            <li><input type="checkbox" name="rid" value="2"/>角色管理</li>
-                            <li><input type="checkbox" name="rid" value="3"/>资费管理</li>
-                            <li><input type="checkbox" name="rid" value="4"/>账务账号</li>
-                            <li><input type="checkbox" name="rid" value="5"/>业务账号</li>
-                            <li><input type="checkbox" name="rid" value="6"/>账单</li>
-                            <li><input type="checkbox" name="rid" value="7"/>报表</li>
+                            <s:iterator value="rList">
+                            	<li><input type="checkbox" name="rid" value="${id }"/>${role_name }</li>
+                            </s:iterator>
                             </ul>
                         </div>
                         <span class="required">*</span>
@@ -102,13 +86,9 @@
         </div>
         <!--主要区域结束-->
         <div id="footer">
-            <span>[源自北美的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</span>
+            <span></span>
             <br />
-            <span>版权所有(C)加拿大达内IT培训集团公司 </span>
+            <span></span>
         </div>
-        	<script type="text/javascript" src="../js/jquery-1.4.3.js">
-</script>
-		<script type="text/javascript" src="../js/adminadd.js">
-</script>
     </body>
 </html>

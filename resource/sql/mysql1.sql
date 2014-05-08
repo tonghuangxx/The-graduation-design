@@ -11,10 +11,9 @@ CREATE TABLE DLTS_ADMIN_INFO(
 	NAME VARCHAR(30) NOT NULL,
 	TELEPHONE VARCHAR(30),
 	EMAIL VARCHAR(50),
-	ENROLLDATE DATE NOT NULL,
+	ENROLLDATE DATETIME NOT NULL,
 	CONSTRAINT DLTS_ADMIN_INFO_ID_PK PRIMARY KEY(id)
 )engine=innodb;
-
 
 insert into dlts_admin_info values(1,'dlts','F60598D5B3B5012DA811610A7D8CC0C1','cwb','13688997766',
 		'shiyl@sin.com','2013-05-22');
@@ -54,7 +53,7 @@ CREATE TABLE dlts_user_role(
   CONSTRAINT dlts_user_role_tid_fk FOREIGN KEY(rid) REFERENCES dlts_role(id)
  )engine=innodb;
 
-select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name,ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from dlts_admin_info ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id;
+select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name,ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from dlts_admin_info ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id order by ai.enrolldate desc;
 
 --给一号管理员添加数据
 insert into dlts_user_role values(1,1,1);

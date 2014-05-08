@@ -44,7 +44,7 @@
                     <div>登录名：<input type="text" value="" class="text_search width200" id="searchAdmin_code"/></div>
                     <div><input type="button" value="搜索" class="btn_search" id="search"/></div>
                     <input type="button" value="密码重置" class="btn_add" onclick="resetPwd();" />
-                    <input type="button" value="增加" class="btn_add" onclick="location.href='../control/adminAddControl?m.id=7&operation=c';" />
+                    <input type="button" value="增加" class="btn_add" onclick="location.href='<%=request.getContextPath() %>/user/add';" />
                 </div>
                 <!--删除和密码重置的操作提示-->
                 <div id="operate_result_info" class="operate_fail" >

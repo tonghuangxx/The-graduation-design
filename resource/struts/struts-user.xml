@@ -11,7 +11,13 @@
 			<result name="success">/admin/admin_modi.jsp</result>
 		</action>
 		<action name="editDo" class="com.dlts.admininfo.action.UserAction" method="editDo">
-			<result name="success" type="redirectAction">/user/list</result>
+			<result name="success" type="redirectAction">user/list</result>
+		</action>
+		<action name="add" class="com.dlts.admininfo.action.UserAction" method="add">
+			<result name="success">/admin/admin_add.jsp</result>
+		</action>
+		<action name="addDo" class="com.dlts.admininfo.action.UserAction" method="addDo">
+			<result name="success" type="redirectAction">user/list</result>
 		</action>
 	</package>
 </struts>

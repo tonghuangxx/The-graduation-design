@@ -25,6 +25,8 @@
             <div id="save_result_info" class="save_success"><s:property value="addMsg"/></div>
             <form action="<%=request.getContextPath() %>/user/editDo" method="post" class="main_form" id="mainform">
             <input type="hidden" value="${adminInfo.id}" name="adminInfo.id"/>
+            <input type="hidden" value="${adminInfo.enrolldate}" name="adminInfo.enrolldate"/>
+            <input type="hidden" value="${adminInfo.password}" name="adminInfo.password"/>
                     <div class="text_info clearfix"><span>姓名：</span></div>
                     <div class="input_info">
                         <input type="text" value="${adminInfo.name}" name="adminInfo.name" id="name"/>
@@ -32,7 +34,7 @@
                         <div class="validate_msg_long validate_msg_long1">20长度以内的汉字、字母、数字的组合</div>
                     </div>
                     <div class="text_info clearfix"><span>管理员账号：</span></div>
-                    <div class="input_info"><input type="text" readonly="readonly" class="readonly" value="${adminInfo.admin_code}"  /></div>
+                    <div class="input_info"><input type="text" readonly="readonly" class="readonly" value="${adminInfo.admin_code}"  name="adminInfo.admin_code"/></div>
                     <div class="text_info clearfix"><span>电话：</span></div>
                     <div class="input_info">
                         <input type="text" value="${adminInfo.telephone}"  name="adminInfo.telephone" id="telphone"/>
@@ -49,14 +51,9 @@
                     <div class="input_info_high">
                         <div class="input_info_scroll">
                             <ul>
-                            <li><input type="checkbox" name="rid" value="1"/>超级管理员</li>
-                            <li><input type="checkbox" name="rid" value="8"/>管理员</li>
-                            <li><input type="checkbox" name="rid" value="2"/>角色管理员</li>
-                            <li><input type="checkbox" name="rid" value="3"/>资费管理员</li>
-                            <li><input type="checkbox" name="rid" value="4"/>账务管理员</li>
-                            <li><input type="checkbox" name="rid" value="5"/>业务管理员</li>
-                            <li><input type="checkbox" name="rid" value="6"/>账单管理员</li>
-                            <li><input type="checkbox" name="rid" value="7"/>报表管理员</li>
+                            <s:iterator value="roleMap" var="rm">
+                            	<li><input type="checkbox" name="rid"  value="<s:property value="key.id"/>" <s:if test="value==1">checked="checked"</s:if>/><s:property value="key.role_name"/></li>
+                            </s:iterator>
                             </ul>
                         </div>
                         <span class="required">*</span>
