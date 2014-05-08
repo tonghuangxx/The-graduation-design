@@ -21,7 +21,7 @@ import com.dlts.role.domain.Role;
  */
 @Entity
 @Table(name="DLTS_ADMIN_INFO")
-public class AdminInfo {
+public class AdminInfo implements Comparable<AdminInfo>{
 	/**
 	 * 主键
 	 */
@@ -134,6 +134,10 @@ public class AdminInfo {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	@Override
+	public int compareTo(AdminInfo o) {
+		return o.getEnrolldate().compareTo(enrolldate);
 	}
 	
 }

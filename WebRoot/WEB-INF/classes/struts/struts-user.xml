@@ -4,41 +4,23 @@
         "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="user" extends="default" namespace="/user">
-		<!--		在管理员管理界面点击判断是否是修改自己的密码-->
-<!--		<action name="uresetPwd" class="com.tarena.netctoss.action.UserAction"-->
-<!--			method="uresetPwd">-->
-<!--			<result name="success">/WEB-INF/user/user_modi_pwd.jsp</result>-->
-<!--			<result name="false" type="redirectAction">-->
-<!--				<param name="actionName">../role/AdminInfoList</param>-->
-<!--				<param name="namespace">../role</param>-->
-<!--				<param name="addMsg">${addMsg}</param>-->
-<!--			</result>-->
-<!--			<result name="error">/WEB-INF/error.jsp</result>-->
-<!--		</action>-->
-		
-<!--		<action name="toResetPwd">-->
-<!--		<result name="success">/WEB-INF/user/user_modi_pwd.jsp</result>-->
-<!--		</action>-->
-<!--				修改密码-->
-<!--		<action name="resetPwd" class="com.tarena.netctoss.action.UserAction"-->
-<!--			method="resetPwd">-->
-<!--			<result name="success">/WEB-INF/user/user_modi_pwd.jsp</result>-->
-<!--			<result name="false">/WEB-INF/user/user_modi_pwd.jsp</result>-->
-<!--			<result name="error">/WEB-INF/error.jsp</result>-->
-<!--		</action>-->
-<!--		-->
-<!--		<action name="rupdateAdminInfo" class="com.tarena.netctoss.action.UserAction"-->
-<!--			method="rupdateAdminInfo">-->
-<!--			<result name="success">/WEB-INF/user/user_info.jsp</result>-->
-<!--			<result name="error">/WEB-INF/error.jsp</result>-->
-<!--		</action>-->
-<!--		-->
-<!--		<action name="updateAdminInfo" class="com.tarena.netctoss.action.UserAction"-->
-<!--			method="updateAdminInfo">-->
-<!--			<result name="success" type="redirectAction">../control/main</result>-->
-<!--		</action>-->
 		<action name="list" class="com.dlts.admininfo.action.UserAction" method="list">
 			<result name="success">/admin/admin_list.jsp</result>
+		</action>
+		<action name="edit" class="com.dlts.admininfo.action.UserAction" method="edit">
+			<result name="success">/admin/admin_modi.jsp</result>
+		</action>
+		<action name="editDo" class="com.dlts.admininfo.action.UserAction" method="editDo">
+			<result name="success" type="redirectAction">user/list</result>
+		</action>
+		<action name="add" class="com.dlts.admininfo.action.UserAction" method="add">
+			<result name="success">/admin/admin_add.jsp</result>
+		</action>
+		<action name="addDo" class="com.dlts.admininfo.action.UserAction" method="addDo">
+			<result name="success" type="redirectAction">list</result>
+		</action>
+		<action name="delete" class="com.dlts.admininfo.action.UserAction" method="delete">
+			<result name="success" >/admin/list.jsp</result>
 		</action>
 	</package>
 </struts>
