@@ -1,6 +1,7 @@
 package com.dlts.admininfo.action;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +99,14 @@ public class UserAction extends BaseAction{
 		userService.addAdminInfo(adminInfo);
 		adminInfo = userService.findAdminInfoByAdmin_code(adminInfo.getAdmin_code());
 		adminRoleService.addAdminRole(rid, adminInfo.getId());
+		return ConstantString.SUCCESS;
+	}
+	/**
+	 * 删除数据
+	 */
+	public String delete(){
+		adminInfo = userService.findAdminInfoById(adminInfo);
+		userService.deleteAdminInfo(adminInfo);
 		return ConstantString.SUCCESS;
 	}
 	

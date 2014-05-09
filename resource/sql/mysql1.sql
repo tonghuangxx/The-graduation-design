@@ -16,6 +16,7 @@ CREATE TABLE DLTS_ADMIN_INFO(
 )engine=innodb;
 alter table DLTS_ADMIN_INFO modify column ENROLLDATE DATETIME;
 
+
 insert into dlts_admin_info values(1,'dlts','F60598D5B3B5012DA811610A7D8CC0C1','cwb','13688997766',
 		'shiyl@sin.com','2013-05-22');
 insert into dlts_admin_info values(2,'admin','111111','lily','13688997766','shiyl@sin.com'
@@ -26,7 +27,8 @@ insert into dlts_admin_info values(4,'lbwn','1234','lb','13688997766','shiyl@sin
    ,'2013-05-22');
    insert into dlts_admin_info values('543da','lbwn123','1234','lb','13688997766','shiyl@sin.com'
    ,'2013-05-22');
-
+   
+   
 --角色表
 CREATE TABLE DLTS_ROLE(
 	id varchar(32),
@@ -50,10 +52,13 @@ CREATE TABLE dlts_user_role(
   usid varchar(32),
   rid varchar(32),
   constraint dlts_user_role_id_pk primary key(id),
-  CONSTRAINT dlts_user_role_usid_fk FOREIGN KEY(usid) REFERENCES dlts_admin_info(id),
-  CONSTRAINT dlts_user_role_tid_fk FOREIGN KEY(rid) REFERENCES dlts_role(id)
+  CONSTRAINT dlts_user_role_usid_fk FOREIGN KEY(usid) REFERENCES dlts_admin_info(id) on delete set null,
+  CONSTRAINT dlts_user_role_tid_fk FOREIGN KEY(rid) REFERENCES dlts_role(id) on delete set null
  )engine=innodb;
 
+alter table dlts_user_role drop  foreign key dlts_user_role_usid_fk;
+alter table dlts_user_role add constraint dlts_user_role_usid_fk foreign key(usid) references dlts_admin_info(id) on delete set null;
+alter table dlts_user_role add constraint dlts_user_role_tid_fk foreign key(rid) references dlts_role(id) on delete set null;
 select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name,ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from dlts_admin_info ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id order by ai.enrolldate desc;
 
 --给一号管理员添加数据
@@ -104,9 +109,14 @@ create table dlts_role_function(
 	roleId varchar(32),
 	functionId varchar(32),
 	constraint dlts_role_function_id_pk primary key(id),
-	constraint dlts_role_function_roleId_fk foreign key(roleId) references dlts_role(id),
-	constraint dlts_role_function_functionId_fk foreign key(functionId) references dlts_function(id)
+	constraint dlts_role_function_roleId_fk foreign key(roleId) references dlts_role(id) on delete set null,
+	constraint dlts_role_function_functionId_fk foreign key(functionId) references dlts_function(id) on delete set null
 )engine=innodb;
+
+alter table dlts_user_role drop  foreign key dlts_role_function_roleId_fk;
+alter table dlts_user_role drop  foreign key dlts_role_function_functionId_fk;
+alter table dlts_user_role add constraint dlts_user_role_usid_fk foreign key(usid) references dlts_admin_info(id) on delete set null;
+alter table dlts_user_role add constraint dlts_user_role_tid_fk foreign key(rid) references dlts_role(id) on delete set null;
 
 select count(*) from DLTS_ADMIN_INFO ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id;
 

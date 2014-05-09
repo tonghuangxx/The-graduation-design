@@ -1,6 +1,8 @@
 package com.dlts.admininfo.servcie;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +80,7 @@ public class UserService extends BaseService {
 		}
 		DCriteriaPageSupport<AdminInfo> result = new DCriteriaPageSupport<AdminInfo>(
 				aList, list.getTotalCount());
+		Collections.sort(result);
 		return result;
 	}
 
@@ -158,5 +161,12 @@ public class UserService extends BaseService {
 		List<AdminInfo> list = this.dao.findAllyHql(hql,
 				new Object[] { admin_code });
 		return list != null && list.size() > 0 ? list.get(0) : null;
+	}
+	/**
+	 * 删除数据
+	 * @param adminInfo
+	 */
+	public void deleteAdminInfo(AdminInfo adminInfo){
+		this.dao.deleteIObject(adminInfo);
 	}
 }

@@ -31,7 +31,9 @@ function resetPwd() {
 function deleteAdmin(adminId) {
 	var r = window.confirm("确定要删除此管理员吗？");
 	if (r) {
-		location.href = "<%=request.getContextPath() %>/user/edit?adminInfo.id="+adminId;
+		$.post("../user/delete",{'adminInfo.id':adminId},function(data){
+			$("#data").html(data);
+		});
 	}
 }
 //全选
