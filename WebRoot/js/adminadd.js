@@ -34,17 +34,18 @@ $(function() {
 				$('#adminCodeLabel').removeClass("error_msg").html(
 						"4-20长度的字母、数字和下划线的组合");
 			}
-			$.post("../validName/adminCodeValidName", {
+			$.post("../user/adminCodeValidName", {
 				"adminInfo.admin_code" : admin_code
 			},
-					function(data) {
-						if (data == 'false') {
-							$('#adminCodeLabel').addClass("error_msg ").html(
-									"管理员帐号重复");
-						} else {
+					function(json) {
+						var data = eval('(' + json + ')'); 
+						if(data.statusCode==200){
 							$('#adminCodeLabel').removeClass('error_msg')
-									.addClass('displayOK').html('ok');
+							.addClass('displayOK').html('ok');
+						}else{
+							$('#adminCodeLabel').addClass("error_msg ").html(data.message);
 						}
+						
 					});
 		});
 	//姓名失去焦点

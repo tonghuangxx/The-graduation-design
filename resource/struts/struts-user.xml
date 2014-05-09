@@ -22,6 +22,9 @@
 		<action name="delete" class="com.dlts.admininfo.action.UserAction" method="delete">
 			<result name="success" >/admin/list.jsp</result>
 		</action>
+		
+		<action name="adminCodeValidName" class="com.dlts.admininfo.action.UserAction" method="checkAdminCode">
+		</action>
 	</package>
 </struts>
 

@@ -18,6 +18,8 @@ import com.dlts.util.MD5Util;
 import com.dlts.util.dao.DCriteriaPageSupport;
 
 public class UserService extends BaseService {
+	private static String ADMIN_CODE_FALSE="管理员账号重复";
+	
 	/**
 	 * 根据id查询用户信息
 	 * 
@@ -43,8 +45,7 @@ public class UserService extends BaseService {
 	public DCriteriaPageSupport<AdminInfo> list(int pageNo, int pageSize) {
 		String hql = "select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name,"
 				+ "ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from AdminInfo as ai,AdminRole as ar,Role as r where ar.rid=r.id and ar.usid=ai.id order by ai.enrolldate desc";
-		DCriteriaPageSupport list = this.dao.findPageByHql(hql, pageSize,
-				pageNo);
+		DCriteriaPageSupport list = this.dao.findPageByHql(hql, pageSize,pageNo);
 		List<AdminInfo> aList = new ArrayList<AdminInfo>();
 		Map<String, AdminInfo> aMap = new HashMap<String, AdminInfo>(); // key为用户id，value为该用户
 		Map<String, List<Role>> rMap = new HashMap<String, List<Role>>(); // key为用户id,value为该用户所拥有的角色
@@ -78,8 +79,7 @@ public class UserService extends BaseService {
 		for (Entry<String, AdminInfo> entry : aMap.entrySet()) {
 			aList.add(entry.getValue());
 		}
-		DCriteriaPageSupport<AdminInfo> result = new DCriteriaPageSupport<AdminInfo>(
-				aList, list.getTotalCount());
+		DCriteriaPageSupport<AdminInfo> result = new DCriteriaPageSupport<AdminInfo>(aList, list.getTotalCount());
 		Collections.sort(result);
 		return result;
 	}
@@ -168,5 +168,15 @@ public class UserService extends BaseService {
 	 */
 	public void deleteAdminInfo(AdminInfo adminInfo){
 		this.dao.deleteIObject(adminInfo);
+	}
+	
+	public String checkAdminCode(String admin_code){
+		String result = null;
+		String hql = "from AdminInfo where admin_code=?";
+		List<AdminInfo> list = this.dao.findAllyHql(hql, new Object[]{admin_code});
+		if(list!=null&&list.size()>0){
+			result = ADMIN_CODE_FALSE;
+		}
+		return result;
 	}
 }

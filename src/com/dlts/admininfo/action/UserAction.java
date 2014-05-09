@@ -1,7 +1,7 @@
 package com.dlts.admininfo.action;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +11,11 @@ import com.dlts.admininfo.servcie.UserService;
 import com.dlts.adminrole.service.AdminRoleService;
 import com.dlts.role.domain.Role;
 import com.dlts.role.service.RoleService;
+import com.dlts.util.ContextUtil;
 import com.dlts.util.SpringUtil;
 import com.dlts.util.dao.DCriteriaPageSupport;
 import com.dlts.util.string.ConstantString;
+import com.dlts.web.action.ActionResult;
 import com.dlts.web.action.BaseAction;
 /**
  * 管理员action
@@ -43,7 +45,7 @@ public class UserAction extends BaseAction{
 	/**
 	 * 角色表中数据
 	 */
-	private DCriteriaPageSupport<Role> rList;
+	private List<Role> rList;
 	
 	/**
 	 * 分页显示用户及其所含角色信息
@@ -53,6 +55,7 @@ public class UserAction extends BaseAction{
 		dataList = userService.list(pageNum, numPerPage);
 		total = dataList.getTotalCount();
 		getPageCount();
+		rList = roleService.list();
 		return ConstantString.SUCCESS;
 	}
 	/**
@@ -61,7 +64,7 @@ public class UserAction extends BaseAction{
 	 */
 	public String edit(){
 		adminInfo = userService.getAdminInfoById(adminInfo.getId());
-		rList = roleService.list(pageNum, numPerPage);
+		rList = roleService.list();
 		//0代表没有该角色，1代表有
 		roleMap = new HashMap<Role, Integer>();
 		for(Role r :rList){
@@ -88,7 +91,7 @@ public class UserAction extends BaseAction{
 	 * @return
 	 */
 	public String add(){
-		rList = roleService.list(pageNum, numPerPage);
+		rList = roleService.list();
 		return ConstantString.SUCCESS;
 	}
 	/**
@@ -108,6 +111,23 @@ public class UserAction extends BaseAction{
 		adminInfo = userService.findAdminInfoById(adminInfo);
 		userService.deleteAdminInfo(adminInfo);
 		return ConstantString.SUCCESS;
+	}
+	/**
+	 * 检测管理员账号是否重名
+	 */
+	public void checkAdminCode(){
+		response.setContentType("text/html;charset=utf-8");
+		String result = userService.checkAdminCode(adminInfo.getAdmin_code());
+		try {
+			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "可以使用");
+			if(result!=null	){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, result);
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public DCriteriaPageSupport<AdminInfo> getDataList() {
@@ -134,10 +154,10 @@ public class UserAction extends BaseAction{
 	public void setRid(String[] rid) {
 		this.rid = rid;
 	}
-	public DCriteriaPageSupport<Role> getRList() {
+	public List<Role> getRList() {
 		return rList;
 	}
-	public void setRList(DCriteriaPageSupport<Role> rList) {
+	public void setRList(List<Role> rList) {
 		this.rList = rList;
 	}
 	

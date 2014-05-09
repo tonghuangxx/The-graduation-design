@@ -15,7 +15,8 @@ CREATE TABLE DLTS_ADMIN_INFO(
 	CONSTRAINT DLTS_ADMIN_INFO_ID_PK PRIMARY KEY(id)
 )engine=innodb;
 alter table DLTS_ADMIN_INFO modify column ENROLLDATE DATETIME;
-
+update dlts_admin_info set enrolldate='2014-01-01' where id ='402881e645db3cc40145db3fd5e60000';
+select * from dlts_admin_info;
 
 insert into dlts_admin_info values(1,'dlts','F60598D5B3B5012DA811610A7D8CC0C1','cwb','13688997766',
 		'shiyl@sin.com','2013-05-22');
@@ -57,6 +58,7 @@ CREATE TABLE dlts_user_role(
  )engine=innodb;
 
 alter table dlts_user_role drop  foreign key dlts_user_role_usid_fk;
+alter table dlts_user_role drop  foreign key dlts_user_role_tid_fk;
 alter table dlts_user_role add constraint dlts_user_role_usid_fk foreign key(usid) references dlts_admin_info(id) on delete set null;
 alter table dlts_user_role add constraint dlts_user_role_tid_fk foreign key(rid) references dlts_role(id) on delete set null;
 select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name,ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from dlts_admin_info ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id order by ai.enrolldate desc;

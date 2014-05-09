@@ -27,24 +27,21 @@
             <form  method="post" id="mainform">
                 <!--查询-->
                 <div class="search_add">
+                    <form action="" method="">
                     <div>
-                        角色：
+                       	 角色：
                         <select id="selModules" class="select_search">
-                            <option value="-1">全部</option>
-                            <option value="1">超级管理员</option>
-                            <option value="2">角色管理</option>
-                            <option value="8">管理员管理</option>
-                            <option value="3">资费管理</option>
-                            <option value="4">账务账号</option>
-                            <option value="5">业务账号</option>
-                            <option value="6">账单管理</option>
-                            <option value="7">报表</option>
+                        	<option value="-1">全部</option>
+                            <s:iterator value="rList">
+                            	<option value="${id }">${role_name }</option>
+                            </s:iterator>
                         </select>
                     </div>
                     <div>登录名：<input type="text" value="" class="text_search width200" id="searchAdmin_code"/></div>
                     <div><input type="button" value="搜索" class="btn_search" id="search"/></div>
                     <input type="button" value="密码重置" class="btn_add" onclick="resetPwd();" />
                     <input type="button" value="增加" class="btn_add" onclick="location.href='<%=request.getContextPath() %>/user/add';" />
+                	</form>
                 </div>
                 <!--删除和密码重置的操作提示-->
                 <div id="operate_result_info" class="operate_fail" >
@@ -76,8 +73,8 @@
         </div>
         <!--主要区域结束-->
         <div id="footer">
-            <p>[源自北美的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</p>
-            <p>版权所有(C)加拿大达内IT培训集团公司 </p>
+            <p></p>
+            <p> </p>
         </div>
     </body>
 </html>
