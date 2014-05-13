@@ -47,22 +47,26 @@ public class UserAction extends BaseAction{
 	 */
 	private List<Role> rList;
 	/**
-	 * 搜索时选择的角色
-	 */
-	private String selRole;
-	/**
 	 * 搜索时填写的登录名
 	 */
 	private String searchAdmin_code;
-	
+	/**
+	 * 用户界面
+	 */
+	private String indexList;
 	/**
 	 * 跳转到显示页面
 	 * @return
 	 */
 	public String list(){
+		indexList=this.getIndexList();
+		rList = roleService.list();
 		return ConstantString.SUCCESS;
 	}
-	
+	/**
+	 * 显示页面的数据
+	 * @return
+	 */
 	public String listData(){
 		dataList = userService.list(pageNum, numPerPage);
 		total = dataList.getTotalCount();
@@ -94,10 +98,21 @@ public class UserAction extends BaseAction{
 	 * 修改数据
 	 * @return
 	 */
-	public String editDo(){
-		userService.updateAdminInfo(adminInfo);
-		adminRoleService.updateAdminRole(rid, adminInfo.getId());
-		return ConstantString.SUCCESS;
+	public void editDo(){
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			boolean result = userService.updateAdminInfo(rid,adminInfo);
+			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE,"修改成功");
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE,"修改失败");
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	/**
 	 * 跳转到添加界面
@@ -111,11 +126,20 @@ public class UserAction extends BaseAction{
 	 * 添加数据
 	 * @return
 	 */
-	public String addDo(){
-		userService.addAdminInfo(adminInfo);
-		adminInfo = userService.findAdminInfoByAdmin_code(adminInfo.getAdmin_code());
-		adminRoleService.addAdminRole(rid, adminInfo.getId());
-		return ConstantString.SUCCESS;
+	public void addDo(){
+		response.setContentType("text/html;charset=utf-8");
+		boolean result = userService.addAdminInfo(adminInfo,rid);
+		try {
+			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "添加成功");
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "添加失败");
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 删除数据
@@ -125,12 +149,16 @@ public class UserAction extends BaseAction{
 		userService.deleteAdminInfo(adminInfo);
 	}
 	
+//	public String editInfor(){
+//		
+//	}
+	
 	/**
 	 * 查询
 	 * @return
 	 */
 	public String search(){
-		dataList = userService.search(pageNum, numPerPage,selRole,searchAdmin_code);
+		dataList = userService.search(pageNum, numPerPage,searchAdmin_code);
 		total = dataList.getTotalCount();
 		countPageCount();
 		rList = roleService.list();
@@ -185,17 +213,17 @@ public class UserAction extends BaseAction{
 	public void setRList(List<Role> rList) {
 		this.rList = rList;
 	}
-	public String getSelRole() {
-		return selRole;
-	}
-	public void setSelRole(String selRole) {
-		this.selRole = selRole;
-	}
 	public String getSearchAdmin_code() {
 		return searchAdmin_code;
 	}
 	public void setSearchAdmin_code(String searchAdminCode) {
 		searchAdmin_code = searchAdminCode;
+	}
+	public String getIndexList() {
+		return indexList;
+	}
+	public void setIndexList(String indexList) {
+		this.indexList = indexList;
 	}
 	
 }
