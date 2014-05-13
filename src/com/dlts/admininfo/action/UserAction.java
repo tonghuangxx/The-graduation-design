@@ -46,18 +46,31 @@ public class UserAction extends BaseAction{
 	 * 角色表中数据
 	 */
 	private List<Role> rList;
+	/**
+	 * 搜索时选择的角色
+	 */
+	private String selRole;
+	/**
+	 * 搜索时填写的登录名
+	 */
+	private String searchAdmin_code;
 	
 	/**
-	 * 分页显示用户及其所含角色信息
+	 * 跳转到显示页面
 	 * @return
 	 */
 	public String list(){
+		return ConstantString.SUCCESS;
+	}
+	
+	public String listData(){
 		dataList = userService.list(pageNum, numPerPage);
 		total = dataList.getTotalCount();
-		getPageCount();
+		countPageCount();
 		rList = roleService.list();
 		return ConstantString.SUCCESS;
 	}
+	
 	/**
 	 * 跳转到修改界面
 	 * @return
@@ -107,11 +120,23 @@ public class UserAction extends BaseAction{
 	/**
 	 * 删除数据
 	 */
-	public String delete(){
+	public void delete(){
 		adminInfo = userService.findAdminInfoById(adminInfo);
 		userService.deleteAdminInfo(adminInfo);
+	}
+	
+	/**
+	 * 查询
+	 * @return
+	 */
+	public String search(){
+		dataList = userService.search(pageNum, numPerPage,selRole,searchAdmin_code);
+		total = dataList.getTotalCount();
+		countPageCount();
+		rList = roleService.list();
 		return ConstantString.SUCCESS;
 	}
+	
 	/**
 	 * 检测管理员账号是否重名
 	 */
@@ -159,6 +184,18 @@ public class UserAction extends BaseAction{
 	}
 	public void setRList(List<Role> rList) {
 		this.rList = rList;
+	}
+	public String getSelRole() {
+		return selRole;
+	}
+	public void setSelRole(String selRole) {
+		this.selRole = selRole;
+	}
+	public String getSearchAdmin_code() {
+		return searchAdmin_code;
+	}
+	public void setSearchAdmin_code(String searchAdminCode) {
+		searchAdmin_code = searchAdminCode;
 	}
 	
 }

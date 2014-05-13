@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@taglib uri="/struts-tags" prefix="s" %>
-<table id="datalist">
+<%@ include file="/taglibs.jsp" %>
+<div id="data">
+	<table id="datalist">
                         <tr>
                             <th class="th_select_all">
                                 <input type="checkbox" onclick="selectAdmins(this);" />
@@ -39,4 +40,21 @@
                             </td>
                         </tr>
                           </s:iterator>
-                    </table>
+	</table>
+</div>
+<div id="pages">
+        	        <s:if test="pageNum>1"><a href="javascript:void(0);" style="color:green;" onclick="numberPage('${pageNum-1}');">上一页</a></s:if>
+                <s:else>上一页</s:else>
+        	        <s:iterator value="new int[pageCount]" status="i">
+        	        <s:if test="#i.count==pageNum">
+        	           <a href="javascript:void(0);" class="current_page" style="color:green;" onclick="numberPage('<s:property value='#i.count'/>');"><s:property value="#i.count"/></a>
+        	        </s:if>
+        	        <s:else>
+        	          <a href="javascript:void(0);" style="color:green;" onclick="numberPage('<s:property value='#i.count'/>');"><s:property value="#i.count"/> </a>
+        	        </s:else>
+        	        </s:iterator>
+        	        <s:if test="pageNum<pageCount">
+        	        <a href="javascript:void(0);" style="color:green;" onclick="numberPage('${pageNum+1}');">下一页</a>
+        	        </s:if>
+        	        <s:else>下一页</s:else>
+</div>  

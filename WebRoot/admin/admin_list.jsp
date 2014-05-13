@@ -8,8 +8,9 @@
        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global_color.css" /> 
         <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.4.4.min.js"></script>
-        <script language="javascript" type="text/javascript" src="<%=request.getContextPath() %>/js/adminlist.js">
-        </script>       
+        <script language="javascript" type="text/javascript" src="<%=request.getContextPath() %>/js/adminlist.js"></script>
+        <script language="javascript" type="text/javascript" src="<%=request.getContextPath() %>/js/tool.js"></script>   
+        <script language="javascript" type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.validate.js"></script>    
     </head>
     <body onload="message();">
         <!--Logo区域开始-->
@@ -24,21 +25,21 @@
         <!--导航区域结束-->
         <!--主要区域开始-->
         <div id="main">
-            <form  method="post" id="mainform">
-                <!--查询-->
                 <div class="search_add">
-                    <form action="" method="">
+                    <form action="<%=request.getContextPath() %>/user/search" method="post" id="searchRorm" >
+                    <input type="hidden" value="${ pageNum}" name="pageNum"/>
+                    <input type="hidden" value="${numPerPage}" name="numPerPage"/>
                     <div>
                        	 角色：
-                        <select id="selModules" class="select_search">
-                        	<option value="-1">全部</option>
+                        <select id="selRole" class="select_search">
+                        	<option value="">全部</option>
                             <s:iterator value="rList">
                             	<option value="${id }">${role_name }</option>
                             </s:iterator>
                         </select>
                     </div>
                     <div>登录名：<input type="text" value="" class="text_search width200" id="searchAdmin_code"/></div>
-                    <div><input type="button" value="搜索" class="btn_search" id="search"/></div>
+                    <div><input type="button" value="搜索" class="btn_search" id="search" onclick="search();"/></div>
                     <input type="button" value="密码重置" class="btn_add" onclick="resetPwd();" />
                     <input type="button" value="增加" class="btn_add" onclick="location.href='<%=request.getContextPath() %>/user/add';" />
                 	</form>
@@ -48,28 +49,10 @@
                     <img src="../images/close.png" onclick="this.parentNode.style.display='none';" />
                     <span id='msg' ><s:property value="addMsg"/></span>
                 </div> 
-                <!--数据区域：用表格展示数据-->     
-                <div id="data">            
-                    <jsp:include page="list.jsp"></jsp:include>
-                </div>
-                <!--分页-->
-                <div id="pages">
-        	        <s:if test="pageNum>1"><a href="<%=request.getContextPath() %>/user/list?pageNum=${pageNum-1}">上一页</a></s:if>
-                <s:else>上一页</s:else>
-        	        <s:iterator value="new int[pageCount]" status="i">
-        	        <s:if test="#i.count==pageNum">
-        	           <a href="<%=request.getContextPath() %>/user/list?pageNum=<s:property value='#i.count'/>" class="current_page"><s:property value="#i.count"/></a>
-        	        </s:if>
-        	        <s:else>
-        	          <a href="<%=request.getContextPath() %>/user/list?pageNum=<s:property value='#i.count'/>"><s:property value="#i.count"/> </a>
-        	        </s:else>
-        	        </s:iterator>
-        	        <s:if test="pageNum<pageCount">
-        	        <a href="<%=request.getContextPath() %>/user/list?pageNum=${pageNum+1}">下一页</a>
-        	        </s:if>
-        	        <s:else>下一页</s:else>
-                </div>  
-            </form>
+                <!--数据区域：用表格展示数据-->
+                <div id="datapages">     
+                    <jsp:include page="/admin/list.jsp"></jsp:include>
+                </div>    
         </div>
         <!--主要区域结束-->
         <div id="footer">

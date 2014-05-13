@@ -1,3 +1,10 @@
+$(function(){
+	$.post("../user/listData",function(data){
+		$("#datapages").html(data);
+	});
+});
+
+
 //显示角色详细信息
 function showDetail(flag, a) {
 	var detailDiv = a.parentNode.getElementsByTagName("div")[0];
@@ -32,7 +39,7 @@ function deleteAdmin(adminId) {
 	var r = window.confirm("确定要删除此管理员吗？");
 	if (r) {
 		$.post("../user/delete",{'adminInfo.id':adminId},function(data){
-			$("#data").html(data);
+			AT.postFrm("#searchRorm", callFunction);
 		});
 	}
 }
@@ -73,5 +80,30 @@ $(function() {
 		location.href="serachAdminRole?admin_code="+$('#searchAdmin_code').val();
 	});
 });
+/**
+ * 显示某一页数据
+ * @param pageNum
+ * @return
+ */
+function numberPage(pageNum){
+	var href = "../user/listData?pageNum="+pageNum;
+	$.post(href,function(data){
+		$("#datapages").html(data);
+	});
+}
+/**
+ * 回调函数
+ * @param data
+ * @return
+ */
+function callFunction(data){
+	$("#datapages").html(data);
+}
 
-
+/**
+ * 搜索
+ * @return
+ */
+function search(){
+	AT.postFrm("#searchRorm", callFunction);
+}
