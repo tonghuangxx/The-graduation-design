@@ -34,7 +34,7 @@ public class BaseAction implements ServletHandler{
 	/**
 	 * 页尺寸
 	 */
-	protected int numPerPage = 20;
+	protected int numPerPage = 3;
 	/**
 	 * 总数
 	 */

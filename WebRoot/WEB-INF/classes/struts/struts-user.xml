@@ -5,6 +5,9 @@
 <struts>
 	<package name="user" extends="default" namespace="/user">
 		<action name="list" class="com.dlts.admininfo.action.UserAction" method="list">
+			<result name="success">/index.jsp</result>
+		</action>
+		<action name="listData" class="com.dlts.admininfo.action.UserAction" method="listData">
 			<result name="success">/admin/admin_list.jsp</result>
 		</action>
 		<action name="edit" class="com.dlts.admininfo.action.UserAction" method="edit">
@@ -17,10 +20,16 @@
 			<result name="success">/admin/admin_add.jsp</result>
 		</action>
 		<action name="addDo" class="com.dlts.admininfo.action.UserAction" method="addDo">
-			<result name="success" type="redirectAction">list</result>
+			<result name="success">/admin/result.jsp</result>
 		</action>
 		<action name="delete" class="com.dlts.admininfo.action.UserAction" method="delete">
 			<result name="success" >/admin/list.jsp</result>
+		</action>
+		<action name="search" class="com.dlts.admininfo.action.UserAction" method="search">
+			<result name="success" >/admin/list.jsp</result>
+		</action>
+		
+		<action name="adminCodeValidName" class="com.dlts.admininfo.action.UserAction" method="checkAdminCode">
 		</action>
 	</package>
 </struts>

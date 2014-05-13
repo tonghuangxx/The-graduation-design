@@ -1,29 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>电信计费系统</title>
-         <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath() %>/styles/global_color.css" /> 
-        <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-1.4.4.min.js"></script>
-    </head>
-    <body>
-        <!--Logo区域开始-->
-        <div id="header">
-            <img src="../images/logo.png" alt="logo" class="left"/>
-            <span>当前账号：<b><s:property value="#session.userinfo.admin_code"/></b></span>
-            <a href="../login/loginOut">[退出]</a>         
-        </div>
-        <!--Logo区域结束-->
-        <!--导航区域开始-->
-        <jsp:include page="/navigation.jsp"></jsp:include>
-        <!--导航区域结束-->
-        <!--主要区域开始-->
-        <div id="main">     
-            <div id="save_result_info" class="save_success"><s:property value="addMsg"/></div>
-            <form action="<%=request.getContextPath() %>/user/editDo" method="post" class="main_form" id="mainform">
+<div id="save_result_info" class="save_success" style="display:none"></div>
+            <form action="<%=request.getContextPath() %>/user/editDo" method="post" class="main_form" id="userEditForm">
             <input type="hidden" value="${adminInfo.id}" name="adminInfo.id"/>
             <input type="hidden" value="${adminInfo.enrolldate}" name="adminInfo.enrolldate"/>
             <input type="hidden" value="${adminInfo.password}" name="adminInfo.password"/>
@@ -60,25 +38,11 @@
                         <div class="validate_msg_tiny">至少选择一个</div>
                     </div>
                     <div class="button_info clearfix">
-                        <input type="submit" value="保存" class="btn_save" id="send" />
-                        <input type="button" value="取消" class="btn_save" />
+                        <input type="button" value="保存" class="btn_save" id="send" onclick="modifyUser();"/>
+                        <input type="button" value="取消" class="btn_save" onclick="cancel();" />
                     </div>
                 </form>  
-        </div>
-        <!--主要区域结束-->
-        <div id="footer">
-            <span></span>
-            <br />
-            <span></span>
-        </div>
 <script type="text/javascript">
-        $(function(){
-		if($('.save_success').html()==""){
-      showResultDiv(false);
-   }else{
-       showResultDiv(true);
-       window.setTimeout("showResultDiv(false);", 5000);
-        }
 //用户名称框的失去焦点事件
 $('#name').blur(function(){
 var name=$.trim($('#name').val());
@@ -107,38 +71,54 @@ var telphone=$.trim($('#telphone').val());
 	}
 });
 
-	$('#send').click(function(){
-			$(':input').trigger('blur');
-			var j=0;  //判断是否有checkbox选中
-			var inputArray=document.getElementById("mainform").getElementsByTagName("input");
-			for (var i = 1; i < inputArray.length; i++) {
-         if (inputArray[i].type == "checkbox") {
-            if(inputArray[i].checked){
-              j++;
-                    			}
-                    	}
-             }
-             //如果没有选中就不能提交表单
-			if(j==0){
-					$('.validate_msg_tiny').addClass("error_msg");
-					return false;
-			}else{
-			  	$('.validate_msg_tiny').removeClass("error_msg");
-  	if($('form div').hasClass('error_msg')){
-		 	return false;
-	  	}
-					$('#mainform').submit();
+/**
+ * 保存
+ */
+function modifyUser() {
+	$(':input').trigger('blur');
+	var j = 0; // 判断是否有checkbox选中
+	var inputArray = document.getElementById("userEditForm").getElementsByTagName(
+			"input");
+	for ( var i = 1; i < inputArray.length; i++) {
+		if (inputArray[i].type == "checkbox") {
+			if (inputArray[i].checked) {
+				j++;
 			}
-	});
-});
+		}
+	}
+	// 如果没有选中就不能提交表单
+	if (j == 0) {
+		$('.validate_msg_tiny').addClass("error_msg");
+		return false;
+	} else {
+		$('.validate_msg_tiny').removeClass("error_msg");
+		if ($('form div').hasClass('error_msg')) {
+			return false;
+		}
+		AT.postFrm("#userEditForm", editUserCall_function);
+	}
+
+}
+function editUserCall_function(json){
+	var data = eval('('+json+')');
+	showResultDiv(true,data.message);
+	window.setTimeout("showResultDiv(false);", 5000);
+}
+
 //保存成功与否的提示消息
-     function showResultDiv(flag) {
-         var divResult = document.getElementById("save_result_info");
-         if (flag)
-           divResult.style.display = "block";
-         else
-           divResult.style.display = "none";
-            }
+function showResultDiv(flag,message) {
+	var divResult = document.getElementById("save_result_info");
+	if (flag) {
+		divResult.innerHTML=message;
+		divResult.style.display = "block";
+	} else {
+		divResult.style.display = "none";
+	}
+}
+function cancel(){
+	var href="../user/listData";
+	$.post(href,function(data){
+		$("#main").html(data);
+	});
+}
 </script>
-    </body>
-</html>

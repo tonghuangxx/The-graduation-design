@@ -8,7 +8,6 @@
 		<action name="main">
 			<result name="success">/main.jsp</result>
 		</action>
-
 		<!--		用户显示角色信息，正确跳到显示页面  无全限跳到无全限界面   错误跳到错误页面   -->
 <!--		<action name="roleListControl" class="com.tarena.netctoss.action.ControlAction"-->
 <!--			method="control">-->
