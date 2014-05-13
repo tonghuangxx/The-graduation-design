@@ -74,7 +74,8 @@
 		//验证码输入框失去焦点事件
 		$('#yzm').blur(function(){
 		var yzm=$('#yzm').val();
-			$.post("code",{"yzm":yzm},function(data){
+		var href="<%=request.getContextPath()%>/login/code";
+			$.post(href,{"yzm":yzm},function(data){
 				$('#codemsg').html(data);
 				return false;
 			});

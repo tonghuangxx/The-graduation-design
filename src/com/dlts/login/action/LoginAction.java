@@ -34,7 +34,7 @@ public class LoginAction extends BaseAction{
 	 * 验证验证码
 	 * @return
 	 */
-	public String testYZM(){
+	public void testYZM(){
 		response.setContentType("text/html;charset=utf-8");
 		String code=(String) request.getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
 		PrintWriter out=null;
@@ -50,7 +50,6 @@ public class LoginAction extends BaseAction{
 			this.setMessage("验证码正确");
 			out.print(message);
 		}
-		return null;
 	}
 	
 	/**
@@ -69,6 +68,8 @@ public class LoginAction extends BaseAction{
 				loginAdmin = loginService.findByCodeAndPwd(adminInfo);
 				if(loginAdmin == null){
 					actionResult = new ActionResult(ConstantString.FAILURECODE, "密码错误");
+				}else{
+					request.getSession().setAttribute(ConstantString.USER, loginAdmin.getAdmin_code());
 				}
 			}
 			PrintWriter out = response.getWriter();

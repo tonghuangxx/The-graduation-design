@@ -16,8 +16,8 @@
 		<!--Logo区域开始-->
 		<div id="header">
 			<img src="<%=request.getContextPath()%>/images/logo.png" alt="logo" class="left" />
-			<span>当前账号：<b><s:property value="#session.userinfo.admin_code" /> </b> </span>
-			<a href="../login/loginOut">[退出]</a>
+			<span>当前账号：<b><s:property value="#session.user" /> </b> </span>
+			<a href="<%=request.getContextPath() %>/login/loginOut">[退出]</a>
 		</div>
 		<!--Logo区域结束-->
 		<!--导航区域开始-->
@@ -31,7 +31,7 @@
 						class="role_off"></a>
 				</li>
 				<li>
-					<a href="<%=request.getContextPath()%>/user/list" class="admin_off"></a>
+					<a href="javascript:void(0);" class="admin_off" onclick="to_userList();"></a>
 				</li>
 				<li>
 					<a href="../control/feeListControl?m.id=2&operation=r"
@@ -73,6 +73,14 @@
 				$("#main").html(data);
 			});
         });
+		/*点击管理员*/
+		function to_userList(){
+			var href = "<%=request.getContextPath()%>/user/listData";
+			$.post(href,function(data){
+				$("#main").html(data);
+			});
+		}
+     	
      </script>   
     </body>
 </html>
