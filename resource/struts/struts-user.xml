@@ -28,6 +28,14 @@
 		<action name="search" class="com.dlts.admininfo.action.UserAction" method="search">
 			<result name="success" >/admin/list.jsp</result>
 		</action>
+		<action name="updateInfo" class="com.dlts.admininfo.action.UserAction" method="updateInfo">
+			<result name="success" >/user/user_info.jsp</result>
+		</action>
+		<action name="updatePwd" class="com.dlts.admininfo.action.UserAction" method="updatePwd">
+			<result name="success" >/user/user_modi_pwd.jsp</result>
+		</action>
+		<action name="updatePwdDo" class="com.dlts.admininfo.action.UserAction" method="updatePwdDo">
+		</action>
 		
 		<action name="adminCodeValidName" class="com.dlts.admininfo.action.UserAction" method="checkAdminCode">
 		</action>

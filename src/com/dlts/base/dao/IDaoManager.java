@@ -84,7 +84,7 @@ public class IDaoManager<T, P, PK extends Serializable> extends
 	 */
 	public T getIObjectByPK(final Class iClass, final PK iPK) {
 		try {
-			return (T) getHibernateTemplate().load(iClass, iPK);
+			return (T) getHibernateTemplate().get(iClass, iPK);
 		} catch (Throwable e) {
 		}
 		return null;

@@ -51,9 +51,14 @@ public class UserAction extends BaseAction{
 	 */
 	private String searchAdmin_code;
 	/**
-	 * 用户界面
+	 * 显示index页面的内容
 	 */
 	private String indexList;
+	/**
+	 * 用户的旧密码
+	 */
+	private String oldPwd;
+	
 	/**
 	 * 跳转到显示页面
 	 * @return
@@ -149,10 +154,6 @@ public class UserAction extends BaseAction{
 		userService.deleteAdminInfo(adminInfo);
 	}
 	
-//	public String editInfor(){
-//		
-//	}
-	
 	/**
 	 * 查询
 	 * @return
@@ -163,6 +164,43 @@ public class UserAction extends BaseAction{
 		countPageCount();
 		rList = roleService.list();
 		return ConstantString.SUCCESS;
+	}
+	/**
+	 * 显示修改个人信息
+	 * @return
+	 */
+	public String updateInfo(){
+		String id = (String) request.getSession().getAttribute(ConstantString.ID);
+		adminInfo = userService.getAdminInfoById(id);
+		return ConstantString.SUCCESS;
+	}
+	/**
+	 * 显示修改个人密码
+	 * @return
+	 */
+	public String updatePwd(){
+		String id = (String) request.getSession().getAttribute(ConstantString.ID);
+		adminInfo = new AdminInfo();
+		adminInfo.setId(id);
+		return ConstantString.SUCCESS;
+	}
+	/**
+	 * 修改密码
+	 */
+	public void updatePwdDo(){
+		response.setContentType("text/html;charset=utf-8");
+		boolean result = userService.updatePwd(adminInfo,oldPwd);
+		ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "修改成功");
+		try {
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "修改失败,旧密码输入有误");
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -182,6 +220,7 @@ public class UserAction extends BaseAction{
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public DCriteriaPageSupport<AdminInfo> getDataList() {
 		return dataList;
@@ -224,6 +263,12 @@ public class UserAction extends BaseAction{
 	}
 	public void setIndexList(String indexList) {
 		this.indexList = indexList;
+	}
+	public String getOldPwd() {
+		return oldPwd;
+	}
+	public void setOldPwd(String oldPwd) {
+		this.oldPwd = oldPwd;
 	}
 	
 }

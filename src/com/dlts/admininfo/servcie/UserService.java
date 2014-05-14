@@ -32,8 +32,8 @@ public class UserService extends BaseService {
 	public AdminInfo findAdminInfoById(AdminInfo adminInfo) {
 		AdminInfo result = null;
 		if (adminInfo != null) {
-			result = (AdminInfo) this.dao.getIObjectByPK(AdminInfo.class,
-					adminInfo.getId());
+			String id = adminInfo.getId();
+			result = (AdminInfo) this.dao.getIObjectByPK(AdminInfo.class,id);
 		}
 		return result;
 	}
@@ -311,5 +311,23 @@ public class UserService extends BaseService {
 		}
 		Collections.sort(list);
 		return list;
+	}
+	/**
+	 * 修改密码
+	 * @param adminInfo
+	 * @return
+	 */
+	public boolean updatePwd(AdminInfo adminInfo,String oldPwd ){
+		boolean result = false;
+		if(adminInfo!=null){
+			AdminInfo ai = findAdminInfoById(adminInfo);
+			if(ai.getPassword().equals(MD5Util.MD5(oldPwd))){
+				adminInfo.setPassword(MD5Util.MD5(adminInfo.getPassword()));
+				String hql = "update AdminInfo set password=? where id=?";
+				this.dao.execByHQL(hql, new Object[]{adminInfo.getPassword(),adminInfo.getId()});
+				result = true;
+			}
+		}
+		return result;
 	}
 }

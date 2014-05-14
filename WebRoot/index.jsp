@@ -34,8 +34,7 @@
 					<a href="javascript:void(0);" class="admin_off" onclick="to_userList();"></a>
 				</li>
 				<li>
-					<a href="../control/feeListControl?m.id=2&operation=r"
-						class="fee_off"></a>
+					<a href="javascript:void(0);" class="fee_off" onclick="to_feeList();"></a>
 				</li>
 				<li>
 					<a href="../control/AccountListControl?m.id=4&operation=r" class="account_off"></a>
@@ -50,10 +49,10 @@
 					<a href="report/report_list.html" class="report_off"></a>
 				</li>
 				<li>
-					<a href="../user/rupdateAdminInfo" class="information_off"></a>
+					<a href="javascript:void(0);" class="information_off" onclick="to_updateInfo();"></a>
 				</li>
 				<li>
-					<a href="../user/toResetPwd" class="password_off"></a>
+					<a href="javascript:void(0);" class="password_off" onclick="to_updatePwd();"></a>
 				</li>
 			</ul>
 		</div>
@@ -80,7 +79,28 @@
 				$("#main").html(data);
 			});
 		}
-     	
+
+		/*点击个人信息*/
+		function to_updateInfo(){
+			var href = "<%=request.getContextPath()%>/user/updateInfo";
+			$.post(href,function(data){
+				$("#main").html(data);
+			});
+		}
+		/*点击修改密码*/
+     	function to_updatePwd(){
+     		var href = "<%=request.getContextPath()%>/user/updatePwd";
+			$.post(href,function(data){
+				$("#main").html(data);
+			});
+     	}
+		/*点击资费*/
+     	function to_feeList(){
+     		var href = "<%=request.getContextPath()%>/fee/listData";
+			$.post(href,function(data){
+				$("#main").html(data);
+			});
+     	}
      </script>   
     </body>
 </html>

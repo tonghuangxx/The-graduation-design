@@ -70,6 +70,7 @@ public class LoginAction extends BaseAction{
 					actionResult = new ActionResult(ConstantString.FAILURECODE, "密码错误");
 				}else{
 					request.getSession().setAttribute(ConstantString.USER, loginAdmin.getAdmin_code());
+					request.getSession().setAttribute(ConstantString.ID, loginAdmin.getId());
 				}
 			}
 			PrintWriter out = response.getWriter();

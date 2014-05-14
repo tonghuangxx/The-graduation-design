@@ -3,17 +3,17 @@
 --status:0：开通  1：暂停  2:表示删除  descr：资费信息说明  creatime:创建时间  startime：启用时间 
 --cost_type 1表示包月,2表示套餐,3表示计时
     CREATE TABLE DLTS_COST(
-    ID NUMBER(4) CONSTRAINT DLTS_COST_ID_PK PRIMARY KEY,
+    ID number(4) CONSTRAINT DLTS_COST_ID_PK PRIMARY KEY,
     NAME VARCHAR(50) NOT NULL,
-    BASE_DURATION NUMBER(11),
-    BASE_COST NUMBER(7,2),
-    UNIT_COST NUMBER(7,4),
+    BASE_DURATION number(11),
+    BASE_COST number(7,2),
+    UNIT_COST number(7,4),
     STATUS CHAR(1) CONSTRAINT DLTS_COST_STATUS_CK
     CHECK (STATUS IN (0,1,2)),
     DESCR VARCHAR2(100),
     CREATIME DATE DEFAULT SYSDATE ,
     STARTIME DATE,
-    COST_TYPE CHAR(1)
+    COST_TYPE CHAR(1),
     );
     --创建一个序列用于资费表插入时的id
 CREATE SEQUENCE dlts_cost_id;

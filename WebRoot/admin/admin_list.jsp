@@ -34,11 +34,11 @@
 		<input type="button" value="增加" class="btn_add" onclick="addUser();" />
 	</form>
 </div>
-<!--删除和密码重置的操作提示-->
+<!--删除的操作提示-->
 <div id="operate_result_info" class="operate_fail">
 	<img src="../images/close.png"
 		onclick="this.parentNode.style.display='none';" />
-	<span id='msg'><s:property value="addMsg" /></span>
+	<span id='msg'></span>
 </div>
 <!--数据区域：用表格展示数据-->
 <div id="datapages">

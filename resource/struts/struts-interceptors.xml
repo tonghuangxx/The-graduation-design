@@ -6,10 +6,10 @@
 	<package name="default" extends="struts-default">
 		<interceptors>
 			<interceptor name="servlet" class="com.dlts.web.interceptor.ServletInterceptor" />
-			<interceptor name="userLogin" class="com.dlts.web.interceptor.UserIsLoginInterceptor" />
+<!--			<interceptor name="userLogin" class="com.dlts.web.interceptor.UserIsLoginInterceptor" />-->
 			<interceptor-stack name="openOperStrack">
 				<interceptor-ref name="servlet" />
-				<interceptor-ref name="userLogin" />
+<!--				<interceptor-ref name="userLogin" />-->
 				<interceptor-ref name="basicStack" />
 			</interceptor-stack>
 		</interceptors>
