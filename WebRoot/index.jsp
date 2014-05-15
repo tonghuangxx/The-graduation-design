@@ -31,10 +31,10 @@
 						class="role_off"></a>
 				</li>
 				<li>
-					<a href="javascript:void(0);" class="admin_off" onclick="to_userList();"></a>
+					<a href="javascript:void(0);" class="admin_off" onclick="menuChange('/user/listData');"></a>
 				</li>
 				<li>
-					<a href="javascript:void(0);" class="fee_off" onclick="to_feeList();"></a>
+					<a href="javascript:void(0);" class="fee_off" onclick="menuChange('/fee/listData');"></a>
 				</li>
 				<li>
 					<a href="../control/AccountListControl?m.id=4&operation=r" class="account_off"></a>
@@ -49,10 +49,10 @@
 					<a href="report/report_list.html" class="report_off"></a>
 				</li>
 				<li>
-					<a href="javascript:void(0);" class="information_off" onclick="to_updateInfo();"></a>
+					<a href="javascript:void(0);" class="information_off" onclick="menuChange('/user/updateInfo');"></a>
 				</li>
 				<li>
-					<a href="javascript:void(0);" class="password_off" onclick="to_updatePwd();"></a>
+					<a href="javascript:void(0);" class="password_off" onclick="menuChange('/user/updatePwd');"></a>
 				</li>
 			</ul>
 		</div>
@@ -72,35 +72,14 @@
 				$("#main").html(data);
 			});
         });
-		/*点击管理员*/
-		function to_userList(){
-			var href = "<%=request.getContextPath()%>/user/listData";
-			$.post(href,function(data){
-				$("#main").html(data);
-			});
-		}
 
-		/*点击个人信息*/
-		function to_updateInfo(){
-			var href = "<%=request.getContextPath()%>/user/updateInfo";
+        function menuChange(url){
+        	var href = "<%=request.getContextPath()%>"+url;
 			$.post(href,function(data){
 				$("#main").html(data);
 			});
-		}
-		/*点击修改密码*/
-     	function to_updatePwd(){
-     		var href = "<%=request.getContextPath()%>/user/updatePwd";
-			$.post(href,function(data){
-				$("#main").html(data);
-			});
-     	}
-		/*点击资费*/
-     	function to_feeList(){
-     		var href = "<%=request.getContextPath()%>/fee/listData";
-			$.post(href,function(data){
-				$("#main").html(data);
-			});
-     	}
+        }
+
      </script>   
     </body>
 </html>

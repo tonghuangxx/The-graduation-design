@@ -29,7 +29,7 @@
 			</th>
 			<th class="width200"></th>
 		</tr>
-		<s:iterator value="feeList" status="st">
+		<s:iterator value="feeList" status="st" var="fl">
 			<tr>
 				<td>
 					<s:property value="#st.count"/>
@@ -58,12 +58,21 @@
 					<s:if test="status=='2'">删除</s:if>
 				</td>
 				<td>
-					<input type="button" value="启用" class="btn_start"
-						onclick="startFee(${fee.id});" />
-					<input type="button" value="修改" class="btn_modify"
-						onclick="location.href='../control/feeModiControl?m.id=2&operation=u&feeId=${fee.id}';" />
-					<input type="button" value="删除" class="btn_delete"
-						onclick="deleteFee(${fee.id});" />
+					<s:if test="status=='0'">
+						<input type="button" value="启用" class="btn_start" onclick="startFee('<s:property value="id"/>');" disabled="disabled"/>
+						<input type="button" value="修改" class="btn_modify" onclick="editFee('<s:property value="id"/>');" disabled="disabled" />
+						<input type="button" value="删除" class="btn_delete" onclick="deleteFee('<s:property value="id"/>');" disabled="disabled" />
+					</s:if>
+					<s:if test="status=='1'">
+						<input type="button" value="启用" class="btn_start" onclick="startFee('<s:property value="id"/>');" />
+						<input type="button" value="修改" class="btn_modify" onclick="editFee('<s:property value="id"/>');" />
+						<input type="button" value="删除" class="btn_delete" onclick="deleteFee('<s:property value="id"/>');" />
+					</s:if>
+					<s:if test="status=='2'">
+						<input type="button" value="启用" class="btn_start" onclick="startFee('<s:property value="id"/>');" />
+						<input type="button" value="修改" class="btn_modify" onclick="editFee('<s:property value="id"/>');" />
+						<input type="button" value="删除" class="btn_delete" onclick="deleteFee('<s:property value="id"/>');" disabled="disabled"/>
+					</s:if>
 				</td>
 			</tr>
 		</s:iterator>
@@ -107,3 +116,28 @@
 	</s:if>
 	<s:else>下一页</s:else>
 </div>
+<script>
+function editFee(id){
+	var href="../fee/edit?fee.id="+id;
+	$.post(href,function(data){
+		$("#main").html(data);
+	});
+}
+
+function deleteFee(id){
+	var r = window.confirm("确定要删除此资费吗？");
+	if (r) {
+		$.post("../fee/delete",{'fee.id':id},function(data){
+			AT.postFrm("#sortFeeForm", callFunction);
+		});
+	}	
+}
+/**
+ * 回调函数
+ * @param data
+ * @return
+ */
+function callFunction(data){
+	$("#datapages").html(data);
+}
+</script>

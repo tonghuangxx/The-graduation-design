@@ -27,7 +27,7 @@
                         <input type="button" value="时长" class="sort_asc" onclick="sort(this);" id="base_duration"/>
                     </s:else>
                     </div>
-                    <input type="button" value="增加" class="btn_add" onclick="location.href='../control/feeAddControl?m.id=2&operation=c';"  />
+                    <input type="button" value="增加" class="btn_add" onclick="to_feeAdd();"  />
                 </div> 
                 <!--启用操作的操作提示-->
 	<div id="operate_result_info" class="operate_success">
@@ -135,16 +135,6 @@ function startFee(feeId) {
 		return false;
 	}
 }
-//删除
-function deleteFee(feeId) {
-	var r = window.confirm("确定要删除此资费吗？");
-	if (r == true) {
-		window.location = "../control/feeDelControl?m.id=2&operation=d&feeId="
-				+ feeId;
-	} else {
-		return false;
-	}
-}
 
 //保存结果的提示
 function showResultDiv(flag) {
@@ -180,5 +170,14 @@ function numberPage(pageNum){
 function callFunction(data){
 	$("#datapages").html(data);
 }
+
+/*点击增加*/
+function to_feeAdd(){
+	var href="../fee/add"
+		$.post(href,function(data){
+			$("#main").html(data);
+	});
+}
+
 </script>
 

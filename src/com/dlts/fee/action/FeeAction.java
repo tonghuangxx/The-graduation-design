@@ -1,10 +1,15 @@
 package com.dlts.fee.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.dlts.fee.domain.Fee;
 import com.dlts.fee.service.FeeService;
+import com.dlts.util.ContextUtil;
 import com.dlts.util.SpringUtil;
 import com.dlts.util.dao.DCriteriaPageSupport;
 import com.dlts.util.string.ConstantString;
+import com.dlts.web.action.ActionResult;
 import com.dlts.web.action.BaseAction;
 
 public class FeeAction extends BaseAction{
@@ -13,7 +18,14 @@ public class FeeAction extends BaseAction{
 	 * 显示index页面的内容
 	 */
 	private String indexList;
+	/**
+	 * 显示数据
+	 */
 	private DCriteriaPageSupport<Fee> feeList;
+	/**
+	 * 增加页面的数据
+	 */
+	private Fee fee;
 	/**
 	 * 跳转到显示页面
 	 * @return
@@ -44,6 +56,76 @@ public class FeeAction extends BaseAction{
 		return ConstantString.SUCCESS;
 	}
 	
+	/**
+	 * 跳转到增加页面
+	 * @return
+	 */
+	public String add(){
+		return ConstantString.SUCCESS;
+	}
+	/**
+	 * 添加操作
+	 */
+	public void addDo(){
+		response.setContentType("text/html;charset=utf-8");
+		boolean result = feeService.saveFee(fee);
+		ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "添加成功");
+		try {
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "添加失败");
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 跳转到修改页面
+	 * @return
+	 */
+	public String edit(){
+		fee = feeService.getFeeById(fee.getId());
+		return ConstantString.SUCCESS;
+	}
+	/**
+	 * 修改操作
+	 */
+	public void editDo(){
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			boolean result = feeService.updateFee(fee);
+			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "修改成功");
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "修改失败");
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 删除操作
+	 */
+	public void delete(){
+		response.setContentType("text/html;charset=utf-8");
+		boolean result = feeService.deleteFee(fee.getId());
+		ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "删除成功");
+		try {
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "删除失败");
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public String getIndexList() {
 		return indexList;
 	}
@@ -55,6 +137,14 @@ public class FeeAction extends BaseAction{
 	}
 	public void setFeeList(DCriteriaPageSupport<Fee> feeList) {
 		this.feeList = feeList;
+	}
+
+	public Fee getFee() {
+		return fee;
+	}
+
+	public void setFee(Fee fee) {
+		this.fee = fee;
 	}
 	
 }

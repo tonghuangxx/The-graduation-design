@@ -100,7 +100,7 @@
 		</div>
 	</div>
 	<div class="button_info clearfix">
-		<input type="button" value="保存" class="btn_save" id="send" onclick="addUser();"/>
+		<input type="button" value="保存" class="btn_save" id="send" onclick="addUserDo();"/>
 		<input type="button" value="取消" class="btn_save" onclick="cancel();" />
 	</div>
 </form>
@@ -231,7 +231,7 @@ $('#email').blur(function() {
 /**
  * 点击保存后
  */
-function addUser(){
+function addUserDo(){
 	$(':input').trigger('blur');
 	var j = 0; //判断是否有checkbox选中
 		var inputArray = document.getElementById("userAddForm").getElementsByTagName("input");

@@ -13,5 +13,17 @@
 		<action name="sort" class="com.dlts.fee.action.FeeAction" method="sort">
 			<result name="success">/fee/list.jsp</result>
 		</action>
+		<action name="add" class="com.dlts.fee.action.FeeAction" method="add">
+			<result name="success">/fee/fee_add.jsp</result>
+		</action>
+		<action name="addDo" class="com.dlts.fee.action.FeeAction" method="addDo">
+		</action>
+		<action name="edit" class="com.dlts.fee.action.FeeAction" method="edit">
+			<result name="success">/fee/fee_modi.jsp</result>
+		</action>
+		<action name="editDo" class="com.dlts.fee.action.FeeAction" method="editDo">
+		</action>
+		<action name="delete" class="com.dlts.fee.action.FeeAction" method="delete">
+		</action>
 	</package>
 </struts>        

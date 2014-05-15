@@ -162,9 +162,9 @@ INSERT INTO dlts_cost VALUES (1,'5.9元套餐',20,5.9,0.4,0,'5.9元20小时/月,
 INSERT INTO dlts_cost VALUES (2,'6.9元套餐',40,6.9,0.3,0,'6.9元40小时/月,超出部分0.3元/时',now(),now(),'2');
 INSERT INTO dlts_cost VALUES (3,'8.5元套餐',100,8.5,0.2,0,'8.5元100小时/月,超出部分0.2元/时',now(),now(),'2');
 INSERT INTO dlts_cost VALUES (4,'10.5元套餐',200,10.5,0.1,0,'10.5元200小时/月,超出部分0.1元/时',now(),now(),'3');
-INSERT INTO dlts_cost VALUES (5,'计时收费',null,null,0.5,0,'0.5元/时,不使用不收费',now(),now(),'1');
-INSERT INTO dlts_cost VALUES (6,'包月',null,20,null,0,'每月20元,不限制使用时间',now(),now(),'1');
-INSERT INTO dlts_cost VALUES (7,'包年',null,20,null,1,'每月20元,不限制使用时间',now(),now(),'1');
+INSERT INTO dlts_cost VALUES (5,'计时收费',0,0,0.5,0,'0.5元/时,不使用不收费',now(),now(),'1');
+INSERT INTO dlts_cost VALUES (6,'包月',0,20,0,0,'每月20元,不限制使用时间',now(),now(),'1');
+INSERT INTO dlts_cost VALUES (7,'包年',0,20,0,1,'每月20元,不限制使用时间',now(),now(),'1');
 =========================================================
 
 
