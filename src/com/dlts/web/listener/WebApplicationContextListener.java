@@ -6,6 +6,7 @@ import javax.servlet.ServletContextListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.dlts.util.ContextUtil;
+import com.dlts.util.InitData;
 import com.dlts.util.SpringUtil;
 
 /**
@@ -37,6 +38,7 @@ public class WebApplicationContextListener implements ServletContextListener {
 		String realPath=servletContextEvent.getServletContext().getRealPath("");
 		ContextUtil.setRealPath(realPath);
 		SpringUtil.setWac(WebApplicationContextUtils.getWebApplicationContext(servletContextEvent.getServletContext()));
+		InitData.webInit();
 		/*new Thread(new Runnable() {
 			
 			public void run() {

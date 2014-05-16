@@ -16,27 +16,7 @@ function showDetail(flag, a) {
 	} else
 		detailDiv.style.display = "none";
 }
-//重置密码
-function resetPwd() {
-	var j = 0; //判断是否有checkbox选中
-	//                document.getElementById("operate_result_info").style.display = "block";
-	var inputArray = document.getElementById("datalist").getElementsByTagName(
-			"input");
-	for ( var i = 1; i < inputArray.length; i++) {
-		if (inputArray[i].type == "checkbox") {
-			if (inputArray[i].checked) {
-				j++;
-			}
-		}
-	}
-	if (j != 1) {
-		alert("请选择一条数据！");
-	} else {
-		document.getElementById("mainform").action = "../user/uresetPwd";
-//		document.getElementById("mainform").submit();
-		$('#mainform').submit();
-	}
-}
+
 //删除
 function deleteAdmin(adminId) {
 	var r = window.confirm("确定要删除此管理员吗？");

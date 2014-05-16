@@ -4,9 +4,9 @@
         "http://struts.apache.org/dtds/struts-2.1.dtd">
 	<!--    用于控制有否权限去操作-->
 <struts>
-	<package name="admin" extends="default" namespace="/admin">
+	<package name="index" extends="default" namespace="/index">
 		<action name="main">
-			<result name="success">/main.jsp</result>
+			<result name="success">/index.jsp</result>
 		</action>
 		<!--		用户显示角色信息，正确跳到显示页面  无全限跳到无全限界面   错误跳到错误页面   -->
 <!--		<action name="roleListControl" class="com.tarena.netctoss.action.ControlAction"-->

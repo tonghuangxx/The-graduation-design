@@ -10,6 +10,7 @@ public class ConstantString {
 	public static final String SUCCESS = "success";
 	public static final String FALSE = "false";
 	public static final String LOGIN = "login";
+	public static final String MODULE_LIST = "moduleList";
 	/**
 	 * 操作成功
 	 */

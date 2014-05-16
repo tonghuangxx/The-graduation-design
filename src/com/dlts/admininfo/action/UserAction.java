@@ -2,16 +2,22 @@ package com.dlts.admininfo.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.dlts.admininfo.domain.AdminInfo;
 import com.dlts.admininfo.servcie.UserService;
-import com.dlts.adminrole.service.AdminRoleService;
+import com.dlts.adminrole.domain.AdminRole;
+import com.dlts.function.domain.Function;
+import com.dlts.module.domain.Module;
 import com.dlts.role.domain.Role;
 import com.dlts.role.service.RoleService;
 import com.dlts.util.ContextUtil;
+import com.dlts.util.InitData;
 import com.dlts.util.SpringUtil;
 import com.dlts.util.dao.DCriteriaPageSupport;
 import com.dlts.util.string.ConstantString;
@@ -25,7 +31,6 @@ import com.dlts.web.action.BaseAction;
 public class UserAction extends BaseAction{
 	private UserService userService = (UserService) SpringUtil.getWebApplicationContext().getBean("userService");
 	private RoleService roleService = (RoleService) SpringUtil.getWebApplicationContext().getBean("roleService");
-	private AdminRoleService adminRoleService = (AdminRoleService) SpringUtil.getWebApplicationContext().getBean("adminRoleService");
 	/**
 	 * 管理员表中数据
 	 */
@@ -60,14 +65,36 @@ public class UserAction extends BaseAction{
 	private String oldPwd;
 	
 	/**
-	 * 跳转到显示页面
+	 * 登录成功后加载数据
 	 * @return
 	 */
-	public String list(){
-		indexList=this.getIndexList();
-		rList = roleService.list();
+	public String index(){
+		String id = (String) request.getSession().getAttribute(ConstantString.ID);
+		List<AdminRole> arList = userService.getRoleByUserId(id);
+		Map<String,List<Function>> roleFunctionMap = InitData.getRoleFunctionMap();
+		Map<String,Module> moduleMap = new HashMap<String, Module>();
+		List<Function> funList = null;
+		List<Module> moduleList = new ArrayList<Module>();
+		for(AdminRole ar : arList){
+			funList = roleFunctionMap.get(ar.getRid());
+			if(funList!=null){
+				for (Function f : funList) {
+					Module module = InitData.getMenuFunCodeMap().get(f.getModuleId());
+					moduleMap.put(module.getId(), module);
+				}
+			}
+		}
+		for(Entry<String,Module> entry : moduleMap.entrySet()){
+			moduleList.add(entry.getValue());
+		}
+		Collections.sort(moduleList);
+		request.getSession().removeAttribute(ConstantString.MODULE_LIST);
+		request.getSession().setAttribute(ConstantString.MODULE_LIST, moduleList);
 		return ConstantString.SUCCESS;
 	}
+	
+	
+	
 	/**
 	 * 显示页面的数据
 	 * @return
@@ -110,6 +137,8 @@ public class UserAction extends BaseAction{
 			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE,"修改成功");
 			if(!result){
 				actionResult = new ActionResult(ConstantString.FAILURECODE,"修改失败");
+			}else{
+				InitData.initUserList();
 			}
 			PrintWriter out = response.getWriter();
 			out.print(ContextUtil.resultToJson(actionResult));
@@ -138,6 +167,8 @@ public class UserAction extends BaseAction{
 			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "添加成功");
 			if(!result){
 				actionResult = new ActionResult(ConstantString.FAILURECODE, "添加失败");
+			}else{
+				InitData.initUserList();
 			}
 			PrintWriter out = response.getWriter();
 			out.print(ContextUtil.resultToJson(actionResult));
@@ -152,6 +183,7 @@ public class UserAction extends BaseAction{
 	public void delete(){
 		adminInfo = userService.findAdminInfoById(adminInfo);
 		userService.deleteAdminInfo(adminInfo);
+		InitData.initUserList();
 	}
 	
 	/**
@@ -194,6 +226,8 @@ public class UserAction extends BaseAction{
 		try {
 			if(!result){
 				actionResult = new ActionResult(ConstantString.FAILURECODE, "修改失败,旧密码输入有误");
+			}else{
+				InitData.initUserList();
 			}
 			PrintWriter out = response.getWriter();
 			out.print(ContextUtil.resultToJson(actionResult));

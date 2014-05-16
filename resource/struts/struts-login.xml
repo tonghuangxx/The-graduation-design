@@ -13,7 +13,7 @@
 			method="testYZM">
 		</action>
 		<action name='login' class='com.dlts.login.action.LoginAction' method="login">
-			<result name='success'>/main.jsp</result>  <!-- 登录成功 -->
+			<result name='success'>/index.jsp</result>  <!-- 登录成功 -->
 			<result name='login'>/login/login.jsp</result> <!-- 登录失败 -->
 		</action>
 		<action name="loginOut" class='com.dlts.login.action.LoginAction' method="loginOut">

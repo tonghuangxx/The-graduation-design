@@ -14,7 +14,13 @@
 	<bean id="adminRoleService" parent="baseService" class="com.dlts.adminrole.service.AdminRoleService"></bean>
 	<!--角色service-->
 	<bean id="roleService" parent="baseService" class="com.dlts.role.service.RoleService"></bean>
-<!--	资费-->
+	<!--功能service-->
+	<bean id="functionService" parent="baseService" class="com.dlts.function.service.FunctionService"></bean>
+	<!--模块service-->
+	<bean id="moduleService" parent="baseService" class="com.dlts.module.service.ModuleService"></bean>
+	<!--角色功能service-->
+	<bean id="roleFunctionService" parent="baseService" class="com.dlts.rolefunction.service.RoleFunctionService"></bean>
+	<!--资费-->
 	<bean id="feeService" parent="baseService" class="com.dlts.fee.service.FeeService"></bean>
 
 </beans>

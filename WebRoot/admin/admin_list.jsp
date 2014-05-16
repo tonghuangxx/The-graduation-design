@@ -44,3 +44,12 @@
 <div id="datapages">
 	<jsp:include page="/admin/list.jsp"></jsp:include>
 </div>
+<script>
+//重置密码
+function resetPwd() {
+	var href="../user/updatePwd"
+		$.post(href,function(data){
+			$("#main").html(data);
+		});
+}
+</script>

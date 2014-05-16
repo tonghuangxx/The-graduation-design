@@ -1,14 +1,18 @@
 package com.dlts.role.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.dlts.function.domain.Function;
 /**
  * 角色实体类
  * @author CWB
@@ -26,6 +30,10 @@ public class Role implements Serializable{
 	 * 角色名字
 	 */
 	private String role_name;
+	/**
+	 * 角色对应的功能
+	 */
+	private List<Function> funList;
 	public Role() {
 		super();
 	}
@@ -67,6 +75,13 @@ public class Role implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	@Transient
+	public List<Function> getFunList() {
+		return funList;
+	}
+	public void setFunList(List<Function> funList) {
+		this.funList = funList;
 	}
 	
 }

@@ -18,17 +18,7 @@ alter table DLTS_ADMIN_INFO modify column ENROLLDATE DATETIME;
 update dlts_admin_info set enrolldate='2014-01-01' where id ='402881e645db3cc40145db3fd5e60000';
 select * from dlts_admin_info;
 
-insert into dlts_admin_info values(1,'dlts','F60598D5B3B5012DA811610A7D8CC0C1','cwb','13688997766',
-		'shiyl@sin.com','2013-05-22');
-insert into dlts_admin_info values(2,'admin','111111','lily','13688997766','shiyl@sin.com'
-   ,'2013-05-22 12:12:12');
-insert into dlts_admin_info values(3,'tom123','1234','tom','13688997766','shiyl@sin.com'
-   ,'2014-02-22');
-insert into dlts_admin_info values(4,'lbwn','1234','lb','13688997766','shiyl@sin.com'
-   ,'2013-05-22');
-   insert into dlts_admin_info values('543da','lbwn123','1234','lb','13688997766','shiyl@sin.com'
-   ,'2013-05-22');
-   
+insert into dlts_admin_info values('e18464c163904680bb124da8ed47704f','dlts','F60598D5B3B5012DA811610A7D8CC0C1','cwb','18766922216','979447668@sin.com','2013-05-22');
    
 --角色表
 CREATE TABLE DLTS_ROLE(
@@ -37,15 +27,14 @@ CREATE TABLE DLTS_ROLE(
 	constraint dlts_role_id_pk primary key(id)
 )engine=innodb;
 
-
-insert into dlts_role values(1,'超级管理');
-insert into dlts_role values(2,'角色管理');
-insert into dlts_role values(3,'资费管理');
-insert into dlts_role values(4,'帐务管理');
-insert into dlts_role values(5,'业务管理');
-insert into dlts_role values(6,'账单管理');
-insert into dlts_role values(7,'报表管理');
-insert into dlts_role values(8,'管理员管理');
+insert into dlts_role values('79b1cfc5195e4990b60b92e8595d838c','超级管理');
+insert into dlts_role values('17289f0071a94926b8029f5cdb148a7c','角色管理');
+insert into dlts_role values('d341c8e8a16a4a1ab31ede808b9b0911','资费管理');
+insert into dlts_role values('4d097cfdf86240e9939ecd5d2214f982','帐务管理');
+insert into dlts_role values('f745f07725d640bb89c1704449377141','业务管理');
+insert into dlts_role values('67c733b569bb45a79f0f5982c57a3f7a','账单管理');
+insert into dlts_role values('476a4edd35734eb385832ffe844b0afc','报表管理');
+insert into dlts_role values('9f73030dfd1944a0becde731b70facc1','管理员管理');
 
 --用户角色关系表
 CREATE TABLE dlts_user_role(
@@ -64,36 +53,14 @@ alter table dlts_user_role add constraint dlts_user_role_tid_fk foreign key(rid)
 select ar.id,ar.usid,ar.rid,ai.id,ai.admin_code,ai.password,ai.name,ai.telephone,ai.email,ai.enrolldate,r.id,r.role_name from dlts_admin_info ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id order by ai.enrolldate desc;
 
 --给一号管理员添加数据
-insert into dlts_user_role values(1,1,1);
-insert into dlts_user_role values(2,1,2);
-insert into dlts_user_role values(3,1,3);
-insert into dlts_user_role values(4,1,4);
-insert into dlts_user_role values(5,1,5);
-insert into dlts_user_role values(6,1,6);
-insert into dlts_user_role values(7,1,7);
-insert into dlts_user_role values(8,1,8);
---给二号管理员添加数据
-insert into dlts_user_role values(9,2,8);
---给三号管理员添加数据
-insert into dlts_user_role values(10,3,8);
---给四号管理员添加数据
-insert into dlts_user_role values(11,4,8);
-
-
---模块表
-CREATE TABLE dlts_module(
-	id varchar(32),
-	module_name varchar(20) not null,
-	constraint dlts_module_id_pk primary key(id)
-)engine=innodb;
-
-insert into dlts_module values(1,'角色');
-insert into dlts_module values(2,'资费');
-insert into dlts_module values(3,'帐务');
-insert into dlts_module values(4,'业务');
-insert into dlts_module values(5,'账单');
-insert into dlts_module values(6,'报表');
-insert into dlts_module values(7,'管理');
+insert into dlts_user_role values('e18464c163904680bb124da8ed47704f','e18464c163904680bb124da8ed47704f','79b1cfc5195e4990b60b92e8595d838c');
+insert into dlts_user_role values('fcb688b6510a41559dea2110c4435bb4','e18464c163904680bb124da8ed47704f','17289f0071a94926b8029f5cdb148a7c');
+insert into dlts_user_role values('d9aa3905fa934ac59b82d8a3f6065f11','e18464c163904680bb124da8ed47704f','d341c8e8a16a4a1ab31ede808b9b0911');
+insert into dlts_user_role values('d0d4b5262b57450fad2cdc542666570e','e18464c163904680bb124da8ed47704f','f745f07725d640bb89c1704449377141');
+insert into dlts_user_role values('127c577efab441c2ac41f8c5dcf1aab8','e18464c163904680bb124da8ed47704f','67c733b569bb45a79f0f5982c57a3f7a');
+insert into dlts_user_role values('f18b505bd224482dbcb729acbc6fc927','e18464c163904680bb124da8ed47704f','476a4edd35734eb385832ffe844b0afc');
+insert into dlts_user_role values('51216abc5a6f4615b2fa3b061a9d2613','e18464c163904680bb124da8ed47704f','9f73030dfd1944a0becde731b70facc1');
+insert into dlts_user_role values('2e395434afa74ee1abc79b0c3c1c295f','e18464c163904680bb124da8ed47704f','4d097cfdf86240e9939ecd5d2214f982');
 
 ##功能表
 create table dlts_function(
@@ -102,8 +69,33 @@ create table dlts_function(
 	name varchar(255),
 	action varchar(1000),
 	parentId varchar(32),
+	moduleId varchar(32),
 	constraint dlts_function_id_pk primary key(id)
 )engine=innodb;
+
+insert into dlts_function values('6cc0cdac947f42669d5508cbc438a20f',null,'角色操作',null,'0','979c435a126043c5af2c8a0967121e1d');
+insert into dlts_function values('cedd55caf0054872803b4b9443d43a9c',null,'资费操作',null,'0','8a413d26ca4345d68137a944a47f0766');
+insert into dlts_function values('3d1d0341892941d7b7a6770d20f07d2a',null,'管理员操作',null,'0','ccf01cb3d8fc441b81b4e6a8417f7233');
+insert into dlts_function values('fdd4c28eaff04a049c471c8ca5f53f2a',null,'修改信息',null,'0','d5d659c7bc124bcc81ef431cb99dbc43');
+insert into dlts_function values('bd5e15e0fa8e473b86da255b9a22f266',null,'修改密码',null,'0','6c7b939b422a43298a55feb1b26a3190');
+##还未插入
+insert into dlts_function('6e6307cdd9414e4fb27009c1d489d64c',null,'帐务操作',null,'0','');
+insert into dlts_function('a1970ae90d414a9d824e98fab27b32c1',null,'业务操作',null,'0','');
+insert into dlts_function('e42797cda42e44e59ca1be435597ecdc',null,'账单操作',null,'0','');
+insert into dlts_function('14b800c2cce445009b93e3b0752a6c49',null,'报表操作',null,'0','');
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ##角色功能表
 create table dlts_role_function(
@@ -114,6 +106,42 @@ create table dlts_role_function(
 	constraint dlts_role_function_roleId_fk foreign key(roleId) references dlts_role(id) on delete set null,
 	constraint dlts_role_function_functionId_fk foreign key(functionId) references dlts_function(id) on delete set null
 )engine=innodb;
+##超级管理员对应的function
+insert into dlts_role_function values('b55943627ef5478c8f3173358a903049','79b1cfc5195e4990b60b92e8595d838c','6cc0cdac947f42669d5508cbc438a20f');
+insert into dlts_role_function values('6ddfe1be0d364377ba302654d0ae0acc','79b1cfc5195e4990b60b92e8595d838c','cedd55caf0054872803b4b9443d43a9c');
+insert into dlts_role_function values('0470674205ae4326b8c028f2a3c25a23','79b1cfc5195e4990b60b92e8595d838c','3d1d0341892941d7b7a6770d20f07d2a');
+insert into dlts_role_function values('60e5cb0471c444ad86ace74799a336a0','79b1cfc5195e4990b60b92e8595d838c','fdd4c28eaff04a049c471c8ca5f53f2a');
+insert into dlts_role_function values('f84adc3c802b4e3f976f0cbc5fc5ed98','79b1cfc5195e4990b60b92e8595d838c','bd5e15e0fa8e473b86da255b9a22f266');
+##管理员对应的function
+insert into dlts_role_function values('5e58de405f3a48c7afb459c954aa7cb3','9f73030dfd1944a0becde731b70facc1','3d1d0341892941d7b7a6770d20f07d2a');
+insert into dlts_role_function values('a3020ef885f04ea296950d0e8119279d','9f73030dfd1944a0becde731b70facc1','fdd4c28eaff04a049c471c8ca5f53f2a');
+insert into dlts_role_function values('05e3afd56746416a89a796c1d7205c0d','9f73030dfd1944a0becde731b70facc1','bd5e15e0fa8e473b86da255b9a22f266');
+
+--模块表
+CREATE TABLE dlts_module(
+	id varchar(32),
+	module_name varchar(20) not null,
+	menucode varchar(100),
+	url varchar(500),
+	parentid varchar(32),
+	displayno int,
+	deleted int,
+	constraint dlts_module_id_pk primary key(id)
+)engine=innodb;
+
+insert into dlts_module values('979c435a126043c5af2c8a0967121e1d','角色管理','role_off','/role/listData','0',1,0);
+insert into dlts_module values('ccf01cb3d8fc441b81b4e6a8417f7233','管理员','admin_off','/user/listData','0',2,0);
+insert into dlts_module values('8a413d26ca4345d68137a944a47f0766','资费','fee_off','/fee/listData','0',3,0);
+insert into dlts_module values('67b5548595bb4cb797fa634a28ac3580','帐务');
+insert into dlts_module values('c89f98f64dc84efa82af44797fde4571','业务');
+insert into dlts_module values('10b336ca80ce47259f33ce04e83cff73','账单');
+insert into dlts_module values('c2112f8554a84d309eadd17aad493cc4','报表');
+insert into dlts_module values('2dc0919cdcec444abb57447520c607db','报表');
+insert into dlts_module values('d5d659c7bc124bcc81ef431cb99dbc43','个人信息','information_off','/user/updateInfo','0',8,0);
+insert into dlts_module values('6c7b939b422a43298a55feb1b26a3190','修改密码','password_off','/user/updatePwd','0',9,0);
+
+
+
 
 alter table dlts_user_role drop  foreign key dlts_role_function_roleId_fk;
 alter table dlts_user_role drop  foreign key dlts_role_function_functionId_fk;
@@ -123,22 +151,6 @@ alter table dlts_user_role add constraint dlts_user_role_tid_fk foreign key(rid)
 select count(*) from DLTS_ADMIN_INFO ai left outer join dlts_user_role ar on ar.usid=ai.id left outer join dlts_role r on ar.rid=r.id;
 
 
-select * from dlts_acl;
-select * from dlts_admin_info; 
-select * from dlts_role;
-select * from dlts_user_role where usid=3; 
-select * from dlts_module;
-select * from dlts_acl where mid=1;
-select * from (select rownum rn,id,admin_code,password,
-name,telephone,email,enrolldate from dlts_admin_info 
-					 where rownum<=4)  where rn>=3;
-					 
-select * from dlts_module m join dlts_role r on m.id=r.id join dlts_admin_info a  where m.id=1; 			
-
-alter system set processes=1000 scope=spfile;
-commit;
-select count(*) from v$process;
-select value from v$parameter where name='processes';
 
 
 --资费表   

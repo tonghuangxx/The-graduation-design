@@ -4,6 +4,9 @@
         "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="user" extends="default" namespace="/user">
+		<action name="index" class="com.dlts.admininfo.action.UserAction" method="index">
+			<result name="success">/index.jsp</result>
+		</action>
 		<action name="list" class="com.dlts.admininfo.action.UserAction" method="list">
 			<result name="success">/index.jsp</result>
 		</action>

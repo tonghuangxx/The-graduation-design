@@ -93,7 +93,7 @@
 	function login_crdCallback(json){
 		var data = eval('(' + json + ')'); 
 		if(data.statusCode==200){
-			window.location.href="<%=request.getContextPath()%>/admin/main";
+			window.location.href="<%=request.getContextPath()%>/user/index";
 		}else{
 			$("#login_message").html(data.message);
 		}	

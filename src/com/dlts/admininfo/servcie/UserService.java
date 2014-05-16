@@ -19,6 +19,8 @@ import com.dlts.base.service.BaseService;
 import com.dlts.role.domain.Role;
 import com.dlts.util.MD5Util;
 import com.dlts.util.dao.DCriteriaPageSupport;
+import com.dlts.util.string.ConstantString;
+import com.dlts.util.string.ValidateObject;
 
 public class UserService extends BaseService {
 	private static String ADMIN_CODE_FALSE="管理员账号重复";
@@ -329,5 +331,28 @@ public class UserService extends BaseService {
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * 获取所有的用户
+	 * @return
+	 */
+	public List<AdminInfo> getAll() {
+		DetachedCriteria dc = DetachedCriteria.forClass(AdminInfo.class);
+		return this.getDao().findAllByCriteria(dc);
+	}
+	
+	/**
+	 * 根据用户id查找所以用户角色
+	 * 
+	 * @param userid
+	 * @return
+	 */
+	public List<AdminRole> getRoleByUserId(String usid) {
+		DetachedCriteria dc = DetachedCriteria.forClass(AdminRole.class);
+		if (ValidateObject.hasValue(usid)) {
+			dc.add(Restrictions.eq("usid", usid));
+		}
+		return this.getDao().findAllByCriteria(dc);
 	}
 }

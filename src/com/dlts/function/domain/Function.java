@@ -36,6 +36,10 @@ public class Function {
 	 * 父功能id
 	 */
 	private String parentId;
+	/**
+	 * 模块id
+	 */
+	private String moduleId;
 	@Id
 	@GeneratedValue(generator = "uuidGenerator")
 	@GenericGenerator(name = "uuidGenerator", strategy = "uuid")
@@ -70,5 +74,35 @@ public class Function {
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
+	public String getModuleId() {
+		return moduleId;
+	}
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Function other = (Function) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
 	
 }
