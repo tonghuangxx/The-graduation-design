@@ -374,3 +374,4 @@ CREATE TABLE BILL_ITEM
  SERVICE_ID 	NUMBER(10) NOT NULL,
  COST 		NUMBER(13,2));
 
+select this_.id as id2_0_, this_.base_cost as base2_2_0_, this_.base_duration as base3_2_0_, this_.cost_type as cost4_2_0_, this_.creatime as creatime2_0_, this_.descr as descr2_0_, this_.name as name2_0_, this_.startime as startime2_0_, this_.status as status2_0_, this_.unit_cost as unit10_2_0_ from DLTS_COST this_ order by this_.base_cost asc, this_.creatime desc limit 3;

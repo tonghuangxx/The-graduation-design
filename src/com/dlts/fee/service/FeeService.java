@@ -71,8 +71,37 @@ public class FeeService extends BaseService{
 		return result;
 	}
 	
-	public DCriteriaPageSupport<Fee> sort(Fee form,int pageNo,int pageSize){
+	public DCriteriaPageSupport<Fee> sort(String[] con_sort,int pageNo,int pageSize){
 		DetachedCriteria dc = DetachedCriteria.forClass(Fee.class);
+		if(con_sort!=null&&!"".equals(con_sort)){
+			int size = con_sort.length;
+			for(int i = 0; i<size ; i++){
+				if(i==0&&"asc".equals(con_sort[i])){
+					dc.addOrder(Order.asc("base_cost"));
+					break;
+				}
+				if(i==0&&"desc".equals(con_sort[i])){
+					dc.addOrder(Order.desc("base_cost"));
+					break;
+				}
+				if(i==1&&"asc".equals(con_sort[i])){
+					dc.addOrder(Order.asc("unit_cost"));
+					break;
+				}
+				if(i==1&&"desc".equals(con_sort[i])){
+					dc.addOrder(Order.desc("unit_cost"));
+					break;
+				}
+				if(i==2&&"asc".equals(con_sort[i])){
+					dc.addOrder(Order.asc("base_duration"));
+					break;
+				}
+				if(i==2&&"desc".equals(con_sort[i])){
+					dc.addOrder(Order.desc("base_duration"));
+					break;
+				}
+			}
+		}
 		dc.addOrder(Order.desc("creatime"));
 		return this.dao.findPageByCriteria(dc, pageSize, pageNo);
 	}

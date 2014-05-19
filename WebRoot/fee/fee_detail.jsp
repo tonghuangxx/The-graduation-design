@@ -44,9 +44,9 @@
                     <span>元/小时</span>
                 </div>
                 <div class="text_info clearfix"><span>创建时间：</span></div>
-                <div class="input_info"><input type="text"  class="readonly" readonly value="${fee.creatime}" /></div>      
+                <div class="input_info"><input type="text"  class="readonly" readonly value="<s:date name="fee.creatime" format="yyyy-MM-dd HH:mm:ss"/>" /></div>      
                 <div class="text_info clearfix"><span>启动时间：</span></div>
-                <div class="input_info"><input type="text"  class="readonly" readonly value="${fee.startime}" /></div>      
+                <div class="input_info"><input type="text"  class="readonly" readonly value="<s:date name="fee.startime" format="yyyy-MM-dd HH:mm:ss"/>" /></div>      
                 <div class="text_info clearfix"><span>资费说明：</span></div>
                 <div class="input_info_high">
                     <textarea class="width300 height70 readonly" readonly><s:property value="fee.descr"/> </textarea>

@@ -7,9 +7,12 @@
 	<!--排序-->
                 <div class="search_add">
                     <div>
-                    	<input type="button" value="月租" class="sort_asc" onclick="sort(this);" name="form.base_cost" />
-                        <input type="button" value="基费" class="sort_asc" onclick="sort(this);" name="form.unit_cost" />
-                        <input type="button" value="时长" class="sort_asc" onclick="sort(this);" name="form.base_duration" />
+                    	<input type="button" value="月租" class="sort_asc" onclick="sort(this);" id="base_cost"/>
+                        <input type="button" value="单费" class="sort_asc" onclick="sort(this);" id="unit_cost" />
+                        <input type="button" value="时长" class="sort_asc" onclick="sort(this);" id="base_duration"/>
+                        <input type="hidden" value="" name="con_sort" id="base_cost_sort"/>
+                        <input type="hidden" value="" name="con_sort" id="unit_cost_sort"/>
+                        <input type="hidden" value="" name="con_sort" id="base_duration_sort"/>
                     </div>
                     <input type="button" value="增加" class="btn_add" onclick="to_feeAdd();"  />
                 </div> 
@@ -31,11 +34,40 @@
 function sort(btnObj) {
     if (btnObj.className == "sort_desc"){
         btnObj.className = "sort_asc";
-        AT.postFrm("#sortFeeForm", callFunction);
+        if($(btnObj).attr("id")=="base_cost"){
+            $("#base_cost_sort").val("asc");
+            $("#unit_cost_sort").val("");
+            $("#base_duration_sort").val("");
+        }
+        if($(btnObj).attr("id")=="unit_cost"){
+            $("#base_cost_sort").val("");
+            $("#unit_cost_sort").val("asc");
+            $("#base_duration_sort").val("");
+        }
+        if($(btnObj).attr("id")=="base_duration"){
+            $("#base_cost_sort").val("");
+        	$("#unit_cost_sort").val("");
+            $("#base_duration_sort").val("asc");
+        }
     }else{
         btnObj.className = "sort_desc";
-        AT.postFrm("#sortFeeForm", callFunction);
+        if($(btnObj).attr("id")=="base_cost"){
+        	$("#base_cost_sort").val("desc");
+            $("#unit_cost_sort").val("");
+            $("#base_duration_sort").val("");
+        }
+        if($(btnObj).attr("id")=="unit_cost"){
+        	$("#base_cost_sort").val("");
+            $("#unit_cost_sort").val("desc");
+            $("#base_duration_sort").val("");
+        }
+        if($(btnObj).attr("id")=="base_duration"){
+        	$("#base_cost_sort").val("");
+            $("#unit_cost_sort").val("");
+            $("#base_duration_sort").val("desc");
+        }
     }
+        AT.postFrm("#sortFeeForm", callFunction);
 }
 /**
  * 回调函数

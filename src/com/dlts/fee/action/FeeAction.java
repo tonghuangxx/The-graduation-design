@@ -27,9 +27,9 @@ public class FeeAction extends BaseAction{
 	 */
 	private Fee fee;
 	/**
-	 * 用于显示页面的排序
+	 * 显示界面的排序条件
 	 */
-	private Fee form;
+	private String[] con_sort;
 	/**
 	 * 跳转到显示页面
 	 * @return
@@ -54,7 +54,7 @@ public class FeeAction extends BaseAction{
 	 * @return
 	 */
 	public String sort(){
-		feeList = feeService.sort(form,pageNum, numPerPage);
+		feeList = feeService.sort(con_sort,pageNum, numPerPage);
 		total = feeList.getTotalCount();
 		countPageCount();
 		return ConstantString.SUCCESS;
@@ -161,12 +161,13 @@ public class FeeAction extends BaseAction{
 		this.fee = fee;
 	}
 
-	public Fee getForm() {
-		return form;
+	public String[] getCon_sort() {
+		return con_sort;
 	}
 
-	public void setForm(Fee form) {
-		this.form = form;
+	public void setCon_sort(String[] conSort) {
+		con_sort = conSort;
 	}
+
 	
 }
