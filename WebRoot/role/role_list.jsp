@@ -1,16 +1,17 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@taglib uri="/struts-tags" prefix="s" %>
-<form action="" method="post">
-	<!--查询-->
+<form action="<%=request.getContextPath() %>/role/list" method="post" id="roleForm">
+	<input type="hidden" value="${ pageNum}" name="pageNum" id="pageNum" />
+	<input type="hidden" value="${numPerPage}" name="numPerPage" id="numPerPage" />
+</form>
 	<div class="search_add">
 		<input type="button" value="增加" class="btn_add"
 			onclick="to_roleAdd();" />
 	</div>
 	<!--删除的操作提示-->
 	<div id="operate_result_info" class="operate_success">
-		<img src="../images/close.png" onclick="this.parentNode.style.display='none';" />删除成功！</div>
+		<img src="../images/close.png" onclick="this.parentNode.style.display='none';" /><span id="infoSpan"></span></div>
 	<!--删除错误！该角色被使用，不能删除。-->
-</form>
 <div id="datapages">
 	<jsp:include page="/role/list.jsp"></jsp:include>
 </div>
@@ -18,9 +19,21 @@
             function deleteRole(id) {
                 var r = window.confirm("确定要删除此角色吗？");
                 if(r){
-                			location.href='../control/roleDelControl?m.id=1&operation=d&adminId='+id;
-                document.getElementById("operate_result_info").style.display = "block";
+                	$.post("../role/delete",{'role.id':id},function(json){
+                    	var data = eval("("+json+")"); 
+                    	document.getElementById("infoSpan").innerHTML=data.message;
+               			document.getElementById("operate_result_info").style.display = "block";
+            			AT.postFrm("#roleForm", callFunction);
+            		});
                 }
+            }
+            /**
+             * 回调函数
+             * @param data
+             * @return
+             */
+            function callFunction(data){
+            	$("#datapages").html(data);
             }
             function to_roleAdd(){
             	var href="../role/add"

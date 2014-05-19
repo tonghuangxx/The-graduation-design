@@ -27,6 +27,10 @@ public class FeeAction extends BaseAction{
 	 */
 	private Fee fee;
 	/**
+	 * 用于显示页面的排序
+	 */
+	private Fee form;
+	/**
 	 * 跳转到显示页面
 	 * @return
 	 */
@@ -50,7 +54,7 @@ public class FeeAction extends BaseAction{
 	 * @return
 	 */
 	public String sort(){
-		feeList = feeService.list(pageNum, numPerPage);
+		feeList = feeService.sort(form,pageNum, numPerPage);
 		total = feeList.getTotalCount();
 		countPageCount();
 		return ConstantString.SUCCESS;
@@ -125,6 +129,16 @@ public class FeeAction extends BaseAction{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 显示某条资费的具体信息
+	 * @return
+	 */
+	public String detail(){
+		numPerPage = this.getNumPerPage();
+		pageNum = this.getPageNum();
+		fee = feeService.getFeeById(fee.getId());
+		return ConstantString.SUCCESS;
+	}
 	
 	public String getIndexList() {
 		return indexList;
@@ -145,6 +159,14 @@ public class FeeAction extends BaseAction{
 
 	public void setFee(Fee fee) {
 		this.fee = fee;
+	}
+
+	public Fee getForm() {
+		return form;
+	}
+
+	public void setForm(Fee form) {
+		this.form = form;
 	}
 	
 }

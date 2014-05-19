@@ -35,7 +35,7 @@
 					<s:property value="#st.count"/>
 				</td>
 				<td>
-					<a href="feeDetail?feeId=${fee.id}"><s:property value="name"/></a>
+					<a href="javascript:void(0);" onclick="to_feeDetail('<s:property value="id"/>');"><s:property value="name"/></a>
 				</td>
 				<td>
 					<s:property value="base_duration"/>小时
@@ -117,6 +117,15 @@
 	<s:else>下一页</s:else>
 </div>
 <script>
+function to_feeDetail(id){
+	var numPerPage = $("#numPerPage").val();
+	var pageNum = $("#pageNum").val();
+	var href="../fee/detail?fee.id="+id+"&numPerPage="+numPerPage+"&pageNum="+pageNum;
+	$.post(href,function(data){
+		$("#main").html(data);
+	})
+}
+
 function editFee(id){
 	var href="../fee/edit?fee.id="+id;
 	$.post(href,function(data){
@@ -132,12 +141,5 @@ function deleteFee(id){
 		});
 	}	
 }
-/**
- * 回调函数
- * @param data
- * @return
- */
-function callFunction(data){
-	$("#datapages").html(data);
-}
+
 </script>

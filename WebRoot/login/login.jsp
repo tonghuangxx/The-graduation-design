@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="<%=request.getContextPath() %>/js/tool.js"></script>
 	</head>
 	<body class="index">
-		<form action="login" method="post" id="mainform" onsubmit="return AT.postFrm(this,login_crdCallback)">
+		<form action="<%=request.getContextPath() %>/login/login" method="post" id="mainform" onsubmit="return AT.postFrm(this,login_crdCallback)">
 			<div class="login_box">
 				<table>
 					<tr>

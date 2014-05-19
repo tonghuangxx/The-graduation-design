@@ -11,13 +11,16 @@
 		<!-- 判断验证码 -->
 		<action name="code" class="com.dlts.login.action.LoginAction"
 			method="testYZM">
+			<interceptor-ref name="loginStrack"></interceptor-ref>
 		</action>
 		<action name='login' class='com.dlts.login.action.LoginAction' method="login">
+			<interceptor-ref name="loginStrack"></interceptor-ref>
 			<result name='success'>/index.jsp</result>  <!-- 登录成功 -->
 			<result name='login'>/login/login.jsp</result> <!-- 登录失败 -->
 		</action>
 		<action name="loginOut" class='com.dlts.login.action.LoginAction' method="loginOut">
-		<result name="success">/login/login.jsp</result>
+			<interceptor-ref name="loginStrack"></interceptor-ref>
+			<result name="success">/login/login.jsp</result>
 		</action>
 	</package>
 </struts>        

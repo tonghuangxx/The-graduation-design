@@ -4,14 +4,25 @@
         "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="role" extends="default" namespace="/role">
-		<action name="listData" class="com.dlts.role.action.RoleActioin" method="listData">
+		<action name="listData" class="com.dlts.role.action.RoleAction" method="listData">
 			<result name="success">/role/role_list.jsp</result>
 		</action>
-		<action name="list" class="com.dlts.role.action.RoleActioin" method="list">
+		<action name="list" class="com.dlts.role.action.RoleAction" method="list">
 			<result name="success">/role/list.jsp</result>
 		</action>
-		<action name="add" class="com.dlts.role.action.RoleActioin" method="add">
+		<action name="add" class="com.dlts.role.action.RoleAction" method="add">
 			<result name="success">/role/role_add.jsp</result>
+		</action>
+		<action name="addDo" class="com.dlts.role.action.RoleAction" method="addDo">
+		</action>
+		<action name="checkRole_name" class="com.dlts.role.action.RoleAction" method="checkRole_name">
+		</action>
+		<action name="delete" class="com.dlts.role.action.RoleAction" method="delete">
+		</action>
+		<action name="edit" class="com.dlts.role.action.RoleAction" method="edit">
+			<result name="success">/role/role_modi.jsp</result>
+		</action>
+		<action name="editDo" class="com.dlts.role.action.RoleAction" method="editDo">
 		</action>
 	</package>
 </struts>

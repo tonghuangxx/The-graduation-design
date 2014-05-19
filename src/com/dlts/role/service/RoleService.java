@@ -33,7 +33,7 @@ public class RoleService extends BaseService {
 			funList = r.getFunList()==null?new ArrayList<Function>():r.getFunList();
 			for(int j = 0; j<rfListSize ;j++){
 				Object[] o = (Object[]) rfList.get(j);
-				if(o[7].equals(r.getId())){
+				if(r.getId().equals(o[7])){
 					function = new Function();
 					function.setId((String) o[0]);
 					function.setCode((String) o[1]);
@@ -100,6 +100,7 @@ public class RoleService extends BaseService {
 				roleFunction.setFunctionId(fd);
 				this.dao.saveIObject(roleFunction);
 			}
+			result = true;
 		}
 		return result;
 	}
@@ -113,7 +114,7 @@ public class RoleService extends BaseService {
 		StringBuffer hql = new StringBuffer( "from Role where 1=1");
 		List<Object> list = new ArrayList<Object>();
 		if(id!=null&&!"".equals(id)){
-			hql.append(" and id=?");
+			hql.append(" and id<>?");
 			list.add(id);
 		}
 		if(role_name!=null&&!"".equals(role_name)){
@@ -121,7 +122,7 @@ public class RoleService extends BaseService {
 			list.add(role_name);
 		}
 		List<Role> roleList = this.dao.findAllyHql(hql.toString(),list.toArray());
-		if(roleList==null||roleList.size()<=0){
+		if(roleList!=null&&!"".equals(roleList)&&roleList.size()>0){
 			result = ROLE_NAME_FAILE;
 		}
 		return result;
@@ -135,5 +136,68 @@ public class RoleService extends BaseService {
 		String hql = "from Role where role_name = ?";
 		List<Role> list =  this.dao.findAllyHql(hql, new Object[]{role_name});
 		return list==null||"".equals(list)?null:list.get(0);
+	}
+	/**
+	 * 删除数据
+	 * @param role
+	 * @return
+	 */
+	public boolean deleteRole(Role role){
+		boolean result = false;
+		if(role!=null){
+			this.dao.deleteIObject(role);
+			result = true;
+		}
+		return result;
+	}
+	/**
+	 * 根据id获取数据
+	 * @param id
+	 * @return
+	 */
+	public Role getRoleById(String id){
+		return (Role) this.dao.getIObjectByPK(Role.class, id);
+	}
+	/**
+	 * 根据角色id删除数据
+	 * @param roleId
+	 * @return
+	 */
+	public boolean deleteRoleFunctionByRoleId(String roleId){
+		boolean result = false;
+		String hql = "delete from RoleFunction where roleId=?";
+		if(roleId!=null&&!"".equals(roleId)){
+			this.dao.execByHQL(hql, new Object[]{roleId});
+			result = true;
+		}
+		return result;
+	}
+	/**
+	 * 更新角色以及该角色对应的功能
+	 * @param role
+	 * @param fid
+	 * @return
+	 */
+	public boolean updateRole(Role role,String[] fid){
+		boolean result = false;
+		if(fid!=null&&!"".equals(fid)){
+			this.dao.updateIObject(role);
+			result = updateRoleFunction(role,fid);
+		}
+		return result;
+	}
+	/**
+	 * 更新角色功能表
+	 * @param role
+	 * @param fid
+	 * @return
+	 */
+	public boolean updateRoleFunction(Role role,String[] fid){
+		boolean result = false;
+		result = deleteRoleFunctionByRoleId(role.getId());
+		if(result){
+			result = saveRoleFunction(role, fid);
+		}
+		return result;
 	}
 }

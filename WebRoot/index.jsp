@@ -9,8 +9,13 @@
         <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath()%>/styles/global_color.css" /> 
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.4.min.js"></script>
         <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/tool.js"></script>   
-        <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.validate.js"></script>    
-    </head>
+        <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.validate.js"></script>
+		<style type="text/css">
+			.displayOK {
+				color: green;
+			}
+		</style>
+	</head>
     <body >
     	<input name="indexList" value="${indexList }" id="indexList" type="hidden"/>
 		<!--Logo区域开始-->

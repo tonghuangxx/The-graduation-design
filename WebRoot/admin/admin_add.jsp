@@ -127,8 +127,7 @@ $('#admin_code').blur(function() {
 				function(json) {
 					var data = eval('(' + json + ')'); 
 					if(data.statusCode==200){
-						$('#adminCodeLabel').removeClass('error_msg')
-						.addClass('displayOK').html('ok');
+						$('#adminCodeLabel').removeClass('error_msg').addClass('displayOK').html('ok');
 					}else{
 						$('#adminCodeLabel').addClass("error_msg ").html(data.message);
 					}

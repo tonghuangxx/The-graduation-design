@@ -70,4 +70,10 @@ public class FeeService extends BaseService{
 		}
 		return result;
 	}
+	
+	public DCriteriaPageSupport<Fee> sort(Fee form,int pageNo,int pageSize){
+		DetachedCriteria dc = DetachedCriteria.forClass(Fee.class);
+		dc.addOrder(Order.desc("creatime"));
+		return this.dao.findPageByCriteria(dc, pageSize, pageNo);
+	}
 }

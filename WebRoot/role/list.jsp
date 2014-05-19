@@ -29,9 +29,9 @@
 					</td>
 					<td>
 						<input type="button" value="修改" class="btn_modify"
-							onclick="" />
+							onclick="editRole('<s:property value="#c.id" />');" />
 						<input type="button" value="删除" class="btn_delete"
-							onclick="deleteRole();" />
+							onclick="deleteRole('<s:property value="#c.id" />');" />
 					</td>
 				</tr>
 			</s:iterator>
@@ -73,6 +73,15 @@ function roleNumberPage(pageNum){
 	var href = "../role/list?pageNum="+pageNum;
 	$.post(href,function(data){
 		$("#datapages").html(data);
+	});
+}
+/**
+ * 点击修改
+ */
+function editRole(id){
+	var href = "../role/edit?role.id="+id;
+	$.post(href,function(data){
+		$("#main").html(data);
 	});
 }
 </script>
