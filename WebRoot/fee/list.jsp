@@ -59,9 +59,6 @@
 				</td>
 				<td>
 					<s:if test="status=='0'">
-						<input type="button" value="启用" class="btn_start" onclick="startFee('<s:property value="id"/>');" disabled="disabled"/>
-						<input type="button" value="修改" class="btn_modify" onclick="editFee('<s:property value="id"/>');" disabled="disabled" />
-						<input type="button" value="删除" class="btn_delete" onclick="deleteFee('<s:property value="id"/>');" disabled="disabled" />
 					</s:if>
 					<s:if test="status=='1'">
 						<input type="button" value="启用" class="btn_start" onclick="startFee('<s:property value="id"/>');" />
@@ -141,5 +138,13 @@ function deleteFee(id){
 		});
 	}	
 }
-
+//启用
+function startFee(id) {
+	var r = window.confirm("确定要启用此资费吗？资费启用后将不能修改和删除。");
+	if (r) {
+		$.post("../fee/start",{'fee.id':id},function(data){
+			AT.postFrm("#sortFeeForm", callFunction);
+		});
+	}	
+}
 </script>

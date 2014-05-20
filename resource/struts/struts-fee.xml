@@ -25,6 +25,8 @@
 		</action>
 		<action name="delete" class="com.dlts.fee.action.FeeAction" method="delete">
 		</action>
+		<action name="start" class="com.dlts.fee.action.FeeAction" method="start">
+		</action>
 		<action name="detail" class="com.dlts.fee.action.FeeAction" method="detail">
 			<result name="success">/fee/fee_detail.jsp</result>
 		</action>

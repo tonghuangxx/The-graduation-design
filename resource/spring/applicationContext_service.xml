@@ -22,5 +22,7 @@
 	<bean id="roleFunctionService" parent="baseService" class="com.dlts.rolefunction.service.RoleFunctionService"></bean>
 	<!--资费-->
 	<bean id="feeService" parent="baseService" class="com.dlts.fee.service.FeeService"></bean>
+	<!--账务-->
+	<bean id="accountService" parent="baseService" class="com.dlts.account.service.AccountService"></bean>
 
 </beans>

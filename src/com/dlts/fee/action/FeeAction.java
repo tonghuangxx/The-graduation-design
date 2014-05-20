@@ -130,6 +130,25 @@ public class FeeAction extends BaseAction{
 		}
 	}
 	/**
+	 * 启用资费
+	 */
+	public void start(){
+		response.setContentType("text/html;charset=utf-8");
+		boolean result = feeService.updateFeeStart(fee.getId());
+		ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "启用成功");
+		try {
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "启用失败");
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * 显示某条资费的具体信息
 	 * @return
 	 */

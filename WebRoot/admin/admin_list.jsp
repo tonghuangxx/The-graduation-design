@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ include file="/taglibs.jsp" %>
-<script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/adminlist.js"></script>
 <div class="search_add">
 	<form action="<%=request.getContextPath() %>/user/search" method="post"
 		id="searchForm">

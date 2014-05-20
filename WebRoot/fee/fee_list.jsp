@@ -77,16 +77,6 @@ function sort(btnObj) {
 function callFunction(data){
 	$("#datapages").html(data);
 }
-//启用
-function startFee(feeId) {
-	var r = window.confirm("确定要启用此资费吗？资费启用后将不能修改和删除。");
-	if (r) {
-		location.href = "../control/feeStartControl?m.id=2&operation=u&feeId="
-				+ feeId;
-	} else {
-		return false;
-	}
-}
 
 //保存结果的提示
 function showResultDiv(flag) {

@@ -105,4 +105,17 @@ public class FeeService extends BaseService{
 		dc.addOrder(Order.desc("creatime"));
 		return this.dao.findPageByCriteria(dc, pageSize, pageNo);
 	}
+	/**
+	 * 启用资费
+	 * @param id
+	 * @return
+	 */
+	public boolean updateFeeStart(String id){
+		boolean result = false;
+		if(id!=null&&!"".equals(id)){
+			String hql = "update Fee set status=? where id=?";
+			this.dao.execByHQL(hql, new Object[]{'0',id});
+		}
+		return result;
+	}
 }
