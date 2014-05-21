@@ -20,9 +20,17 @@
 	<bean id="moduleService" parent="baseService" class="com.dlts.module.service.ModuleService"></bean>
 	<!--角色功能service-->
 	<bean id="roleFunctionService" parent="baseService" class="com.dlts.rolefunction.service.RoleFunctionService"></bean>
-	<!--资费-->
+	<!--资费service-->
 	<bean id="feeService" parent="baseService" class="com.dlts.fee.service.FeeService"></bean>
-	<!--账务-->
+	<!--账务service-->
 	<bean id="accountService" parent="baseService" class="com.dlts.account.service.AccountService"></bean>
+	<!--服务器service-->
+	<bean id="hostService" parent="baseService" class="com.dlts.host.service.HostService"></bean>
+	<!--业务service-->
+	<bean id="serviceService" parent="baseService" class="com.dlts.service.service.ServiceService">
+		<property name="accountService" ref="accountService"></property>
+		<property name="feeService" ref="feeService"></property>
+		<property name="hostService" ref="hostService"></property>
+	</bean>
 
 </beans>

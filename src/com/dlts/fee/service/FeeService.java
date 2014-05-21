@@ -70,7 +70,13 @@ public class FeeService extends BaseService{
 		}
 		return result;
 	}
-	
+	/**
+	 * 排序
+	 * @param con_sort
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
 	public DCriteriaPageSupport<Fee> sort(String[] con_sort,int pageNo,int pageSize){
 		DetachedCriteria dc = DetachedCriteria.forClass(Fee.class);
 		if(con_sort!=null&&!"".equals(con_sort)){
@@ -113,9 +119,19 @@ public class FeeService extends BaseService{
 	public boolean updateFeeStart(String id){
 		boolean result = false;
 		if(id!=null&&!"".equals(id)){
-			String hql = "update Fee set status=? where id=?";
-			this.dao.execByHQL(hql, new Object[]{'0',id});
+			String hql = "update Fee set status=?,startime=? where id=?";
+			this.dao.execByHQL(hql, new Object[]{'0',new Date(),id});
 		}
 		return result;
 	}
+	
+	/**
+	 * 获取所有资费
+	 * @return
+	 */
+	public DCriteriaPageSupport<Fee> getAll(){
+		DetachedCriteria dc = DetachedCriteria.forClass(Fee.class);
+		return this.dao.findPageByCriteria(dc);
+	}
+	
 }

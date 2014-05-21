@@ -13,6 +13,7 @@
 	<include file="struts/struts-fee.xml" />
 	<include file="struts/struts-role.xml"></include>
 	<include file="struts/struts-account.xml"></include>
+	<include file="struts/struts-service.xml"></include>
 <!--	<include file="struts/struts-admin.xml"></include>-->
 <!--	<include file="struts/struts-validName.xml"></include>-->
 </struts>

@@ -79,8 +79,8 @@ insert into dlts_function values('3d1d0341892941d7b7a6770d20f07d2a',null,'管理
 insert into dlts_function values('fdd4c28eaff04a049c471c8ca5f53f2a',null,'修改信息',null,'0','d5d659c7bc124bcc81ef431cb99dbc43');
 insert into dlts_function values('bd5e15e0fa8e473b86da255b9a22f266',null,'修改密码',null,'0','6c7b939b422a43298a55feb1b26a3190');
 insert into dlts_function values('6e6307cdd9414e4fb27009c1d489d64c',null,'帐务操作',null,'0','67b5548595bb4cb797fa634a28ac3580');
+insert into dlts_function values('a1970ae90d414a9d824e98fab27b32c1',null,'业务操作',null,'0','c89f98f64dc84efa82af44797fde4571');
 ##还未插入
-insert into dlts_function values('a1970ae90d414a9d824e98fab27b32c1',null,'业务操作',null,'0','');
 insert into dlts_function values('e42797cda42e44e59ca1be435597ecdc',null,'账单操作',null,'0','');
 insert into dlts_function values('14b800c2cce445009b93e3b0752a6c49',null,'报表操作',null,'0','');
 
@@ -133,10 +133,9 @@ insert into dlts_module values('979c435a126043c5af2c8a0967121e1d','角色管理'
 insert into dlts_module values('ccf01cb3d8fc441b81b4e6a8417f7233','管理员','admin_off','/user/listData','0',2,0);
 insert into dlts_module values('8a413d26ca4345d68137a944a47f0766','资费','fee_off','/fee/listData','0',3,0);
 insert into dlts_module values('67b5548595bb4cb797fa634a28ac3580','帐务','account_off','/account/listData','0',4,0);
-insert into dlts_module values('c89f98f64dc84efa82af44797fde4571','业务');
+insert into dlts_module values('c89f98f64dc84efa82af44797fde4571','业务','service_off','/service/listData','0',5,0);
 insert into dlts_module values('10b336ca80ce47259f33ce04e83cff73','账单');
 insert into dlts_module values('c2112f8554a84d309eadd17aad493cc4','报表');
-insert into dlts_module values('2dc0919cdcec444abb57447520c607db','报表');
 insert into dlts_module values('d5d659c7bc124bcc81ef431cb99dbc43','个人信息','information_off','/user/updateInfo','0',8,0);
 insert into dlts_module values('6c7b939b422a43298a55feb1b26a3190','修改密码','password_off','/user/updatePwd','0',9,0);
 
@@ -170,13 +169,13 @@ CREATE TABLE DLTS_COST(
     COST_TYPE CHAR(1),
     CONSTRAINT DLTS_COST_ID_PK PRIMARY KEY(id)
  )engine=innodb;
-INSERT INTO dlts_cost VALUES (1,'5.9元套餐',20,5.9,0.4,0,'5.9元20小时/月,超出部分0.4元/时',now(),now(),'2');
-INSERT INTO dlts_cost VALUES (2,'6.9元套餐',40,6.9,0.3,0,'6.9元40小时/月,超出部分0.3元/时',now(),now(),'2');
-INSERT INTO dlts_cost VALUES (3,'8.5元套餐',100,8.5,0.2,0,'8.5元100小时/月,超出部分0.2元/时',now(),now(),'2');
-INSERT INTO dlts_cost VALUES (4,'10.5元套餐',200,10.5,0.1,0,'10.5元200小时/月,超出部分0.1元/时',now(),now(),'3');
-INSERT INTO dlts_cost VALUES (5,'计时收费',0,0,0.5,0,'0.5元/时,不使用不收费',now(),now(),'1');
-INSERT INTO dlts_cost VALUES (6,'包月',0,20,0,0,'每月20元,不限制使用时间',now(),now(),'1');
-INSERT INTO dlts_cost VALUES (7,'包年',0,20,0,1,'每月20元,不限制使用时间',now(),now(),'1');
+INSERT INTO dlts_cost VALUES ('1','5.9元套餐',20,5.9,0.4,0,'5.9元20小时/月,超出部分0.4元/时',now(),now(),'2');
+INSERT INTO dlts_cost VALUES ('2','6.9元套餐',40,6.9,0.3,0,'6.9元40小时/月,超出部分0.3元/时',now(),now(),'2');
+INSERT INTO dlts_cost VALUES ('3','8.5元套餐',100,8.5,0.2,0,'8.5元100小时/月,超出部分0.2元/时',now(),now(),'2');
+INSERT INTO dlts_cost VALUES ('4','10.5元套餐',200,10.5,0.1,0,'10.5元200小时/月,超出部分0.1元/时',now(),now(),'3');
+INSERT INTO dlts_cost VALUES ('5','计时收费',0,0,0.5,0,'0.5元/时,不使用不收费',now(),now(),'1');
+INSERT INTO dlts_cost VALUES ('6','包月',0,20,0,0,'每月20元,不限制使用时间',now(),now(),'1');
+INSERT INTO dlts_cost VALUES ('7','包年',0,20,0,1,'每月20元,不限制使用时间',now(),now(),'1');
 
 
 
@@ -246,54 +245,42 @@ VALUES('7',NULL,'admin7','F60598D5B3B5012DA811610A7D8CC0C1',1,'weixiaobao','2000
 
 
 --UNIX服务器信息表
-CREATE TABLE DLTS_HOST
-(ID 		NUMBER(15) CONSTRAINT DLTS_HOST_ID_PK PRIMARY KEY,
-HOST_IP VARCHAR2(15),
-NAME 		VARCHAR2(20), 
-LOCATION	VARCHAR2(30)
-);
+CREATE TABLE DLTS_HOST(
+	ID 		VARCHAR(32),
+	HOST_IP VARCHAR(64),
+	NAME 	VARCHAR(100), 
+	LOCATION	VARCHAR(100),
+ 	CONSTRAINT DLTS_HOST_ID_PK PRIMARY KEY(ID)
+)engine=innodb;
 
-CREATE SEQUENCE DLTS_HOST_ID;
-INSERT INTO HOST VALUES (dlts_host_id.nextval,'192.168.0.26','sunv210','beijing');
-INSERT INTO HOST VALUES(dlts_host_id.nextval,'192.168.0.20','sun-server','beijing');
-INSERT INTO HOST VALUES (dlts_host_id.nextval,'192.168.0.23','sun280','beijing');
-INSERT INTO HOST VALUES (dlts_host_id.nextval,'192.168.0.200','ultra10','beijing');
+INSERT INTO DLTS_HOST VALUES ('1','127.0.0.1','administrator','zibo');
 
 --业务信息表
 CREATE TABLE DLTS_SERVICE(
- ID		NUMBER(10) CONSTRAINT DLTS_SERVICE_ID_PK PRIMARY KEY,
- ACCOUNT_ID	NUMBER(9) CONSTRAINT DLTS_SERVICE_DLTS_ACCOUNT_ID_FK
-		REFERENCES ACCOUNT(ID) NOT NULL,
- UNIX_HOST	VARCHAR2(15) CONSTRAINT DLTS_SERVICE_UNIX_HOST_FK
-		REFERENCES HOST(ID) NOT NULL ,
- OS_USERNAME	VARCHAR2(8)	NOT NULL,
- CONSTRAINT DLTS_SERVICE_UNIXHOST_OSUSERNAME_UK 
- 	UNIQUE(UNIX_HOST,OS_USERNAME),
- LOGIN_PASSWD	VARCHAR2(8) NOT NULL,
- STATUS 		CHAR(1) 	CONSTRAINT DLTS_SERVICE_STATUS_CK
-			CHECK ( STATUS IN (0,1,2) ),	
- CREATE_DATE	DATE	DEFAULT SYSDATE,
- PAUSE_DATE	DATE,
- CLOSE_DATE	DATE,
- COST_ID		NUMBER(4) CONSTRAINT DLTS_SERVICE_COST_ID_FK
-			REFERENCES COST(ID) NOT NULL
-);
+	ID VARCHAR(32),
+ 	ACCOUNT_ID	VARCHAR(32) NOT NULL,
+ 	UNIX_HOST	VARCHAR(32) NOT NULL ,
+ 	OS_USERNAME	VARCHAR(50)	NOT NULL,
+ 	LOGIN_PASSWD VARCHAR(32) NOT NULL,
+ 	STATUS CHAR(1),	
+ 	CREATE_DATE	timestamp DEFAULT current_timestamp,
+ 	PAUSE_DATE	DATETIME,
+ 	CLOSE_DATE	DATETIME,
+ 	COST_ID VARCHAR(32) NOT NULL,
+    CONSTRAINT DLTS_SERVICE_ID_PK PRIMARY KEY(ID),
+    CONSTRAINT DLTS_SERVICE_DLTS_ACCOUNT_ID_FK FOREIGN KEY(ACCOUNT_ID) REFERENCES DLTS_ACCOUNT(ID) ,
+    CONSTRAINT DLTS_SERVICE_UNIX_HOST_FK FOREIGN KEY(UNIX_HOST) REFERENCES DLTS_HOST(ID) ,
+    CONSTRAINT DLTS_SERVICE_UNIXHOST_OSUSERNAME_UK UNIQUE(UNIX_HOST,OS_USERNAME),
+    CONSTRAINT DLTS_SERVICE_COST_ID_FK FOREIGN KEY(COST_ID) REFERENCES  DLTS_COST(ID) 
+)engine=innodb;
 
-INSERT INTO SERVICE VALUES (2001,1010,'192.168.0.26','guojing','guo1234',0,'2009 03 10 10:00:00',null,null,1);
+INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status,cost_id) VALUES ('1','1','1','guojing','F60598D5B3B5012DA811610A7D8CC0C1',0,'1');
 
-INSERT INTO SERVICE VALUES (2002,1011,'192.168.0.26','huangr','huang234',0,'2009 03 01 15:30:05',null,null,1);
+INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status,cost_id) VALUES ('2','1','1','huangr','F60598D5B3B5012DA811610A7D8CC0C1',0,'1');
 
-INSERT INTO SERVICE VALUES (2003,1011,'192.168.0.20','huangr','huang234',0,'2009 03 01 15:30:10',null,null,3);
+INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status,cost_id) VALUES ('3','1','1','zhangwuji','F60598D5B3B5012DA811610A7D8CC0C1',0,'2');
 
-INSERT INTO SERVICE VALUES (2004,1011,'192.168.0.23','huangr','huang234',0,'2009 03 01 15:30:15',null,null,6);
-
-INSERT INTO SERVICE VALUES (2005,1019,'192.168.0.26','luwsh','luwu2345',0,'2012 02 10 23 :50:55',null,null,4);
-
-INSERT INTO SERVICE VALUES (2006,1019,'192.168.0.20','luwsh','luwu2345',0,'2012 02 10 00 :00:00',null,null,5);
-
-INSERT INTO SERVICE VALUES (2007,1020,'192.168.0.20','weixb','wei12345',0,'2012 02 10 11:05:20',null,null,6);
-
-INSERT INTO SERVICE VALUES (2008,1010,'192.168.0.20','guojing','guo09876',0,'2012 02 11 12:05:21',null,null,6);
+INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status,cost_id) VALUES ('4','2','1','zhangsanfeng','F60598D5B3B5012DA811610A7D8CC0C1',0,'2');
 
 --业务详单表
 CREATE TABLE SERVICE_DETAIL

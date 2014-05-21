@@ -125,8 +125,10 @@ public class RoleAction extends BaseAction{
 		for(Entry<String, Function> entry : funMap.entrySet()){
 			functionMap.put(entry.getValue(), 0);
 		}
-		for(Function fun : funList){
-			functionMap.put(fun, 1);
+		if(funList!=null&&!"".equals(funList)){
+			for(Function fun : funList){
+				functionMap.put(fun, 1);
+			}
 		}
 		return ConstantString.SUCCESS;
 	}

@@ -32,7 +32,7 @@
          </select>                        
      </div>
      <s:if test='account.status=="0"'>
-     <div class="text_info clearfix"><span>开通时间：</span></div>
+     <div class="text_info clearfix"><span>创建时间：</span></div>
 	 <div class="input_info"><input type="text" readonly class="readonly" value="<s:date name="account.create_date" format="yyyy-MM-dd HH:mm:ss"/>" /></div>
      </s:if><s:elseif test='account.status=="1"'>
 	 	<div class="text_info clearfix"><span>暂停时间：</span></div>

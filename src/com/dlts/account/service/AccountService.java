@@ -1,5 +1,6 @@
 package com.dlts.account.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -90,9 +91,9 @@ public class AccountService extends BaseService{
 	 */
 	public boolean updateAccountStart(String id){
 		boolean result = false;
-		String hql = "update Account set status=? where id=?";
+		String hql = "update Account set status=?,pause_date=? where id=?";
 		if(id!=null&&!"".equals(id)){
-			this.dao.execByHQL(hql, new Object[]{"0",id});
+			this.dao.execByHQL(hql, new Object[]{"0",null,id});
 			result = true;
 		}
 		return result;
@@ -104,9 +105,9 @@ public class AccountService extends BaseService{
 	 */
 	public boolean updateAccountStop(String id){
 		boolean result = false;
-		String hql = "update Account set status=? where id=?";
+		String hql = "update Account set status=?,pause_date=? where id=?";
 		if(id!=null&&!"".equals(id)){
-			this.dao.execByHQL(hql, new Object[]{"1",id});
+			this.dao.execByHQL(hql, new Object[]{"1",new Date(),id});
 			result = true;
 		}
 		return result;
@@ -162,5 +163,26 @@ public class AccountService extends BaseService{
 	 */
 	public void updateAccountRecommender_id(Account account){
 		this.dao.updateIObject(account);
+	}
+	
+	/**
+	 * 获取所有数据
+	 * @return
+	 */
+	public DCriteriaPageSupport<Account> getAll(){
+		DetachedCriteria dc = DetachedCriteria.forClass(Account.class);
+		return this.dao.findPageByCriteria(dc);
+	}
+	
+	/**
+	 * 根据身份证模糊查询
+	 * @param recommender_id
+	 * @return
+	 */
+	public Account getAccountByIdcard_noLike(String idcard_no){
+		DetachedCriteria dc = DetachedCriteria.forClass(Account.class);
+		dc.add(Restrictions.ilike("idcard_no", idcard_no, MatchMode.ANYWHERE));
+		List list = this.dao.findAllByCriteria(dc);
+		return list==null||list.size()<=0?null:(Account)list.get(0);
 	}
 }

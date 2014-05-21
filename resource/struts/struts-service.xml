@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="service" extends="default" namespace="/service">
+		<action name="listData" class="com.dlts.service.action.ServiceAction" method="listData">
+			<result name="success">/service/service_list.jsp</result>
+		</action>
+		<action name="detail" class="com.dlts.service.action.ServiceAction" method="detail">
+			<result name="success">/service/service_detail.jsp</result>
+		</action>
+		<action name="search" class="com.dlts.service.action.ServiceAction" method="search">
+			<result name="success">/service/list.jsp</result>
+		</action>
+		<action name="edit" class="com.dlts.account.action.AccountAction" method="edit">
+			<result name="success">/account/account_modi.jsp</result>
+		</action>
+		<action name="editDo" class="com.dlts.account.action.AccountAction" method="editDo">
+		</action>
+		<action name="start" class="com.dlts.account.action.AccountAction" method="start">
+		</action>
+		<action name="stop" class="com.dlts.account.action.AccountAction" method="stop">
+		</action>
+		<action name="add" class="com.dlts.account.action.AccountAction" method="add">
+			<result name="success">/account/account_add.jsp</result>
+		</action>
+		<action name="addDo" class="com.dlts.account.action.AccountAction" method="addDo">
+		</action>
+	</package>
+</struts>        
