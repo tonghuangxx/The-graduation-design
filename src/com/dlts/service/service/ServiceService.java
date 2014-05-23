@@ -1,5 +1,7 @@
 package com.dlts.service.service;
 
+import java.util.Date;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -72,6 +74,20 @@ public class ServiceService extends BaseService {
 	}
 
 	/**
+	 * 修改操作
+	 * @param service
+	 * @return
+	 */
+	public boolean updateService(Service service){
+		boolean result = false;
+		if(service!=null){
+			this.dao.updateIObject(service);
+			result = true;
+		}
+		return result;
+	}
+	
+	/**
 	 * 搜索
 	 * 
 	 * @param form
@@ -135,6 +151,94 @@ public class ServiceService extends BaseService {
 		return serviceList;
 	}
 
+	/**
+	 * 根据账务id暂停业务
+	 * @param account_id
+	 * @return
+	 */
+	public boolean updateServiceStopByAccount_id(String account_id){
+		boolean result = false;
+		String hql = "update Service set status=?,pause_date=? where account_id=?";
+		if(account_id!=null&&!"".equals(account_id)){
+			this.dao.execByHQL(hql, new Object[]{"1",new Date(),account_id});
+			result = true;
+		}
+		return result;
+	}
+	
+	/**
+	 * 根据账务id删除业务
+	 * @param account_id
+	 * @return
+	 */
+	public boolean deleteByAccount_id(String account_id){
+		boolean result = false;
+		String hql = "update Service set status=?,close_date=? where account_id=?";
+		if(account_id!=null&&!"".equals(account_id)){
+			this.dao.execByHQL(hql, new Object[]{"2",new Date(),account_id});
+			result = true;
+		}
+		return result;
+	}
+	/**
+	 * 开启业务（先判断该业务的所对应的账务是否是开启的）
+	 * @param id
+	 * @return
+	 */
+	public String updateServiceStart(String id){
+		String result = null;
+		Service service = getServiceById(id);
+		Account account = accountService.getAccountById(service.getAccount_id());
+		Fee fee = feeService.getFeeById(service.getCost_id());
+		if("0".equals(account.getStatus())||account.getStatus()=="0"){
+			if(fee.getStatus()=='0'){
+				String hql = "update Service set status=?,pause_date=? where id=?";
+				if(id!=null&&!"".equals(id)){
+					int i = this.dao.execByHQL(hql, new Object[]{"0",null,id});
+					if(i<0){
+						result = "开启失败";
+					}
+				}
+			}else{
+				result="开启失败,选择的资费未开启";
+			}
+		}else{
+			result="开启失败,账务账号已暂停";
+		}
+		return result;
+	}
+	
+	/**
+	 *暂停业务
+	 */
+	public boolean updateServiceStop(String id){
+		boolean result = false;
+		String hql = "update Service set status=?,pause_date=? where id=?";
+		if(id!=null&&!"".equals(id)){
+			int i = this.dao.execByHQL(hql, new Object[]{"1",new Date(),id});
+			if(i>0){
+				result = true;
+			}
+		}
+		return result;
+	}
+	/**
+	 * 删除业务
+	 * @param id
+	 * @return
+	 */
+	public boolean updateServiceDelete(String id){
+		boolean result = false;
+		String hql = "update Service set status=?,close_date=? where id=?"	;
+		if(id!=null&&!"".equals(id)){
+			int i = this.dao.execByHQL(hql, new Object[]{"2",new Date(),id});
+			if(i>0){
+				result = true;
+			}
+		}
+		return result;
+	}
+	
 	public FeeService getFeeService() {
 		return feeService;
 	}

@@ -137,11 +137,20 @@ function to_accountEdit(id){
 	});
 }
 //删除
-function deleteAccount() {
+function deleteAccount(id) {
 	var r = window.confirm("确定要删除此账务账号吗？\r\n删除后将不能恢复，且会删除其下属的所有业务账号。");
 	if (r) {
-		$.post("../fee/start",{'fee.id':id},function(data){
-			AT.postFrm("#sortFeeForm", callFunction);
+		$.post("../account/delete",{'account.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
+			AT.postFrm("#serachAccountHinForm", callFunction);
 		});
 	}	
 }
@@ -149,7 +158,16 @@ function deleteAccount() {
 function stop(id) {
 	var r = window.confirm("确定要暂停此账务账号吗？");
 	if (r) {
-		$.post("../account/stop",{'account.id':id},function(data){
+		$.post("../account/stop",{'account.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
 			AT.postFrm("#serachAccountHinForm", callFunction);
 		});
 	}	
@@ -158,7 +176,16 @@ function stop(id) {
 function start(id) {
 	var r = window.confirm("确定要开启此账务账号吗？");
 	if (r) {
-		$.post("../account/start",{'account.id':id},function(data){
+		$.post("../account/start",{'account.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
 			AT.postFrm("#serachAccountHinForm", callFunction);
 		});
 	}	

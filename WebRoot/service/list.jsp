@@ -34,7 +34,7 @@
 			</th>
 			<th class="width200"></th>
 		</tr>
-			<s:iterator value="serviceList" status="st">
+			<s:iterator value="serviceList" status="st" >
 		<tr>
 			<td>
 				<s:property value="#st.count"/>
@@ -51,7 +51,7 @@
 			<td>
 				<s:if test='status=="0"'>开通</s:if>
 				<s:elseif test='status=="1"'>暂停</s:elseif>
-				<s:elseif test='stauts=="2"'>删除</s:elseif>
+				<s:elseif test='status=="2"'>删除</s:elseif>
 			</td>
 			<td>
 				<s:property value="host.host_ip"/>
@@ -65,12 +65,18 @@
 				</div>
 			</td>
 			<td class="td_modi">
-				<input type="button" value="暂停" class="btn_pause"
-					onclick="setState();" />
-				<input type="button" value="修改" class="btn_modify"
-					onclick="location.href='service_modi.html';" />
-				<input type="button" value="删除" class="btn_delete"
-					onclick="deleteAccount();" />
+				<s:if test='status=="0"'>
+						<input type="button" value="暂停" class="btn_pause" onclick="stop('<s:property value="id" />');" />
+						<input type="button" value="修改" class="btn_modify" onclick="to_serviceEdit('<s:property value="id" />')" disabled="disabled" />
+						<input type="button" value="删除" class="btn_delete" onclick="deleteService('<s:property value="id" />');" disabled="disabled" />
+					</s:if>
+					<s:if test='status=="1"'>
+						<input type="button" value="开通" class="btn_start" onclick="start('<s:property value="id" />');" />
+						<input type="button" value="修改" class="btn_modify" onclick="to_serviceEdit('<s:property value="id" />')"  />
+						<input type="button" value="删除" class="btn_delete" onclick="deleteService('<s:property value="id" />');"  />
+					</s:if>
+					<s:if test='status=="2"'>
+				</s:if>
 			</td>
 		</tr>
 			</s:iterator>
@@ -136,5 +142,66 @@ function numberPage(pageNum){
 	$("#pageNum").val(pageNum);
 	AT.postFrm("#serachServiceHinForm", callFunction);
 }
-
+function to_serviceEdit(id){
+	var pageNum=$("#pageNum").val();
+	var numPerPage=$("#numPerPage").val();
+	var href="../service/edit?service.id="+id+"&pageNum="+pageNum+"&numPerPage="+numPerPage;
+	$.post(href,function(data){
+		$("#main").html(data);
+	});
+}
+//暂停
+function stop(id) {
+	var r = window.confirm("确定要暂停此业务账号吗？");
+	if (r) {
+		$.post("../service/stop",{'service.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
+			AT.postFrm("#serachServiceHinForm", callFunction);
+		});
+	}	
+}
+//开启
+function start(id) {
+	var r = window.confirm("确定要开启此业务账号吗？");
+	if (r) {
+		$.post("../service/start",{'service.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
+			AT.postFrm("#serachServiceHinForm", callFunction);
+		});
+	}	
+}
+//删除
+function deleteService(id) {
+	var r = window.confirm("确定要删除此业务吗");
+	if (r) {
+		$.post("../service/delete",{'service.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
+			AT.postFrm("#serachServiceHinForm", callFunction);
+		});
+	}	
+}
 </script>

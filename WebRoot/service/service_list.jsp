@@ -15,12 +15,12 @@
                         </select>
                     </div>
                     <div><input type="button" value="搜索" class="btn_search" onclick="to_searchService();"/></div>
-                    <input type="button" value="增加" class="btn_add" onclick="location.href='service_add.html';" />
+                    <input type="button" value="增加" class="btn_add" onclick="to_addService();" />
                 </div>  
                </form>
-                <!--删除的操作提示-->
-                <div id="operate_result_info" class="operate_success">
-                    <img src="../images/close.png" onclick="this.parentNode.style.display='none';" />
+                <!--操作提示-->
+                <div id="operate_result_info">
+                    <img src="../images/close.png" onclick="this.parentNode.style.display='none';" /><span id="infoSpan"></span>
                 </div>   
                 <!--数据区域：用表格展示数据-->     
 <div id="datapages">
@@ -28,24 +28,14 @@
 </div>  
         
 <script language="javascript" type="text/javascript">
-	//显示角色详细信息
-	function showDetail(flag, a) {
-		var detailDiv = a.parentNode.getElementsByTagName("div")[0];
-		if (flag) {
-			detailDiv.style.display = "block";
-		} else
-			detailDiv.style.display = "none";
-	}
-	//删除
-	function deleteAccount() {
-		var r = window.confirm("确定要删除此业务账号吗？删除后将不能恢复。");
-		document.getElementById("operate_result_info").style.display = "block";
-	}
-	//开通或暂停
-	function setState() {
-		var r = window.confirm("确定要开通此业务账号吗？");
-		document.getElementById("operate_result_info").style.display = "block";
-	}
+function showDetail(flag, a) {
+    var detailDiv = a.parentNode.getElementsByTagName("div")[0];
+    if (flag) {
+        detailDiv.style.display = "block";
+    }
+    else
+        detailDiv.style.display = "none";
+}
 	function to_searchService(){
 		AT.postFrm("#searchServiceForm", callFunction);
 	}	
@@ -56,5 +46,12 @@
 	 */
 	function callFunction(data){
 		$("#datapages").html(data);
+	}
+
+	function to_addService(){
+		var href="../service/add";
+		$.post(href,function(data){
+			$("#main").html(data);
+		});
 	}
 </script>

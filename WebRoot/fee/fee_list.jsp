@@ -20,8 +20,7 @@
                 <!--启用操作的操作提示-->
 	<div id="operate_result_info" class="operate_success">
 		<img src="../images/close.png"
-			onclick="this.parentNode.style.display='none';" />
-		<span id='msg'></span>
+			onclick="this.parentNode.style.display='none';" /><span id="infoSpan"></span>
 	</div>
 
                 <!--数据区域：用表格展示数据-->

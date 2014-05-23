@@ -9,7 +9,7 @@
 			onclick="to_roleAdd();" />
 	</div>
 	<!--删除的操作提示-->
-	<div id="operate_result_info" class="operate_success">
+	<div id="operate_result_info">
 		<img src="../images/close.png" onclick="this.parentNode.style.display='none';" /><span id="infoSpan"></span></div>
 	<!--删除错误！该角色被使用，不能删除。-->
 <div id="datapages">
@@ -20,9 +20,15 @@
                 var r = window.confirm("确定要删除此角色吗？");
                 if(r){
                 	$.post("../role/delete",{'role.id':id},function(json){
-                    	var data = eval("("+json+")"); 
+                		var data = eval("("+json+")"); 
                     	document.getElementById("infoSpan").innerHTML=data.message;
-               			document.getElementById("operate_result_info").style.display = "block";
+                    	var operate_result_info = document.getElementById("operate_result_info");
+                    	operate_result_info.style.display = "block";
+               			if(data.statusCode=='200'){
+               				operate_result_info.className="operate_success";
+               	   		}else{
+               	   			operate_result_info.className="operate_fail";
+               	   		}
             			AT.postFrm("#roleForm", callFunction);
             		});
                 }

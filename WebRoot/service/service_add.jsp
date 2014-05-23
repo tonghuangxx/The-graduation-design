@@ -1,117 +1,131 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>达内－NetCTOSS</title>
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css" />
-        <script language="javascript" type="text/javascript">
-            //保存成功的提示信息
-            function showResult() {
-                showResultDiv(true);
-                window.setTimeout("showResultDiv(false);", 3000);
-            }
-            function showResultDiv(flag) {
-                var divResult = document.getElementById("save_result_info");
-                if (flag)
-                    divResult.style.display = "block";
-                else
-                    divResult.style.display = "none";
-            }
-
-            //自动查询账务账号
-            function searchAccounts(txtObj) {
-                //document.getElementById("a1").innerHTML = txtObj.value;
-            }
-        </script>
-    </head>
-    <body>
-        <!--Logo区域开始-->
-        <div id="header">
-            <img src="../images/logo.png" alt="logo" class="left"/>
-            <a href="#">[退出]</a>            
-        </div>
-        <!--Logo区域结束-->
-        <!--导航区域开始-->
-        <div id="navi">
-            <ul id="menu">
-                <li><a href="../index.html" class="index_off"></a></li>
-                <li><a href="../role/role_list.html" class="role_off"></a></li>
-                <li><a href="../admin/admin_list.html" class="admin_off"></a></li>
-                <li><a href="../fee/fee_list.html" class="fee_off"></a></li>
-                <li><a href="../account/account_list.html" class="account_off"></a></li>
-                <li><a href="../service/service_list.html" class="service_on"></a></li>
-                <li><a href="../bill/bill_list.html" class="bill_off"></a></li>
-                <li><a href="../report/report_list.html" class="report_off"></a></li>
-                <li><a href="../user/user_info.html" class="information_off"></a></li>
-                <li><a href="../user/user_modi_pwd.html" class="password_off"></a></li>
-            </ul>
-        </div>
-        <!--导航区域结束-->
-        <!--主要区域开始-->
-        <div id="main">
-            <!--保存操作的提示信息-->
-            <div id="save_result_info" class="save_fail">保存失败！192.168.0.23服务器上已经开通过 OS 账号 “mary”。</div>
-            <form action="" method="" class="main_form">
+﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ include file="/taglibs.jsp"%>
+<div id="save_result_info" class="save_fail"></div>
+            <form action="<%=request.getContextPath() %>/service/addDo" method="post" class="main_form" id="serviceAddForm" >
                 <!--内容项-->
                 <div class="text_info clearfix"><span>身份证：</span></div>
                 <div class="input_info">
-                    <input type="text" value="查询出的结果写入账务账号" class="width180" />
-                    <input type="button" value="查询账务账号" class="btn_search_large" />
+                    <input type="text" name="service.account.idcard_no" value="" class="width180" id="idcard_no" placeholder="请输入账务账号中存在的身份证"/>
+                    <input type="button" value="查询身份证" class="btn_search_large"   />
                     <span class="required">*</span>
                     <div class="validate_msg_short">没有此身份证号，请重新录入。</div>
                 </div>
-                <div class="text_info clearfix"><span>账务账号：</span></div>
-                <div class="input_info">
-                    <input type="text" value="zhangsan1" onkeyup="searchAccounts(this);" />
-                    <span class="required">*</span>
-                    <div class="validate_msg_long">没有此账务账号，请重新录入。</div>
-                </div>
+                <input value="" name="service.account.id" id="account_id" type="hidden"/>
                 <div class="text_info clearfix"><span>资费类型：</span></div>
                 <div class="input_info">
-                    <select>
-                        <option>包 20 小时</option>
-                        <option>包 40 小时</option>
-                        <option>包 60 小时</option>
-                        <option>包月</option>
-                    </select>                        
+                    <select class="width150" name="service.cost_id" id="cost_id">
+						<s:iterator value="feeList" var="f">
+							<option value="<s:property value="#f.id"/>"><s:property value="#f.name"/></option>
+						</s:iterator>
+					</select>                       
                 </div> 
                 <div class="text_info clearfix"><span>服务器 IP：</span></div>
                 <div class="input_info">
-                    <input type="text" value="192.168.0.23"  />
-                    <span class="required">*</span>
-                    <div class="validate_msg_long">15 长度，符合IP的地址规范</div>
+                    <select class="width150" name="service.unix_host" id="cost_id">
+						<s:iterator value="hostList" var="h">
+							<option value="<s:property value="#h.id"/>"><s:property value="#f.host_ip"/></option>
+						</s:iterator>
+					</select> 
                 </div>                   
                 <div class="text_info clearfix"><span>登录 OS 账号：</span></div>
                 <div class="input_info">
-                    <input type="text" value="创建即启用，状态为开通"  />
+                    <input type="text" value=""  name="service.os_username" id="os_username" />
                     <span class="required">*</span>
-                    <div class="validate_msg_long">8长度以内的字母、数字和下划线的组合</div>
+                    <div class="validate_msg_long">4-8长度的字母、数字和下划线的组合</div>
                 </div>
                 <div class="text_info clearfix"><span>密码：</span></div>
                 <div class="input_info">
-                    <input type="password"  />
+                    <input type="password"  name="service.login_passwd" id="login_passwd"/>
                     <span class="required">*</span>
-                    <div class="validate_msg_long">30长度以内的字母、数字和下划线的组合</div>
+                    <div class="validate_msg_long">4-16长度的字母、数字和下划线的组合</div>
                 </div>
                 <div class="text_info clearfix"><span>重复密码：</span></div>
                 <div class="input_info">
-                    <input type="password"  />
+                    <input type="password" id="com_login_passwd" />
                     <span class="required">*</span>
                     <div class="validate_msg_long">两次密码必须相同</div>
                 </div>     
                 <!--操作按钮-->
                 <div class="button_info clearfix">
-                    <input type="button" value="保存" class="btn_save" onclick="showResult();" />
+                    <input type="button" value="保存" class="btn_save" onclick="to_serviceAddDo();" />
                     <input type="button" value="取消" class="btn_save" />
                 </div>
             </form>
-        </div>
-        <!--主要区域结束-->
-        <div id="footer">
-            <span>[源自北美的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</span>
-            <br />
-            <span>版权所有(C)加拿大达内IT培训集团公司 </span>
-        </div>
-    </body>
-</html>
+<script language="javascript" type="text/javascript">
+$().ready(function() {
+	$("#serviceAddForm").validate({
+		errorClass:"error_msg",
+		errorPlacement:function (error, element){
+	        error.appendTo(element.parent().children("div")); 
+		},
+		success:function(element){
+			element.parent().children("div").removeClass("error_msg").addClass("displayOK").html("ok");
+		},
+		rules:{
+			idcard_no:{required:true,remote:{url:"${pageContext.request.contextPath}/service/checkIdcard_no"}},
+	        os_username:{required:true,check_os_username:true},
+	        login_passwd:{required:true,check_login_passwd:true},
+	        com_login_passwd:{required:true,check_com_login_passwd:true,equalTo:"#login_passwd"}
+		},
+		messages:{
+			idcard_no:{remote:"没有此身份证号，请重新录入。"},
+			os_username:{required:"4-8长度的字母、数字和下划线的组合"},
+			login_passwd:{required:"4-16长度的字母、数字和下划线的组合"},
+			com_login_passwd:{required:"4-16长度的字母、数字和下划线的组合"}
+		}
+	});
+});
+$.validator.setDefaults({
+	submitHandler: function() { alert("submitted!"); }
+});
+
+//os账号的验证规则
+jQuery.validator.addMethod("check_os_username",function(value,element){
+	var pattern='/^\w{4,8}$/';
+	if(!pattern.test(value)){
+		return false;
+	}
+	return true;
+},"4-8长度的字母、数字和下划线的组合");
+//密码的验证规则
+jQuery.validator.addMethod("check_login_passwd",function(value,element){
+	var pattern='/^\w{4,16}$/';
+	if(!pattern.test(value)){
+		return false;
+	}
+	return true;
+},"4-16长度的字母、数字和下划线的组合");
+//重复密码的验证规则
+jQuery.validator.addMethod("check_com_login_passwd",function(value,element){
+	var pattern='/^\w{4,16}$/';
+	if(!pattern.test(value)){
+		return false;
+	}
+	return true;
+},"4-16长度的字母、数字和下划线的组合");
+
+
+function to_serviceAddDo(){
+	AT.postFrm("#serviceAddForm", addServiceCall_function);
+}
+function addServiceCall_function(json){
+	var data = eval('(' + json + ')'); 
+	document.getElementById("serviceAddForm").reset();
+	showResultDiv(true,data.message);
+	window.setTimeout("showResultDiv(false);", 5000);
+}
+function showResultDiv(flag,message) {
+	var divResult = document.getElementById("save_result_info");
+	if (flag) {
+		divResult.innerHTML=message;
+		divResult.style.display = "block";
+	} else {
+		divResult.style.display = "none";
+	}
+}
+
+	//自动查询账务账号
+	function searchAccounts(txtObj) {
+		//document.getElementById("a1").innerHTML = txtObj.value;
+	}
+</script>

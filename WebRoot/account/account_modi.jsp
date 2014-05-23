@@ -108,7 +108,7 @@
                     <!--操作按钮-->
                     <div class="button_info clearfix">
                         <input type="button" value="保存" class="btn_save" onclick="to_accoutEditDo();" />
-                        <input type="button" value="取消" class="btn_save" />
+                        <input type="reset" value="取消" class="btn_save" />
                     </div>
                 </form>
 <script language="javascript" type="text/javascript">

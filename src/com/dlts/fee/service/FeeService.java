@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.dlts.base.service.BaseService;
 import com.dlts.fee.domain.Fee;
@@ -121,6 +122,7 @@ public class FeeService extends BaseService{
 		if(id!=null&&!"".equals(id)){
 			String hql = "update Fee set status=?,startime=? where id=?";
 			this.dao.execByHQL(hql, new Object[]{'0',new Date(),id});
+			result=true;
 		}
 		return result;
 	}
@@ -133,5 +135,15 @@ public class FeeService extends BaseService{
 		DetachedCriteria dc = DetachedCriteria.forClass(Fee.class);
 		return this.dao.findPageByCriteria(dc);
 	}
+	
+	/**
+	 * 获取开通的资费
+	 * @return
+	 */
+	public DCriteriaPageSupport<Fee> getAllStartFee(){
+		DetachedCriteria dc = DetachedCriteria.forClass(Fee.class);
+		dc.add(Restrictions.eq("status", '0'));
+		return this.dao.findPageByCriteria(dc);
+	} 
 	
 }

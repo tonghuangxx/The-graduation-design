@@ -10,10 +10,12 @@ import org.hibernate.criterion.Restrictions;
 
 import com.dlts.account.domain.Account;
 import com.dlts.base.service.BaseService;
+import com.dlts.service.service.ServiceService;
 import com.dlts.util.MD5Util;
 import com.dlts.util.dao.DCriteriaPageSupport;
 
 public class AccountService extends BaseService{
+	private ServiceService serviceService;
 	/**
 	 * 分页查询数据
 	 * @param pageNo
@@ -107,8 +109,11 @@ public class AccountService extends BaseService{
 		boolean result = false;
 		String hql = "update Account set status=?,pause_date=? where id=?";
 		if(id!=null&&!"".equals(id)){
-			this.dao.execByHQL(hql, new Object[]{"1",new Date(),id});
-			result = true;
+			int i = this.dao.execByHQL(hql, new Object[]{"1",new Date(),id});
+			if(i>0){
+				boolean flag = serviceService.updateServiceStopByAccount_id(id);
+				result = flag;
+			}
 		}
 		return result;
 	}
@@ -119,10 +124,12 @@ public class AccountService extends BaseService{
 	 */
 	public boolean delete(String id){
 		boolean result = false;
-		String hql = "update Account set status=? where id=?";
+		String hql = "update Account set status=?,close_date=? where id=?";
 		if(id!=null&&!"".equals(id)){
-			this.dao.execByHQL(hql, new Object[]{"2",id});
-			result = true;
+			int i = this.dao.execByHQL(hql, new Object[]{"2",new Date(),id});
+			if(i>0){
+				result = serviceService.deleteByAccount_id(id);
+			}
 		}
 		return result;
 	}
@@ -185,4 +192,11 @@ public class AccountService extends BaseService{
 		List list = this.dao.findAllByCriteria(dc);
 		return list==null||list.size()<=0?null:(Account)list.get(0);
 	}
+	public ServiceService getServiceService() {
+		return serviceService;
+	}
+	public void setServiceService(ServiceService serviceService) {
+		this.serviceService = serviceService;
+	}
+	
 }

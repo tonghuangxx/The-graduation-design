@@ -181,9 +181,22 @@ public class UserAction extends BaseAction{
 	 * 删除数据
 	 */
 	public void delete(){
+		response.setContentType("text/html;charset=utf-8");
 		adminInfo = userService.findAdminInfoById(adminInfo);
-		userService.deleteAdminInfo(adminInfo);
-		InitData.initUserList();
+		boolean result = userService.deleteAdminInfo(adminInfo);
+		try {
+			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "删除成功");
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE, "删除失败");
+			}else{
+				InitData.initUserList();
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

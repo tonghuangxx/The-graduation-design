@@ -133,7 +133,16 @@ function editFee(id){
 function deleteFee(id){
 	var r = window.confirm("确定要删除此资费吗？");
 	if (r) {
-		$.post("../fee/delete",{'fee.id':id},function(data){
+		$.post("../fee/delete",{'fee.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
 			AT.postFrm("#sortFeeForm", callFunction);
 		});
 	}	
@@ -142,7 +151,16 @@ function deleteFee(id){
 function startFee(id) {
 	var r = window.confirm("确定要启用此资费吗？资费启用后将不能修改和删除。");
 	if (r) {
-		$.post("../fee/start",{'fee.id':id},function(data){
+		$.post("../fee/start",{'fee.id':id},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
 			AT.postFrm("#sortFeeForm", callFunction);
 		});
 	}	

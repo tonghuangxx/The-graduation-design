@@ -6,10 +6,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>电信计费系统</title>
        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath()%>/styles/global.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath()%>/styles/global_color.css" /> 
-        <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.4.min.js"></script>
-        <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/tool.js"></script>   
-        <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.validate.js"></script>
+        <link type="text/css" rel="stylesheet" media="all" href="<%=request.getContextPath()%>/styles/global_color.css" />
+        <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.0.min.js"></script>
+        <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/tool.js"></script>  
+        <script language="javascript" type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.validate.js"></script> 
 		<style type="text/css">
 			.displayOK {
 				color: green;

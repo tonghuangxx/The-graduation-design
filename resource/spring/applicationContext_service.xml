@@ -23,7 +23,9 @@
 	<!--资费service-->
 	<bean id="feeService" parent="baseService" class="com.dlts.fee.service.FeeService"></bean>
 	<!--账务service-->
-	<bean id="accountService" parent="baseService" class="com.dlts.account.service.AccountService"></bean>
+	<bean id="accountService" parent="baseService" class="com.dlts.account.service.AccountService">
+		<property name="serviceService" ref="serviceService"></property>
+	</bean>
 	<!--服务器service-->
 	<bean id="hostService" parent="baseService" class="com.dlts.host.service.HostService"></bean>
 	<!--业务service-->

@@ -262,8 +262,13 @@ public class UserService extends BaseService {
 	 * 删除数据
 	 * @param adminInfo
 	 */
-	public void deleteAdminInfo(AdminInfo adminInfo){
-		this.dao.deleteIObject(adminInfo);
+	public boolean deleteAdminInfo(AdminInfo adminInfo){
+		boolean result = false;
+		if(adminInfo!=null){
+			this.dao.deleteIObject(adminInfo);
+			result = true;
+		}
+		return result;
 	}
 	/**
 	 * 检测管理员账号是否重名

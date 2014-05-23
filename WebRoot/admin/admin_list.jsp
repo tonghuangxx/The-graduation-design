@@ -34,10 +34,9 @@
 	</form>
 </div>
 <!--删除的操作提示-->
-<div id="operate_result_info" class="operate_fail">
+<div id="operate_result_info">
 	<img src="../images/close.png"
-		onclick="this.parentNode.style.display='none';" />
-	<span id='msg'></span>
+		onclick="this.parentNode.style.display='none';" /><span id="infoSpan"></span>
 </div>
 <!--数据区域：用表格展示数据-->
 <div id="datapages">
@@ -66,7 +65,16 @@ function showDetail(flag, a) {
 function deleteAdmin(adminId) {
 	var r = window.confirm("确定要删除此管理员吗？");
 	if (r) {
-		$.post("../user/delete",{'adminInfo.id':adminId},function(data){
+		$.post("../user/delete",{'adminInfo.id':adminId},function(json){
+			var data = eval("("+json+")"); 
+        	document.getElementById("infoSpan").innerHTML=data.message;
+        	var operate_result_info = document.getElementById("operate_result_info");
+        	operate_result_info.style.display = "block";
+   			if(data.statusCode=='200'){
+   				operate_result_info.className="operate_success";
+   	   		}else{
+   	   			operate_result_info.className="operate_fail";
+   	   		}
 			AT.postFrm("#searchForm", callFunction);
 		});
 	}
