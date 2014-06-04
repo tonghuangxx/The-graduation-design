@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
-    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="default" extends="struts-default">
 		<interceptors>
@@ -19,13 +19,11 @@
 		</interceptors>
 		<default-interceptor-ref name="openOperStrack" />
 		<global-results>
-<!--			<result name="error">/error.jsp</result>-->
+			<result name="error">/jump_toError.jsp</result>
 			<result name="login">/login/login.jsp</result>
-<!--			<result name="userLogin">/monitor/modules/login.jsp</result>-->
-<!--			<result name="none">/none.jsp</result>-->
 		</global-results>
-<!--		<global-exception-mappings>-->
-<!--            <exception-mapping exception="java.lang.Exception" result="error"/>-->
-<!--        </global-exception-mappings>-->
+		<global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+        </global-exception-mappings>
 	</package>
 </struts>

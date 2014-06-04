@@ -1,6 +1,7 @@
 package com.dlts.service.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
@@ -15,6 +16,8 @@ import com.dlts.fee.service.FeeService;
 import com.dlts.host.domain.Host;
 import com.dlts.host.service.HostService;
 import com.dlts.service.domain.Service;
+import com.dlts.service.domain.ServiceBak;
+import com.dlts.util.MD5Util;
 import com.dlts.util.dao.DCriteriaPageSupport;
 
 public class ServiceService extends BaseService {
@@ -81,7 +84,20 @@ public class ServiceService extends BaseService {
 	public boolean updateService(Service service){
 		boolean result = false;
 		if(service!=null){
-			this.dao.updateIObject(service);
+			ServiceBak serviceBak = null;
+			String hql = "from ServiceBak where service_id=?";
+			List list = this.dao.findAllyHql(hql, new Object[]{service.getId()});
+			if(list==null||list.size()<=0){
+				serviceBak = new ServiceBak();
+				serviceBak.setCost_id(service.getCost_id());
+				serviceBak.setService_id(service.getId());
+				this.dao.saveIObject(serviceBak);
+				result = true;
+			}else{
+				serviceBak = (ServiceBak) list.get(0);
+				serviceBak.setCost_id(service.getCost_id());
+				this.dao.saveOrUpdateIObject(serviceBak);
+			}
 			result = true;
 		}
 		return result;
@@ -235,6 +251,22 @@ public class ServiceService extends BaseService {
 			if(i>0){
 				result = true;
 			}
+		}
+		return result;
+	}
+	/**
+	 * 保存业务
+	 * @param service
+	 * @return
+	 */
+	public boolean saveService(Service service){
+		boolean result = false;
+		if(service!=null){
+			service.setStatus("0");
+			service.setLogin_passwd(MD5Util.MD5(service.getLogin_passwd()));
+			service.setCreate_date(new Date());
+			this.dao.saveIObject(service);
+			result = true;
 		}
 		return result;
 	}

@@ -29,6 +29,8 @@
 		</action>
 		<action name="checkIdcard_no" class="com.dlts.service.action.ServiceAction" method="checkIdcard_no">
 		</action>
+		<action name="checkIdcard_no" class="com.dlts.service.action.ServiceAction" method="checkIdcard_no">
+		</action>
 		<action name="addDo" class="com.dlts.service.action.ServiceAction" method="addDo">
 		</action>
 	</package>

@@ -166,16 +166,17 @@ public class ServiceAction extends BaseAction{
 		hostList = hostService.getAllHost();
 		return ConstantString.SUCCESS;
 	}
+	
 	/**
-	 * 检测身份证号是否存在账务表中
+	 * 添加操作
 	 */
-	public void checkIdcard_no(){
+	public void addDo(){
 		response.setContentType("text/html;charset=utf-8");
-		Account account = accountService.getAccountByIdcard_no(service.getAccount().getIdcard_no());
+		boolean result = serviceService.saveService(service);
 		try {
-			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "存在此身份证号");
-			if(account==null||"".equals(account)){
-				actionResult = new ActionResult(ConstantString.FAILURECODE,"没有此身份证号");
+			ActionResult actionResult = new ActionResult(ConstantString.SUCCESSCODE, "添加成功");
+			if(!result){
+				actionResult = new ActionResult(ConstantString.FAILURECODE,"添加失败");
 			}
 			PrintWriter out = response.getWriter();
 			out.print(ContextUtil.resultToJson(actionResult));
@@ -184,6 +185,28 @@ public class ServiceAction extends BaseAction{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 检测身份证号是否存在账务表中
+	 */
+	public void checkIdcard_no(){
+		response.setContentType("text/html;charset=utf-8");
+		Account account = accountService.getAccountByIdcard_no(service.getAccount().getIdcard_no());
+		try {
+			ActionResult actionResult = null;
+			if(account==null||"".equals(account)){
+				actionResult = new ActionResult(ConstantString.FAILURECODE,"没有此身份证号");
+			}else{
+				actionResult = new ActionResult(ConstantString.SUCCESSCODE, account.getId());
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ContextUtil.resultToJson(actionResult));
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public DCriteriaPageSupport<Service> getServiceList() {
 		return serviceList;

@@ -80,8 +80,8 @@ insert into dlts_function values('fdd4c28eaff04a049c471c8ca5f53f2a',null,'修改
 insert into dlts_function values('bd5e15e0fa8e473b86da255b9a22f266',null,'修改密码',null,'0','6c7b939b422a43298a55feb1b26a3190');
 insert into dlts_function values('6e6307cdd9414e4fb27009c1d489d64c',null,'帐务操作',null,'0','67b5548595bb4cb797fa634a28ac3580');
 insert into dlts_function values('a1970ae90d414a9d824e98fab27b32c1',null,'业务操作',null,'0','c89f98f64dc84efa82af44797fde4571');
+insert into dlts_function values('e42797cda42e44e59ca1be435597ecdc',null,'账单操作',null,'0','10b336ca80ce47259f33ce04e83cff73');
 ##还未插入
-insert into dlts_function values('e42797cda42e44e59ca1be435597ecdc',null,'账单操作',null,'0','');
 insert into dlts_function values('14b800c2cce445009b93e3b0752a6c49',null,'报表操作',null,'0','');
 
 
@@ -134,7 +134,7 @@ insert into dlts_module values('ccf01cb3d8fc441b81b4e6a8417f7233','管理员','a
 insert into dlts_module values('8a413d26ca4345d68137a944a47f0766','资费','fee_off','/fee/listData','0',3,0);
 insert into dlts_module values('67b5548595bb4cb797fa634a28ac3580','帐务','account_off','/account/listData','0',4,0);
 insert into dlts_module values('c89f98f64dc84efa82af44797fde4571','业务','service_off','/service/listData','0',5,0);
-insert into dlts_module values('10b336ca80ce47259f33ce04e83cff73','账单');
+insert into dlts_module values('10b336ca80ce47259f33ce04e83cff73','账单','bill_off','/bill/listData','0',6,0);
 insert into dlts_module values('c2112f8554a84d309eadd17aad493cc4','报表');
 insert into dlts_module values('d5d659c7bc124bcc81ef431cb99dbc43','个人信息','information_off','/user/updateInfo','0',8,0);
 insert into dlts_module values('6c7b939b422a43298a55feb1b26a3190','修改密码','password_off','/user/updatePwd','0',9,0);
@@ -172,8 +172,8 @@ CREATE TABLE DLTS_COST(
 INSERT INTO dlts_cost VALUES ('1','5.9元套餐',20,5.9,0.4,0,'5.9元20小时/月,超出部分0.4元/时',now(),now(),'2');
 INSERT INTO dlts_cost VALUES ('2','6.9元套餐',40,6.9,0.3,0,'6.9元40小时/月,超出部分0.3元/时',now(),now(),'2');
 INSERT INTO dlts_cost VALUES ('3','8.5元套餐',100,8.5,0.2,0,'8.5元100小时/月,超出部分0.2元/时',now(),now(),'2');
-INSERT INTO dlts_cost VALUES ('4','10.5元套餐',200,10.5,0.1,0,'10.5元200小时/月,超出部分0.1元/时',now(),now(),'3');
-INSERT INTO dlts_cost VALUES ('5','计时收费',0,0,0.5,0,'0.5元/时,不使用不收费',now(),now(),'1');
+INSERT INTO dlts_cost VALUES ('4','10.5元套餐',200,10.5,0.1,0,'10.5元200小时/月,超出部分0.1元/时',now(),now(),'2');
+INSERT INTO dlts_cost VALUES ('5','计时收费',0,0,0.5,0,'0.5元/时,不使用不收费',now(),now(),'3');
 INSERT INTO dlts_cost VALUES ('6','包月',0,20,0,0,'每月20元,不限制使用时间',now(),now(),'1');
 INSERT INTO dlts_cost VALUES ('7','包年',0,20,0,1,'每月20元,不限制使用时间',now(),now(),'1');
 
@@ -274,6 +274,7 @@ CREATE TABLE DLTS_SERVICE(
     CONSTRAINT DLTS_SERVICE_COST_ID_FK FOREIGN KEY(COST_ID) REFERENCES  DLTS_COST(ID) 
 )engine=innodb;
 
+
 INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status,cost_id) VALUES ('1','1','1','guojing','F60598D5B3B5012DA811610A7D8CC0C1',0,'1');
 
 INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status,cost_id) VALUES ('2','1','1','huangr','F60598D5B3B5012DA811610A7D8CC0C1',0,'1');
@@ -282,6 +283,63 @@ INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status
 
 INSERT INTO DLTS_SERVICE(id,account_id,unix_host,os_username,login_passwd,status,cost_id) VALUES ('4','2','1','zhangsanfeng','F60598D5B3B5012DA811610A7D8CC0C1',0,'2');
 
+--业务资费更新备份表
+CREATE TABLE DLTS_SERVICE_UPDATE_BAK(
+ ID		VARCHAR(32) PRIMARY KEY,
+ SERVICE_ID	VARCHAR(32) NOT NULL,
+ COST_ID VARCHAR(32)  NOT NULL,
+ CONSTRAINT DLTS_SERVICE_UPDATE_BAK_SERVICE_ID_FK FOREIGN KEY(SERVICE_ID) REFERENCES DLTS_SERVICE(ID),
+ CONSTRAINT DLTS_SERVICE_UPDATE_BAK_COST_ID_FK FOREIGN KEY(COST_ID) REFERENCES DLTS_COST(ID) 
+)engine=innodb;
+
+select * from DLTS_SERVICE_UPDATE_BAK;
+
+
+--时长信息表
+CREATE TABLE DLTS_MONTH_DURATION
+(SERVICE_ID varchar(32),
+ MONTH_ID 	DATE,
+ SERVICE_DETAIL_ID VARCHAR(32),
+ SOFAR_DURATION	int,
+ CONSTRAINT DLTS_MONTH_DURATION_PK PRIMARY KEY(SERVICE_ID,MONTH_ID),
+ CONSTRAINT DLTS_MONTH_DURATION_SERVICE_ID_FK FOREIGN KEY(SERVICE_ID) REFERENCES DLTS_SERVICE(ID)
+)engine=innodb;
+
+
+ 
+--账单信息表
+DROP TABLE BILL CASCADE CONSTRAINTS PURGE;
+CREATE TABLE DLTS_BILL(
+	ID VARCHAR(32) ,
+    ACCOUNT_ID 	VARCHAR(32),
+    BILL_MONTH 	DATE,
+    COST FLOAT(13,2),
+    PAYMENT_MODE CHAR(1),
+    PAY_STATE	CHAR(1) DEFAULT 0, 
+    CONSTRAINT DLTS_BILL_ID_PK  PRIMARY KEY(id),
+	CONSTRAINT DLTS_BILL_ACCOUNT_ID FOREIGN KEY(ACCOUNT_ID) REFERENCES DLTS_ACCOUNT(ID) ON DELETE SET NULL
+)ENGINE=INNODB;
+
+
+
+--账单条目表
+DROP TABLE BILL_ITEM CASCADE CONSTRAINTS PURGE;
+CREATE TABLE DLTS_BILL_ITEM(
+	ID		varchar(32),
+ 	BILL_ID varchar(32),
+ 	SERVICE_ID 	VARCHAR(32),
+ 	COST 		FLOAT(13,2),
+ 	CONSTRAINT DLTS_BILL_ITEM_ID_PK  PRIMARY KEY(ID),
+ 	CONSTRAINT DLTS_BILL_ITEM_SERVICE_ID_FK FOREIGN KEY(SERVICE_ID) REFERENCES DLTS_SERVICE(ID) ON DELETE SET NULL
+ )ENGINE=INNODB;
+ 
+ --用临时表技术生成账单编号表，用于保存BILL_ID(账单ID)，ACCOUNT_ID（帐务ID），BILL_MONTH（账单月）
+CREATE GLOBAL TEMPORARY TABLE DLTS_BILL_CODE
+(BILL_ID  		varchar(32),
+ ACCOUNT_ID 	varchar(32),
+ BILL_MONTH 	DATE
+) On COMMIT PRESERVE ROWS;
+ 
 --业务详单表
 CREATE TABLE SERVICE_DETAIL
 (ID 		NUMBER(11) CONSTRAINT SERVICE_DTAIL_ID_PK PRIMARY KEY,
@@ -310,50 +368,18 @@ INSERT INTO SERVICE_DETAIL(ID,SERVICE_ID,CLIENT_HOST,OS_USERNAME,LOGOUT_TIME,DUR
 (6,2001,'192.168.172.4','guojing','2013 06 20 21:30:00',36000);
 COMMIT;
 
---业务资费更新备份表
-CREATE TABLE SERVICE_UPDATE_BAK(
- ID		NUMBER(10) PRIMARY KEY,
- SERVICE_ID	NUMBER(9) NOT NULL,
- COST_ID		NUMBER(4)  NOT NULL
-);
 
---时长信息表
-CREATE TABLE MONTH_DURATION
-(SERVICE_ID 		NUMBER(10),
- MONTH_ID 		CHAR(6),
- CONSTRAINT MONTH_DURATION_PK PRIMARY KEY(SERVICE_ID,MONTH_ID),
- SERVICE_DETAIL_ID            NUMBER(11),
- SOFAR_DURATION	NUMBER(11)
-);
-
---用临时表技术生成账单编号表，用于保存BILL_ID(账单ID)，ACCOUNT_ID（帐务ID），BILL_MONTH（账单月）
-CREATE GLOBAL TEMPORARY TABLE BILL_CODE
-(BILL_ID  		NUMBER(11),
- ACCOUNT_ID 	NUMBER(9),
- BILL_MONTH 	CHAR(6)
-) On COMMIT PRESERVE ROWS;
- 
---账单信息表
-DROP TABLE BILL CASCADE CONSTRAINTS PURGE;
-CREATE TABLE BILL
-(ID 		NUMBER(11) CONSTRAINT BILL_ID_PK PRIMARY KEY,
- ACCOUNT_ID 	NUMBER(9) CONSTRAINT BILL_ACCOUNT_ID
-                                           REFERENCES ACCOUNT(ID) NOT NULL,
- BILL_MONTH 	CHAR(6),
- COST 		NUMBER(13,2),
- PAYMENT_MODE 	CHAR(1) CONSTRAINT BILL_PAYMENT_CODE_CK
-			CHECK (PAYMENT_MODE IN (0,1,2,3)),
- PAY_STATE	CHAR(10) DEFAULT 0 CONSTRAINT BILL_PAY_STATE_CK
-		CHECK (PAY_STATE IN (0,1)) 
-);
-
---账单条目表
-DROP TABLE BILL_ITEM CASCADE CONSTRAINTS PURGE;
-CREATE TABLE BILL_ITEM
-(ITEM_ID		NUMBER(11) CONSTRAINT BILL_ITEM_ID_PK  PRIMARY KEY,
- BILL_ID 		NUMBER(11) CONSTRAINT BILL_ITME_BILL_ID
-			REFERENCES BILL(ID) NOT NULL,
- SERVICE_ID 	NUMBER(10) NOT NULL,
- COST 		NUMBER(13,2));
 
 select this_.id as id2_0_, this_.base_cost as base2_2_0_, this_.base_duration as base3_2_0_, this_.cost_type as cost4_2_0_, this_.creatime as creatime2_0_, this_.descr as descr2_0_, this_.name as name2_0_, this_.startime as startime2_0_, this_.status as status2_0_, this_.unit_cost as unit10_2_0_ from DLTS_COST this_ order by this_.base_cost asc, this_.creatime desc limit 3;
+
+##开启event_scheduler
+SET GLOBAL event_scheduler = 1;
+
+CREATE EVENT e_dlts_cost_update_status ON SCHEDULE EVERY 1 HOUR  DO update biyesheji.dlts_cost set STATUS='0';
+show events;
+drop event e_every_1_month;
+CREATE EVENT e_dlts_service_update_cost_id ON SCHEDULE EVERY 1 MINUTE  DO update biyesheji.dlts_service set cost_id='1' where id='40288a7d463d9f0f01463dd3151d0010';
+CREATE EVENT e_dlts_service_update_cost_id ON SCHEDULE AT TIMESTAMP '2014-05-29 14:22:00'  DO update biyesheji.dlts_service as s join biyesheji.DLTS_SERVICE_UPDATE_BAK as b set s.cost_id=b.cost_id where s.id=b.service_id;
+
+CREATE  EVENT e_every_1_month  ON SCHEDULE EVERY 1 MONTH STARTS DATE_ADD(DATE_ADD(DATE_SUB(CURDATE(),INTERVAL DAY(CURDATE())-1 DAY), INTERVAL 0 MONTH),INTERVAL 0 HOUR)  DO update biyesheji.dlts_service as s join biyesheji.DLTS_SERVICE_UPDATE_BAK as b set s.cost_id=b.cost_id where s.id=b.service_id;
+CREATE EVENT e_dlt_bill_insert ON SCHEDULE AT TIMESTAMP '2014-05-29 14:22:00'  DO insert into  biyesheji.dlts_bill values( replace(uuid(),'-',''),) ;

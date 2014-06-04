@@ -165,6 +165,28 @@ public class AccountService extends BaseService{
 	}
 	
 	/**
+	 * 根据姓名查询
+	 * @param real_name
+	 * @return
+	 */
+	public Account getAccountByReal_name(String real_name){
+		String hql = "from Account where real_name=?";
+		List list = this.dao.findAllyHql(hql, new Object[]{real_name});
+		return list==null||list.size()<=0?null:(Account)list.get(0);
+	}
+	
+	/**
+	 * 根据账号查询
+	 * @param login_name
+	 * @return
+	 */
+	public Account getAccountByLogin_name(String login_name){
+		String hql = "from Account where login_name=?";
+		List list = this.dao.findAllyHql(hql, new Object[]{login_name});
+		return list==null||list.size()<=0?null:(Account)list.get(0);
+	}
+	
+	/**
 	 * 跟新推荐人id
 	 * @param account
 	 */
