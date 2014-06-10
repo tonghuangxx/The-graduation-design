@@ -6,19 +6,19 @@
 		<input type="hidden" value="${ pageNum}" name="pageNum" id="pageNum" />
 		<input type="hidden" value="${numPerPage}" name="numPerPage"
 			id="numPerPage" />
-		<div>
-			角色：
-			<select id="selRole" class="select_search">
-				<option value="">
-					全部
-				</option>
-				<s:iterator value="rList">
-					<option value="${id }">
-						${role_name }
-					</option>
-				</s:iterator>
-			</select>
-		</div>
+<%--		<div>--%>
+<%--			角色：--%>
+<%--			<select id="selRole" class="select_search">--%>
+<%--				<option value="">--%>
+<%--					全部--%>
+<%--				</option>--%>
+<%--				<s:iterator value="rList">--%>
+<%--					<option value="${id }">--%>
+<%--						${role_name }--%>
+<%--					</option>--%>
+<%--				</s:iterator>--%>
+<%--			</select>--%>
+<%--		</div>--%>
 		<div>
 			登录名：
 			<input type="text" value="" class="text_search width200"

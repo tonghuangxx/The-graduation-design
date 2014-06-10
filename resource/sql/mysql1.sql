@@ -81,8 +81,6 @@ insert into dlts_function values('bd5e15e0fa8e473b86da255b9a22f266',null,'修改
 insert into dlts_function values('6e6307cdd9414e4fb27009c1d489d64c',null,'帐务操作',null,'0','67b5548595bb4cb797fa634a28ac3580');
 insert into dlts_function values('a1970ae90d414a9d824e98fab27b32c1',null,'业务操作',null,'0','c89f98f64dc84efa82af44797fde4571');
 insert into dlts_function values('e42797cda42e44e59ca1be435597ecdc',null,'账单操作',null,'0','10b336ca80ce47259f33ce04e83cff73');
-##还未插入
-insert into dlts_function values('14b800c2cce445009b93e3b0752a6c49',null,'报表操作',null,'0','');
 
 
 

@@ -34,33 +34,6 @@
 				<s:iterator value="#session.moduleList" var="m">
 					<li><a href="javascript:void(0);" class="<s:property value="#m.menucode"/>" onclick="menuChange('<s:property value="#m.url"/>')"></a></li>
 				</s:iterator>
-<%--				<li>--%>
-<%--					<a href="../control/roleListControl?m.id=1&operation=r" class="role_off"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="javascript:void(0);" class="admin_off" onclick="menuChange('/user/listData');"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="javascript:void(0);" class="fee_off" onclick="menuChange('/fee/listData');"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="../control/AccountListControl?m.id=4&operation=r" class="account_off"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="service/service_list.html" class="service_off"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="bill/bill_list.html" class="bill_off"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="report/report_list.html" class="report_off"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="javascript:void(0);" class="information_off" onclick="menuChange('/user/updateInfo');"></a>--%>
-<%--				</li>--%>
-<%--				<li>--%>
-<%--					<a href="javascript:void(0);" class="password_off" onclick="menuChange('/user/updatePwd');"></a>--%>
-<%--				</li>--%>
 			</ul>
 		</div>
 		<!--导航区域结束-->
